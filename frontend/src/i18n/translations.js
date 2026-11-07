@@ -1,0 +1,143 @@
+export const translations = {
+  en: {
+    // Nav & Brand
+    storeTagline: 'Authentic Kathiyawadi Homemade Snacks Made Fresh Daily',
+    home: 'Home',
+    allSnacks: 'All Snacks',
+    categories: 'Categories',
+    comboBuilder: 'Combo Builder',
+    bulkOrders: 'Bulk Orders',
+    trackOrder: 'Track Order',
+    aboutUs: 'About Us',
+    contactUs: 'Contact Us',
+    cart: 'Cart',
+    wishlist: 'Wishlist',
+    login: 'Login',
+    register: 'Register',
+    account: 'My Account',
+    myOrders: 'My Orders',
+    adminDashboard: 'Admin Panel',
+    logout: 'Logout',
+
+    // Announcement bar
+    announcement: '🌿 100% Pure Filtered Groundnut Oil (Sing-Tel) | Fresh Daily Batches | Free Rajkot Delivery on Orders Above ₹999!',
+
+    // Common Buttons
+    addToCart: 'Add to Cart',
+    buyNow: 'Buy Now',
+    viewDetails: 'View Details',
+    quickView: 'Quick View',
+    checkout: 'Proceed to Checkout',
+    applyCoupon: 'Apply',
+    submit: 'Submit',
+    save: 'Save Changes',
+    reorder: 'Order Again',
+    cancel: 'Cancel',
+
+    // Product & Weight
+    pricePerKg: 'Price per kg',
+    selectWeight: 'Select Pack Weight',
+    grams: 'g',
+    kilograms: 'kg',
+    inStock: 'In Stock',
+    lowStock: 'Few Packs Left',
+    outOfStock: 'Sold Out',
+    freshness: 'Freshness & Quality Guarantee',
+    madeWithLove: 'Handcrafted in Rajkot',
+    bestseller: 'Bestseller',
+    featured: 'Featured',
+    pureOilBadge: '100% Pure Sing-Tel',
+
+    // Cart & Checkout
+    shoppingCart: 'Shopping Cart',
+    cartEmpty: 'Your snack basket is empty',
+    cartEmptySub: 'Explore our authentic Gujarati homemade farsan and namkeen to fill your box!',
+    startShopping: 'Browse Snacks',
+    orderSummary: 'Order Summary',
+    subtotal: 'Items Subtotal',
+    deliveryFee: 'Delivery Fee',
+    freeDelivery: 'FREE Delivery',
+    discount: 'Coupon Discount',
+    grandTotal: 'Total Payable',
+    cashOnDelivery: 'Cash on Delivery (COD)',
+    onlinePayment: 'Online Payment (Razorpay / UPI / Card)',
+    placeOrder: 'Place Order',
+
+    // Messages
+    addedToCart: 'Added to your snack basket!',
+    removedFromCart: 'Removed from basket',
+    orderSuccess: 'Order Placed Successfully!',
+    whatsappInquiry: 'Chat on WhatsApp',
+  },
+  gu: {
+    // Nav & Brand
+    storeTagline: 'રાજકોટના શુદ્ધ સીંગતેલના તાજા બનાવેલા કાઠીયાવાડી નાસ્તા',
+    home: 'હોમ',
+    allSnacks: 'બધા નાસ્તા',
+    categories: 'કેટેગરીઝ',
+    comboBuilder: 'કોમ્બો બિલ્ડર',
+    bulkOrders: 'જથ્થાબંધ ઓર્ડર',
+    trackOrder: 'ઓર્ડર ટ્રેક કરો',
+    aboutUs: 'અમારા વિશે',
+    contactUs: 'સંપર્ક કરો',
+    cart: 'થેલી (કાર્ટ)',
+    wishlist: 'મનપસંદ નાસ્તા',
+    login: 'લોગિન',
+    register: 'નવું ખાતું બનાવો',
+    account: 'મારું એકાઉન્ટ',
+    myOrders: 'મારા ઓર્ડર્સ',
+    adminDashboard: 'એડમિન પેનલ',
+    logout: 'લૉગ આઉટ',
+
+    // Announcement bar
+    announcement: '🌿 ૧૦૦% શુદ્ધ ફિલ્ટર સીંગતેલ | રોજ તાજી બનાવટ | ₹૯૯૯ થી વધુના ઓર્ડર પર ફ્રી ડિલિવરી!',
+
+    // Common Buttons
+    addToCart: 'કાર્ટમાં ઉમેરો',
+    buyNow: 'હમણાં ખરીદો',
+    viewDetails: 'વિગત જુઓ',
+    quickView: 'ઝડપી ઝલક',
+    checkout: 'ઓર્ડર કરવા આગળ વધો',
+    applyCoupon: 'કૂપન વાપરો',
+    submit: 'સબમિટ કરો',
+    save: 'ફેરફાર સાચવો',
+    reorder: 'ફરીથી ઓર્ડર કરો',
+    cancel: 'રદ કરો',
+
+    // Product & Weight
+    pricePerKg: 'પ્રતિ કિલો ભાવ',
+    selectWeight: 'પેકનું વજન પસંદ કરો',
+    grams: 'ગ્રામ',
+    kilograms: 'કિલો',
+    inStock: 'હાજરમાં ઉપલબ્ધ',
+    lowStock: 'મર્યાદિત સ્ટોક',
+    outOfStock: 'સ્ટોક ખલાસ',
+    freshness: 'તાજગી અને ગુણવત્તાની ખાતરી',
+    madeWithLove: 'રાજકોટમાં પ્રેમપૂર્વક બનાવેલ',
+    bestseller: 'સૌથી વધુ વેચાતો નાસ્તો',
+    featured: 'વિશેષ નાસ્તો',
+    pureOilBadge: 'શુદ્ધ સીંગતેલમાં તળેલ',
+
+    // Cart & Checkout
+    shoppingCart: 'તમારી નાસ્તાની થેલી',
+    cartEmpty: 'તમારી થેલી ખાલી છે',
+    cartEmptySub: 'તાજા કાઠીયાવાડી ફરસાણ અને નમકીન ઉમેરવા અહીં જુઓ!',
+    startShopping: 'નાસ્તા જુઓ',
+    orderSummary: 'ઓર્ડર સારાંશ',
+    subtotal: 'કુલ નાસ્તાની રકમ',
+    deliveryFee: 'ડિલિવરી ચાર્જ',
+    freeDelivery: 'મફત ડિલિવરી',
+    discount: 'કૂપન ડિસ્કાઉન્ટ',
+    grandTotal: 'કુલ ચૂકવવાપાત્ર રકમ',
+    cashOnDelivery: 'કેશ ઓન ડિલિવરી (COD)',
+    onlinePayment: 'ઓનલાઈન પેમેન્ટ (Razorpay / UPI / કાર્ડ)',
+    placeOrder: 'ઓર્ડર કન્ફર્મ કરો',
+
+    // Messages
+    addedToCart: 'નાસ્તો કાર્ટમાં ઉમેરાયો!',
+    removedFromCart: 'કાર્ટમાંથી દૂર કર્યો',
+    orderSuccess: 'ઓર્ડર સફળતાપૂર્વક નોંધાયો!',
+    whatsappInquiry: 'WhatsApp પર વાત કરો',
+  },
+};
+
