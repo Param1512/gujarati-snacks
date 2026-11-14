@@ -8,8 +8,9 @@ export const SettingsProvider = ({ children }) => {
     storeName: 'Gujarati Homemade Nasta & Snacks',
     storeNameGujarati: 'ગુજરાતી હોમમેડ નાસ્તા અને સ્નેક્સ',
     tagline: 'Authentic Kathiyawadi Namkeen, Made Fresh Daily With Pure Groundnut Oil',
-    phone: '+91 98250 12345',
-    whatsappNumber: '919825012345',
+    phone: '+91 94268 45625',
+    whatsappRecipientName: 'Deepa Bhansali',
+    whatsappNumber: '919426845625',
     email: 'orders@gujaratinasta.com',
     address: {
       shopNo: 'Shop 4, Shreeji Complex',

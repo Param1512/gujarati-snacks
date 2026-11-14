@@ -62,8 +62,39 @@ const authorize = (...roles) => {
   };
 };
 
+// Optional auth for public/guest actions that can optionally link to an admin or user if logged in
+const optionalAuth = async (req, res, next) => {
+  let token;
+  if (
+    req.headers.authorization &&
+    req.headers.authorization.startsWith('Bearer')
+  ) {
+    token = req.headers.authorization.split(' ')[1];
+  } else if (req.cookies && req.cookies.token) {
+    token = req.cookies.token;
+  }
+
+  if (!token) {
+    req.user = null;
+    return next();
+  }
+
+  try {
+    const decoded = jwt.verify(
+      token,
+      process.env.JWT_SECRET || 'gujarati_nasta_super_secret_jwt_key_2026'
+    );
+    const user = await User.findById(decoded.id).select('-password');
+    req.user = user && user.isActive ? user : null;
+  } catch (error) {
+    req.user = null;
+  }
+  next();
+};
+
 module.exports = {
   protect,
   authorize,
+  optionalAuth,
 };
 

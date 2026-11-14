@@ -31,11 +31,15 @@ const businessSettingsSchema = new mongoose.Schema(
     },
     phone: {
       type: String,
-      default: '+91 98250 12345',
+      default: '+91 94268 45625',
+    },
+    whatsappRecipientName: {
+      type: String,
+      default: 'Deepa Bhansali',
     },
     whatsappNumber: {
       type: String,
-      default: '919825012345',
+      default: '919426845625',
     },
     email: {
       type: String,

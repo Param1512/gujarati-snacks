@@ -1,6 +1,8 @@
 const Order = require('../models/Order');
 const Payment = require('../models/Payment');
+const BusinessSettings = require('../models/BusinessSettings');
 const { verifyPaymentSignature, verifyWebhookSignature } = require('../services/razorpayService');
+const { formatWhatsAppOrder } = require('../services/whatsappService');
 
 // @desc Verify Razorpay payment signature
 // @route POST /api/payments/verify
@@ -73,6 +75,15 @@ exports.verifyPayment = async (req, res, next) => {
       description: `Payment of ₹${order.totalAmount} received successfully via Razorpay (Txn ID: ${razorpayPaymentId}).`,
       updatedAt: new Date(),
     });
+
+    const settings = (await BusinessSettings.findOne()) || {};
+    const waDetails = formatWhatsAppOrder(order, settings);
+    order.whatsappNotification = {
+      recipientName: waDetails.recipientName,
+      recipientPhone: waDetails.recipientPhone,
+      formattedMessage: waDetails.formattedMessage,
+      waUrl: waDetails.waUrl,
+    };
     await order.save();
 
     await Payment.findOneAndUpdate(
@@ -89,6 +100,12 @@ exports.verifyPayment = async (req, res, next) => {
       success: true,
       message: 'Payment successfully verified and order confirmed!',
       order,
+      whatsappUrl: waDetails.waUrl,
+      whatsappMessage: waDetails.formattedMessage,
+      whatsappRecipient: {
+        name: waDetails.recipientName,
+        phone: waDetails.recipientPhone,
+      },
     });
   } catch (error) {
     next(error);

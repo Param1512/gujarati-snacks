@@ -7,6 +7,7 @@ const Payment = require('../models/Payment');
 const { calculateItemUnitPrice, validateWeightOption, getWeightLabel } = require('../services/priceCalculator');
 const { createRazorpayOrder } = require('../services/razorpayService');
 const { generateInvoiceHtml } = require('../services/invoiceService');
+const { formatWhatsAppOrder } = require('../services/whatsappService');
 
 // Helper to generate unique order number: GNS-YYYYMMDD-XXXX
 const generateOrderNumber = () => {
@@ -38,9 +39,39 @@ exports.createOrder = async (req, res, next) => {
     if (!shippingAddress || !shippingAddress.fullName || !shippingAddress.phone || !shippingAddress.addressLine1 || !shippingAddress.pincode) {
       return res.status(400).json({
         success: false,
-        message: 'Please provide complete delivery address details',
+        message: 'Please provide full name, mobile number, address, and pincode.',
       });
     }
+
+    const cleanPhone = (shippingAddress.phone || '').replace(/\D/g, '').slice(-10);
+    if (!cleanPhone || cleanPhone.length !== 10) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please provide a valid 10-digit Indian mobile number.',
+      });
+    }
+
+    const cleanPincode = (shippingAddress.pincode || '').replace(/\D/g, '');
+    if (!cleanPincode || cleanPincode.length !== 6) {
+      return res.status(400).json({
+        success: false,
+        message: 'Please enter a valid 6-digit delivery pincode.',
+      });
+    }
+
+    const validatedShippingAddress = {
+      fullName: (shippingAddress.fullName || '').trim(),
+      phone: cleanPhone,
+      email: (shippingAddress.email || req.user?.email || '').trim(),
+      addressLine1: (shippingAddress.addressLine1 || '').trim(),
+      addressLine2: (shippingAddress.addressLine2 || '').trim(),
+      area: (shippingAddress.area || shippingAddress.addressLine2 || '').trim(),
+      landmark: (shippingAddress.landmark || '').trim(),
+      city: (shippingAddress.city || 'Rajkot').trim(),
+      state: (shippingAddress.state || 'Gujarat').trim(),
+      pincode: cleanPincode,
+      deliveryInstructions: (shippingAddress.deliveryInstructions || customerNotes || '').trim(),
+    };
 
     const settings = (await BusinessSettings.findOne()) || {
       deliveryCharges: { localRajkot: 30, standardShipping: 70, customerPickup: 0 },
@@ -165,13 +196,21 @@ exports.createOrder = async (req, res, next) => {
 
     const totalAmount = Math.max(0, itemsSubtotal + deliveryFee - discountAmount);
     const orderNumber = generateOrderNumber();
+    const userId = req.user ? req.user._id : null;
+    const isGuest = !req.user;
 
-    // 4. Create Order
+    // 4. Create Order in MongoDB (Always persisted before WhatsApp or payment)
     const order = await Order.create({
       orderNumber,
-      customer: req.user._id,
+      customer: userId,
+      isGuest,
+      guestCustomer: {
+        name: validatedShippingAddress.fullName,
+        phone: validatedShippingAddress.phone,
+        email: validatedShippingAddress.email,
+      },
       orderItems: validatedOrderItems,
-      shippingAddress,
+      shippingAddress: validatedShippingAddress,
       deliveryType,
       itemsSubtotal,
       deliveryFee,
@@ -180,17 +219,17 @@ exports.createOrder = async (req, res, next) => {
       totalAmount,
       totalWeightGrams,
       paymentMethod,
-      paymentStatus: paymentMethod === 'cod' ? 'pending' : 'pending',
+      paymentStatus: 'pending',
       orderStatus: 'pending',
       trackingHistory: [
         {
           status: 'pending',
-          title: 'Order Placed',
-          description: `Your order #${orderNumber} has been received and is awaiting confirmation.`,
+          title: 'Order Placed (Pending Confirmation)',
+          description: `Your order #${orderNumber} has been received and stored in our database.`,
           updatedAt: new Date(),
         },
       ],
-      customerNotes,
+      customerNotes: validatedShippingAddress.deliveryInstructions,
     });
 
     // 5. Deduct inventory stock & record adjustment logs
@@ -204,7 +243,7 @@ exports.createOrder = async (req, res, next) => {
         newGrams: inventory.availableGrams,
         reason: 'order_confirmed',
         referenceId: order.orderNumber,
-        adjustedBy: req.user._id,
+        adjustedBy: userId,
         createdAt: new Date(),
       });
       await inventory.save();
@@ -216,7 +255,7 @@ exports.createOrder = async (req, res, next) => {
       try {
         const rzpOrder = await createRazorpayOrder(totalAmount, order.orderNumber, {
           orderNumber: order.orderNumber,
-          customerEmail: req.user.email,
+          customerEmail: validatedShippingAddress.email || 'orders@gujaratinasta.com',
         });
 
         order.paymentDetails = {
@@ -226,7 +265,7 @@ exports.createOrder = async (req, res, next) => {
 
         await Payment.create({
           order: order._id,
-          user: req.user._id,
+          user: userId,
           paymentMethod: 'razorpay',
           amount: totalAmount,
           currency: 'INR',
@@ -247,7 +286,7 @@ exports.createOrder = async (req, res, next) => {
       // COD payment record
       await Payment.create({
         order: order._id,
-        user: req.user._id,
+        user: userId,
         paymentMethod: 'cod',
         amount: totalAmount,
         currency: 'INR',
@@ -255,11 +294,27 @@ exports.createOrder = async (req, res, next) => {
       });
     }
 
+    // 7. Generate verified WhatsApp message for Deepa Bhansali
+    const waDetails = formatWhatsAppOrder(order, settings);
+    order.whatsappNotification = {
+      recipientName: waDetails.recipientName,
+      recipientPhone: waDetails.recipientPhone,
+      formattedMessage: waDetails.formattedMessage,
+      waUrl: waDetails.waUrl,
+    };
+    await order.save();
+
     res.status(201).json({
       success: true,
       message: 'Order created successfully',
       order,
       razorpayOrder: razorpayOrderData,
+      whatsappUrl: waDetails.waUrl,
+      whatsappMessage: waDetails.formattedMessage,
+      whatsappRecipient: {
+        name: waDetails.recipientName,
+        phone: waDetails.recipientPhone,
+      },
     });
   } catch (error) {
     next(error);
@@ -284,6 +339,40 @@ exports.getMyOrders = async (req, res, next) => {
   }
 };
 
+// @desc Public lookup for dedicated order confirmation page
+// @route GET /api/orders/confirmed/:orderNumber
+exports.getOrderConfirmationDetails = async (req, res, next) => {
+  try {
+    const { orderNumber } = req.params;
+    if (!orderNumber) {
+      return res.status(400).json({ success: false, message: 'Order number is required' });
+    }
+
+    const order = await Order.findOne({ orderNumber: orderNumber.trim() })
+      .populate('orderItems.product', 'name slug images pricePerKg');
+
+    if (!order) {
+      return res.status(404).json({ success: false, message: 'Order not found in database' });
+    }
+
+    const settings = (await BusinessSettings.findOne()) || {};
+    const waDetails = formatWhatsAppOrder(order, settings);
+
+    res.status(200).json({
+      success: true,
+      order,
+      whatsappUrl: waDetails.waUrl,
+      whatsappMessage: waDetails.formattedMessage,
+      whatsappRecipient: {
+        name: waDetails.recipientName,
+        phone: waDetails.recipientPhone,
+      },
+    });
+  } catch (error) {
+    next(error);
+  }
+};
+
 // @desc Get single order by ID or orderNumber
 // @route GET /api/orders/:identifier
 exports.getOrderById = async (req, res, next) => {
@@ -295,7 +384,7 @@ exports.getOrderById = async (req, res, next) => {
       $or: isObjectId ? [{ _id: identifier }, { orderNumber: identifier }] : [{ orderNumber: identifier }],
     })
       .populate('customer', 'name email phone')
-      .populate('orderItems.product', 'name slug images');
+      .populate('orderItems.product', 'name slug images pricePerKg');
 
     if (!order) {
       return res.status(404).json({
@@ -304,12 +393,17 @@ exports.getOrderById = async (req, res, next) => {
       });
     }
 
-    // Role check: Admin can view any order; Customer can only view their own
-    if (req.user.role !== 'admin' && order.customer._id.toString() !== req.user._id.toString()) {
-      return res.status(403).json({
-        success: false,
-        message: 'Access denied. You cannot view other customers orders.',
-      });
+    // Role check: Admin can view any order; Customer can only view their own; Guest can view their order
+    if (req.user && req.user.role === 'admin') {
+      return res.status(200).json({ success: true, order });
+    }
+
+    if (order.customer && req.user && order.customer._id.toString() === req.user._id.toString()) {
+      return res.status(200).json({ success: true, order });
+    }
+
+    if (order.isGuest || !order.customer) {
+      return res.status(200).json({ success: true, order });
     }
 
     res.status(200).json({
@@ -364,7 +458,7 @@ exports.cancelOrder = async (req, res, next) => {
       return res.status(404).json({ success: false, message: 'Order not found' });
     }
 
-    if (req.user.role !== 'admin' && order.customer.toString() !== req.user._id.toString()) {
+    if (req.user && req.user.role !== 'admin' && order.customer && order.customer.toString() !== req.user._id.toString()) {
       return res.status(403).json({ success: false, message: 'Not authorized to cancel this order' });
     }
 
@@ -529,6 +623,8 @@ exports.getAllOrders = async (req, res, next) => {
         { 'shippingAddress.fullName': { $regex: search, $options: 'i' } },
         { 'shippingAddress.phone': { $regex: search, $options: 'i' } },
         { 'shippingAddress.city': { $regex: search, $options: 'i' } },
+        { 'guestCustomer.name': { $regex: search, $options: 'i' } },
+        { 'guestCustomer.phone': { $regex: search, $options: 'i' } },
       ];
     }
 
@@ -565,8 +661,14 @@ exports.getOrderInvoice = async (req, res, next) => {
       return res.status(404).send('Order not found');
     }
 
-    if (req.user.role !== 'admin' && order.customer._id.toString() !== req.user._id.toString()) {
-      return res.status(403).send('Not authorized');
+    const isAllowed =
+      (req.user && req.user.role === 'admin') ||
+      order.isGuest ||
+      !order.customer ||
+      (req.user && order.customer?._id?.toString() === req.user._id.toString());
+
+    if (!isAllowed) {
+      return res.status(403).send('Not authorized to access this invoice.');
     }
 
     const settings = await BusinessSettings.findOne();

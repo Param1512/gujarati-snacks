@@ -260,6 +260,10 @@ const Footer = () => {
             <span>•</span>
             <Link to="/terms-and-conditions" className="hover:underline">Terms & Conditions</Link>
             <span>•</span>
+            <Link to="/admin/login" className="hover:text-[#D6B77A] text-[11px] opacity-60 hover:opacity-100 transition-opacity">
+              Admin Portal
+            </Link>
+            <span>•</span>
             <span className="text-[#FFF0DC] font-medium flex items-center gap-1">
               Handcrafted with <Heart className="w-3 h-3 fill-[#C98789] text-[#C98789]" /> in Rajkot
             </span>

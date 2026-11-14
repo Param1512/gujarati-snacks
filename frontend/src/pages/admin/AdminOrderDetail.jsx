@@ -199,8 +199,11 @@ const AdminOrderDetail = () => {
               {order.shippingAddress?.fullName}
             </div>
             <div className="text-[#21191A]/70 space-y-1 font-mono text-xs">
-              <div>Email: {order.customer?.email || 'N/A'}</div>
-              <div>Phone: {order.shippingAddress?.phone}</div>
+              <div>Email: {order.shippingAddress?.email || order.guestCustomer?.email || order.customer?.email || 'Guest Customer'}</div>
+              <div>Phone: +91 {order.shippingAddress?.phone}</div>
+              {order.isGuest && (
+                <div className="text-[11px] text-[#790B13] font-bold">Type: Guest Order</div>
+              )}
             </div>
           </div>
 
@@ -250,7 +253,7 @@ const AdminOrderDetail = () => {
           <div className="p-5 bg-[#FFF0DC] rounded-2xl border border-[#D6B77A]/40 text-xs font-mono space-y-2 max-w-xs ml-auto">
             <div className="flex justify-between text-[#21191A]/70">
               <span>Items Total</span>
-              <span>₹{order.itemsPrice}</span>
+              <span>₹{order.itemsSubtotal ?? order.itemsPrice ?? 0}</span>
             </div>
             {order.discountAmount > 0 && (
               <div className="flex justify-between text-[#790B13] font-bold">
@@ -260,7 +263,7 @@ const AdminOrderDetail = () => {
             )}
             <div className="flex justify-between text-[#21191A]/70">
               <span>Delivery Fee</span>
-              <span>₹{order.shippingPrice}</span>
+              <span>{order.deliveryFee === 0 ? 'FREE' : `₹${order.deliveryFee ?? order.shippingPrice ?? 0}`}</span>
             </div>
             <div className="flex justify-between font-heading font-black text-base text-[#790B13] pt-2 border-t border-[#D6B77A]/30">
               <span className="text-[#21191A]">Final Total</span>

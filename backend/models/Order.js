@@ -87,7 +87,17 @@ const orderSchema = new mongoose.Schema(
     customer: {
       type: mongoose.Schema.Types.ObjectId,
       ref: 'User',
-      required: true,
+      required: false,
+      default: null,
+    },
+    isGuest: {
+      type: Boolean,
+      default: true,
+    },
+    guestCustomer: {
+      name: { type: String, default: '' },
+      phone: { type: String, default: '' },
+      email: { type: String, default: '' },
     },
     orderItems: {
       type: [orderItemSchema],
@@ -97,12 +107,15 @@ const orderSchema = new mongoose.Schema(
     shippingAddress: {
       fullName: { type: String, required: true },
       phone: { type: String, required: true },
+      email: { type: String, default: '' },
       addressLine1: { type: String, required: true },
       addressLine2: { type: String, default: '' },
+      area: { type: String, default: '' },
       landmark: { type: String, default: '' },
-      city: { type: String, required: true },
-      state: { type: String, required: true },
+      city: { type: String, required: true, default: 'Rajkot' },
+      state: { type: String, required: true, default: 'Gujarat' },
       pincode: { type: String, required: true },
+      deliveryInstructions: { type: String, default: '' },
     },
     deliveryType: {
       type: String,
@@ -175,6 +188,14 @@ const orderSchema = new mongoose.Schema(
     adminNotes: {
       type: String,
       default: '',
+    },
+    whatsappNotification: {
+      recipientName: { type: String, default: 'Deepa Bhansali' },
+      recipientPhone: { type: String, default: '919426845625' },
+      formattedMessage: { type: String, default: '' },
+      waUrl: { type: String, default: '' },
+      customerOpenedWa: { type: Boolean, default: false },
+      openedAt: { type: Date },
     },
   },
   {

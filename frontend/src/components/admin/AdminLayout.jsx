@@ -29,7 +29,7 @@ const AdminLayout = () => {
   }, [location.pathname]);
 
   if (!isAuthenticated || !isAdmin) {
-    return <Navigate to="/login?redirect=/admin" replace />;
+    return <Navigate to="/admin/login" replace />;
   }
 
   const navLinks = [

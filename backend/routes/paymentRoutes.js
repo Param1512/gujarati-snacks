@@ -4,9 +4,9 @@ const {
   verifyPayment,
   handleWebhook,
 } = require('../controllers/paymentController');
-const { protect } = require('../middleware/auth');
 
-router.post('/verify', protect, verifyPayment);
+// Public guest & user payment verification
+router.post('/verify', verifyPayment);
 router.post('/webhook', handleWebhook);
 
 module.exports = router;

@@ -113,8 +113,8 @@ export const CartProvider = ({ children }) => {
   const totalKg = (totalGrams / 1000).toFixed(2);
   const totalItemsCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
-  // Generate WhatsApp cart message
-  const getWhatsAppCartMessage = (phoneNumber = '919825012345') => {
+  // Generate WhatsApp cart message for Deepa Bhansali
+  const getWhatsAppCartMessage = (phoneNumber = '919426845625') => {
     if (items.length === 0) return '';
     let msg = `*Namaste Gujarati Nasta & Snacks!* 🥟\n\nI want to order the following fresh homemade snacks:\n\n`;
     items.forEach((item, idx) => {

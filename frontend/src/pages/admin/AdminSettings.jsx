@@ -14,7 +14,8 @@ const AdminSettings = () => {
   const [storeNameGujarati, setStoreNameGujarati] = useState('');
   const [tagline, setTagline] = useState('');
   const [phone, setPhone] = useState('');
-  const [whatsappNumber, setWhatsappNumber] = useState('');
+  const [whatsappRecipientName, setWhatsappRecipientName] = useState('Deepa Bhansali');
+  const [whatsappNumber, setWhatsappNumber] = useState('919426845625');
   const [email, setEmail] = useState('');
   const [operatingStatus, setOperatingStatus] = useState('open');
   const [allowCashOnDelivery, setAllowCashOnDelivery] = useState(true);
@@ -40,7 +41,8 @@ const AdminSettings = () => {
           setStoreNameGujarati(s.storeNameGujarati || '');
           setTagline(s.tagline);
           setPhone(s.phone);
-          setWhatsappNumber(s.whatsappNumber);
+          setWhatsappRecipientName(s.whatsappRecipientName || 'Deepa Bhansali');
+          setWhatsappNumber(s.whatsappNumber || '919426845625');
           setEmail(s.email);
           setOperatingStatus(s.operatingStatus || 'open');
           setAllowCashOnDelivery(s.allowCashOnDelivery !== undefined ? s.allowCashOnDelivery : true);
@@ -72,6 +74,7 @@ const AdminSettings = () => {
         storeNameGujarati,
         tagline,
         phone,
+        whatsappRecipientName,
         whatsappNumber,
         email,
         operatingStatus,
@@ -190,7 +193,7 @@ const AdminSettings = () => {
             </h2>
           </div>
 
-          <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-5">
             <div>
               <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Voice Contact *
@@ -206,14 +209,28 @@ const AdminSettings = () => {
 
             <div>
               <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
-                WhatsApp API Key Number *
+                WhatsApp Recipient Name *
+              </label>
+              <input
+                type="text"
+                required
+                value={whatsappRecipientName}
+                onChange={(e) => setWhatsappRecipientName(e.target.value)}
+                placeholder="Deepa Bhansali"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs text-[#21191A] focus:outline-none focus:border-[#790B13]"
+              />
+            </div>
+
+            <div>
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
+                WhatsApp Number *
               </label>
               <input
                 type="text"
                 required
                 value={whatsappNumber}
                 onChange={(e) => setWhatsappNumber(e.target.value)}
-                placeholder="919825012345"
+                placeholder="919426845625"
                 className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs font-mono text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>

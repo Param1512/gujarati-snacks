@@ -1,5 +1,5 @@
 import React from 'react';
-import { BrowserRouter as Router, Routes, Route, Outlet } from 'react-router-dom';
+import { BrowserRouter as Router, Routes, Route, Outlet, Navigate } from 'react-router-dom';
 
 // Context Providers
 import { AuthProvider } from './context/AuthContext';
@@ -23,11 +23,8 @@ import ProductDetails from './pages/ProductDetails';
 import SearchResults from './pages/SearchResults';
 import Cart from './pages/Cart';
 import Checkout from './pages/Checkout';
+import OrderConfirmationPage from './pages/OrderConfirmationPage';
 import Login from './pages/Login';
-import Register from './pages/Register';
-import Profile from './pages/Profile';
-import MyOrders from './pages/MyOrders';
-import OrderDetails from './pages/OrderDetails';
 import OrderTracking from './pages/OrderTracking';
 import Wishlist from './pages/Wishlist';
 import ComboBuilderPage from './pages/ComboBuilderPage';
@@ -124,11 +121,13 @@ function App() {
                       <Route path="/search" element={<SearchResults />} />
                       <Route path="/cart" element={<Cart />} />
                       <Route path="/checkout" element={<Checkout />} />
+                      <Route path="/order-confirmed/:orderNumber" element={<OrderConfirmationPage />} />
+                      <Route path="/order/:orderId" element={<OrderConfirmationPage />} />
+                      <Route path="/admin/login" element={<Login />} />
                       <Route path="/login" element={<Login />} />
-                      <Route path="/register" element={<Register />} />
-                      <Route path="/profile" element={<Profile />} />
-                      <Route path="/my-orders" element={<MyOrders />} />
-                      <Route path="/order/:orderId" element={<OrderDetails />} />
+                      <Route path="/register" element={<Navigate to="/" replace />} />
+                      <Route path="/profile" element={<Navigate to="/" replace />} />
+                      <Route path="/my-orders" element={<Navigate to="/" replace />} />
                       <Route path="/track-order" element={<OrderTracking />} />
                       <Route path="/track/:orderNumber" element={<OrderTracking />} />
                       <Route path="/wishlist" element={<Wishlist />} />

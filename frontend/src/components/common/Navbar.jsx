@@ -177,85 +177,19 @@ const Navbar = () => {
               )}
             </Link>
 
-            {/* User Account / Profile */}
-            <div className="relative shrink-0">
-              {isAuthenticated ? (
-                <div>
-                  <button
-                    type="button"
-                    onClick={() => setUserDropdown(!userDropdown)}
-                    className="flex items-center gap-1.5 text-xs font-heading font-bold text-[#50000D] bg-[#FFF0DC] border border-[#D6B77A]/40 rounded-full px-3 py-2 hover:bg-[#790B13] hover:text-[#FFF0DC] transition-all cursor-pointer shadow-xs whitespace-nowrap"
-                  >
-                    <User className="w-3.5 h-3.5" />
-                    <span className="hidden sm:inline">
-                      {user?.name?.split(' ')[0] || 'Account'}
-                    </span>
-                  </button>
-
-                  {userDropdown && (
-                    <div className="absolute right-0 mt-2 w-56 bg-white text-[#21191A] rounded-2xl shadow-2xl py-2 z-50 text-xs font-heading border border-[#D6B77A]/30">
-                      <div className="px-4 py-3 border-b border-[#D6B77A]/20 bg-[#FFF9F2]">
-                        <p className="text-[10px] text-[#790B13] uppercase tracking-wider font-bold">Patron Account</p>
-                        <p className="font-bold text-[#21191A] truncate text-sm">{user?.name}</p>
-                        <p className="text-[11px] text-[#21191A]/60 truncate font-sans">{user?.email}</p>
-                      </div>
-
-                      {isAdmin && (
-                        <Link
-                          to="/admin"
-                          onClick={() => setUserDropdown(false)}
-                          className="flex items-center justify-between px-4 py-2.5 text-[#790B13] hover:bg-[#FFF0DC] transition-colors font-bold"
-                        >
-                          <span className="flex items-center gap-2">
-                            <LayoutDashboard className="w-3.5 h-3.5" />
-                            Admin Console
-                          </span>
-                          <ArrowRight className="w-3 h-3" />
-                        </Link>
-                      )}
-
-                      <Link
-                        to="/profile"
-                        onClick={() => setUserDropdown(false)}
-                        className="flex items-center gap-2 px-4 py-2 text-[#21191A] hover:bg-[#FFF0DC] transition-colors font-medium"
-                      >
-                        <User className="w-3.5 h-3.5 text-[#790B13]" />
-                        Profile & Addresses
-                      </Link>
-
-                      <Link
-                        to="/my-orders"
-                        onClick={() => setUserDropdown(false)}
-                        className="flex items-center gap-2 px-4 py-2 text-[#21191A] hover:bg-[#FFF0DC] transition-colors font-medium"
-                      >
-                        <ShoppingBag className="w-3.5 h-3.5 text-[#790B13]" />
-                        My Orders & Tracking
-                      </Link>
-
-                      <button
-                        type="button"
-                        onClick={() => {
-                          setUserDropdown(false);
-                          logout();
-                        }}
-                        className="w-full text-left flex items-center gap-2 px-4 py-2 text-rose-700 hover:bg-rose-50 border-t border-[#D6B77A]/20 mt-1 cursor-pointer transition-colors font-semibold"
-                      >
-                        <LogOut className="w-3.5 h-3.5" />
-                        Sign Out
-                      </button>
-                    </div>
-                  )}
-                </div>
-              ) : (
+            {/* Admin Console Shortcut (Only visible when Administrator is authenticated) */}
+            {isAdmin && (
+              <div className="relative shrink-0">
                 <Link
-                  to="/login"
-                  className="flex items-center gap-1.5 text-xs font-heading font-extrabold uppercase tracking-wider text-[#50000D] bg-[#FFF0DC] hover:bg-[#790B13] hover:text-[#FFF0DC] border border-[#D6B77A]/50 rounded-full px-3.5 sm:px-4 py-2 transition-all shadow-xs whitespace-nowrap shrink-0"
+                  to="/admin"
+                  className="flex items-center gap-1.5 text-xs font-heading font-extrabold uppercase tracking-wider text-[#FFF0DC] bg-[#50000D] hover:bg-[#790B13] border border-[#D6B77A]/50 rounded-full px-3.5 py-2 transition-all shadow-xs whitespace-nowrap shrink-0"
+                  title="Admin Dashboard"
                 >
-                  <User className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">{t('login')}</span>
+                  <LayoutDashboard className="w-3.5 h-3.5 text-[#D6B77A]" />
+                  <span className="hidden sm:inline">Admin</span>
                 </Link>
-              )}
-            </div>
+              </div>
+            )}
 
             {/* Shopping Bag Trigger in Deep Burgundy Luxury Style */}
             <button
@@ -391,36 +325,27 @@ const Navbar = () => {
                 </button>
               </div>
 
-              {/* User Account / Sign In State */}
-              {isAuthenticated ? (
+              {/* Administrator Status / Console (Only if Admin is Logged In) */}
+              {isAdmin ? (
                 <div className="bg-white p-3.5 rounded-2xl border border-[#D6B77A]/30 space-y-2">
                   <div className="flex items-center gap-2.5">
-                    <div className="w-8 h-8 rounded-full bg-[#FFF0DC] text-[#790B13] flex items-center justify-center font-bold text-xs border border-[#D6B77A]/30">
-                      {user?.name?.[0] || 'U'}
+                    <div className="w-8 h-8 rounded-full bg-[#50000D] text-[#FFF0DC] flex items-center justify-center font-bold text-xs border border-[#D6B77A]/30">
+                      A
                     </div>
                     <div className="min-w-0 flex-1">
-                      <p className="font-heading font-bold text-xs text-[#21191A] truncate">{user?.name}</p>
+                      <p className="font-heading font-bold text-xs text-[#21191A] truncate">{user?.name} (Admin)</p>
                       <p className="text-[10px] text-[#21191A]/60 truncate font-sans">{user?.email}</p>
                     </div>
                   </div>
 
                   <div className="pt-2 border-t border-[#D6B77A]/20 flex items-center justify-between text-xs font-heading font-bold">
                     <Link
-                      to="/my-orders"
+                      to="/admin"
                       onClick={() => setMobileMenuOpen(false)}
-                      className="text-[#790B13] hover:underline"
+                      className="text-[#50000D] hover:underline"
                     >
-                      My Orders
+                      Admin Dashboard
                     </Link>
-                    {isAdmin && (
-                      <Link
-                        to="/admin"
-                        onClick={() => setMobileMenuOpen(false)}
-                        className="text-[#50000D] hover:underline"
-                      >
-                        Admin
-                      </Link>
-                    )}
                     <button
                       type="button"
                       onClick={() => {
@@ -433,24 +358,7 @@ const Navbar = () => {
                     </button>
                   </div>
                 </div>
-              ) : (
-                <div className="grid grid-cols-2 gap-2 text-xs font-heading font-bold uppercase tracking-wider">
-                  <Link
-                    to="/login"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="py-3 text-center bg-[#FFF0DC] text-[#50000D] border border-[#D6B77A]/40 rounded-xl hover:bg-[#790B13] hover:text-white transition-all min-h-[44px] flex items-center justify-center"
-                  >
-                    {t('login')}
-                  </Link>
-                  <Link
-                    to="/register"
-                    onClick={() => setMobileMenuOpen(false)}
-                    className="py-3 text-center bg-[#50000D] text-[#FFF0DC] border border-[#D6B77A]/40 rounded-xl hover:bg-[#790B13] transition-all min-h-[44px] flex items-center justify-center"
-                  >
-                    Register
-                  </Link>
-                </div>
-              )}
+              ) : null}
             </div>
           </div>
         </div>
