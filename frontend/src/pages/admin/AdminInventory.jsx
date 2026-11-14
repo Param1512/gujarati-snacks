@@ -129,8 +129,8 @@ const AdminInventory = () => {
             Loading inventory ledger...
           </div>
         ) : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-left text-xs sm:text-sm font-sans">
+          <div className="table-responsive-container">
+            <table className="w-full text-left text-xs sm:text-sm font-sans min-w-[720px]">
               <thead className="bg-[#FFF9F2] text-[#21191A]/70 uppercase font-mono text-xs tracking-wider border-b border-[#D6B77A]/20">
                 <tr>
                   <th className="py-4 px-5 font-bold">Snack Product</th>

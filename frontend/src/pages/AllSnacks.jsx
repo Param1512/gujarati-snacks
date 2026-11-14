@@ -36,6 +36,7 @@ const AllSnacks = () => {
   const [page, setPage] = useState(pageParam);
   const [totalPages, setTotalPages] = useState(1);
   const [totalCount, setTotalCount] = useState(0);
+  const [showMobileFilters, setShowMobileFilters] = useState(false);
 
   // Sync with URL params
   useEffect(() => {
@@ -119,10 +120,27 @@ const AllSnacks = () => {
         </div>
       </div>
 
+      {/* Mobile Filter Toggle Button */}
+      <div className="lg:hidden flex items-center justify-between bg-[#FFF9F2] p-3.5 rounded-2xl border border-[#D6B77A]/30">
+        <button
+          onClick={() => setShowMobileFilters(!showMobileFilters)}
+          className="flex items-center gap-2 text-xs font-heading font-bold text-[#50000D] bg-[#FFF0DC] border border-[#D6B77A]/40 px-4 py-2.5 rounded-xl min-h-[44px] cursor-pointer"
+        >
+          <SlidersHorizontal className="w-4 h-4 text-[#790B13]" />
+          <span>{showMobileFilters ? 'Hide Filters' : 'Filter & Refine Selection'}</span>
+          {(category || searchTerm || minPrice || maxPrice) && (
+            <span className="w-2 h-2 rounded-full bg-[#790B13]" />
+          )}
+        </button>
+        <span className="text-xs text-[#21191A]/70 font-heading font-bold">
+          {totalCount} snacks
+        </span>
+      </div>
+
       <div className="grid grid-cols-1 lg:grid-cols-4 gap-8">
         
         {/* Sidebar Filters */}
-        <aside className="bg-[#FFF9F2] p-6 sm:p-7 rounded-3xl border border-[#D6B77A]/30 shadow-sm space-y-6 h-fit font-heading">
+        <aside className={`${showMobileFilters ? 'block' : 'hidden'} lg:block bg-[#FFF9F2] p-6 sm:p-7 rounded-3xl border border-[#D6B77A]/30 shadow-sm space-y-6 h-fit font-heading`}>
           <div className="flex items-center justify-between pb-3.5 border-b border-[#D6B77A]/25">
             <h2 className="font-bold text-xs uppercase tracking-wider text-[#50000D]">
               Refine Selection
@@ -286,7 +304,7 @@ const AllSnacks = () => {
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-6">
               {products.map((product) => (
                 <ProductCard
                   key={product._id}

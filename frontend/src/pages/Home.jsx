@@ -60,7 +60,7 @@ const Home = () => {
     : products.filter((p) => p.category?.slug === activeCategorySlug || p.categorySlug === activeCategorySlug);
 
   return (
-    <div className="space-y-24 sm:space-y-32 pb-24 overflow-hidden">
+    <div className="space-y-16 sm:space-y-24 lg:space-y-32 pb-24 overflow-hidden">
       
       {/* ========================================================
           1. IMMERSIVE HERO SECTION
@@ -117,7 +117,7 @@ const Home = () => {
               </div>
 
               {/* Quality & Trust Badges */}
-              <div className="grid grid-cols-3 gap-4 pt-8 border-t border-[#D6B77A]/20 text-xs font-heading uppercase tracking-wider text-[#FFF0DC]/80">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-6 sm:pt-8 border-t border-[#D6B77A]/20 text-[11px] sm:text-xs font-heading uppercase tracking-wider text-[#FFF0DC]/80">
                 <div className="flex items-center gap-2 justify-center lg:justify-start">
                   <ShieldCheck className="w-4 h-4 text-[#D6B77A] shrink-0" />
                   <span>100% Sing-Tel</span>
@@ -221,7 +221,7 @@ const Home = () => {
         </div>
 
         {/* Asymmetrical Grid of Photographic Tiles */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 gap-6">
+        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-6">
           {categories.map((cat, idx) => (
             <Link
               key={cat._id}
@@ -279,7 +279,7 @@ const Home = () => {
           </Link>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {bestsellers.slice(0, 4).map((product) => (
             <ProductCard
               key={product._id}
@@ -382,7 +382,7 @@ const Home = () => {
         </div>
 
         {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6 sm:gap-8">
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
           {filteredProducts.map((product) => (
             <ProductCard
               key={product._id}

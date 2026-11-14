@@ -267,7 +267,7 @@ const ProductDetails = () => {
             </div>
 
             {/* Weight Options Grid */}
-            <div className="grid grid-cols-4 gap-2">
+            <div className="grid grid-cols-2 xs:grid-cols-4 gap-2">
               {weightOptions.map((opt) => {
                 const packCost = Math.round((product.pricePerKg * opt.weightGrams) / 1000);
                 const isSel = selectedWeight === opt.weightGrams;
@@ -276,7 +276,7 @@ const ProductDetails = () => {
                     key={opt.weightGrams}
                     type="button"
                     onClick={() => setSelectedWeight(opt.weightGrams)}
-                    className={`p-3 rounded-2xl border text-center transition-all cursor-pointer ${
+                    className={`p-2.5 sm:p-3 rounded-xl sm:rounded-2xl border text-center transition-all cursor-pointer min-h-[44px] ${
                       isSel
                         ? 'bg-[#50000D] text-[#FFF0DC] border-[#D6B77A]/40 shadow-xs'
                         : 'bg-[#FFF0DC]/60 text-[#21191A] border-[#D6B77A]/30 hover:border-[#790B13]'
