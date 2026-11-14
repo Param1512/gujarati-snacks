@@ -98,7 +98,7 @@ const Footer = () => {
                   rel="noopener noreferrer"
                   className="hover:text-[#D6B77A] transition-colors flex items-center gap-1 text-[#D6B77A] font-bold"
                 >
-                  <span>WhatsApp Concierge</span>
+                  <span>Chat on WhatsApp</span>
                   <ArrowUpRight className="w-3.5 h-3.5 text-[#D6B77A]" />
                 </a>
               </li>

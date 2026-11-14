@@ -18,7 +18,7 @@ const WhatsAppButton = () => {
       title="Chat on WhatsApp"
     >
       <MessageCircle className="w-4 h-4 text-[#D6B77A]" />
-      <span className="hidden sm:inline">WhatsApp Concierge</span>
+      <span className="hidden sm:inline">Chat on WhatsApp</span>
     </a>
   );
 };

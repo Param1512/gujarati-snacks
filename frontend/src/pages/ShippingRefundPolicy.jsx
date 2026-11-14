@@ -51,7 +51,7 @@ const ShippingRefundPolicy = () => {
               3. Fresh Food Return & Replacement Guarantee
             </h2>
             <p className="text-[#21191A]/70">
-              Because our snacks are freshly made food products prepared without chemical preservatives, we cannot accept returns once an individual packet has been opened. If you receive a damaged carton or compromised seal, please capture photographs and notify our WhatsApp concierge ({settings.phone}) within 24 hours of delivery. We will immediately dispatch a fresh replacement or process a refund.
+              Because our snacks are freshly made food products prepared without chemical preservatives, we cannot accept returns once an individual packet has been opened. If you receive a damaged carton or compromised seal, please capture photographs and notify our WhatsApp support team ({settings.phone}) within 24 hours of delivery. We will immediately dispatch a fresh replacement or process a refund.
             </p>
           </div>
         </div>

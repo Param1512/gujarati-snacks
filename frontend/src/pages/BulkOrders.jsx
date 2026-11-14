@@ -354,7 +354,7 @@ const BulkOrders = () => {
                 className="w-full sm:w-auto border border-[#D6B77A]/40 hover:border-[#790B13] bg-white text-[#21191A] text-xs font-mono uppercase tracking-widest px-8 py-4 rounded-full transition-colors flex items-center justify-center gap-2 shadow-sm hover:bg-[#FFF0DC]/40 cursor-pointer"
               >
                 <MessageCircle className="w-4 h-4 text-[#790B13]" />
-                <span>Direct Artisan Concierge</span>
+                <span>WhatsApp Our Kitchen</span>
               </a>
             </div>
           </form>

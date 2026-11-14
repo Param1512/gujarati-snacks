@@ -47,7 +47,7 @@ const PrivacyPolicy = () => {
             <ul className="list-disc pl-5 space-y-2 text-[#21191A]/70 font-sans">
               <li>Accurately prepare, pack, and dispatch your ordered snack packages.</li>
               <li>Provide WhatsApp and SMS notifications regarding kitchen frying status and courier dispatch.</li>
-              <li>Deliver personal customer concierge support for inquiries or special dietary requests.</li>
+              <li>Deliver personal customer support for inquiries or special dietary requests.</li>
             </ul>
           </div>
 

@@ -37,7 +37,7 @@ const ContactUs = () => {
         <div className="text-center max-w-2xl mx-auto space-y-4">
           <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFF0DC] border border-[#D6B77A]/40 text-[#790B13] text-xs font-mono uppercase tracking-widest shadow-xs">
             <Sparkles className="w-3.5 h-3.5 text-[#D6B77A]" />
-            <span>Direct Kitchen Concierge</span>
+            <span>Kitchen Customer Helpline</span>
             <span className="text-[#D6B77A]">✦ Rajkot Dispatch</span>
           </div>
           <h1 className="font-heading font-black text-3xl sm:text-5xl text-[#21191A] tracking-tight uppercase">
