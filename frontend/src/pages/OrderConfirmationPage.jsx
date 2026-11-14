@@ -365,7 +365,7 @@ const OrderConfirmationPage = () => {
           {/* Bottom Actions */}
           <div className="flex flex-col sm:flex-row items-center justify-between gap-4 pt-6 border-t border-[#D6B77A]/20">
             <a
-              href={`http://localhost:5000/api/orders/${orderData._id}/invoice`}
+              href={`${(import.meta.env.VITE_API_BASE_URL || '/api').replace(/\/api\/?$/, '')}/api/orders/${orderData._id}/invoice`}
               target="_blank"
               rel="noopener noreferrer"
               className="inline-flex items-center gap-2 text-xs font-mono font-bold uppercase text-[#50000D] hover:text-[#790B13] border border-[#D6B77A]/40 px-5 py-2.5 rounded-full hover:bg-[#FFF0DC] transition-colors"
