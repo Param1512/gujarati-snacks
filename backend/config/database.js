@@ -9,6 +9,10 @@ const connectDatabase = async () => {
   };
 
   try {
+    if (!process.env.MONGO_URI && (process.env.NODE_ENV === 'production' || process.env.RENDER)) {
+      console.warn('⚠️ [MongoDB] process.env.MONGO_URI is not set in Render Environment Variables!');
+    }
+
     const conn = await mongoose.connect(mongoURI, options);
     console.log(`[MongoDB] Connected successfully to host: ${conn.connection.host}, database: ${conn.connection.name}`);
     
@@ -27,7 +31,13 @@ const connectDatabase = async () => {
     return conn;
   } catch (error) {
     console.error(`[MongoDB] Initial connection error: ${error.message}`);
-    console.error('[MongoDB] Make sure MongoDB Community Server is installed and running on port 27017.');
+    if (!process.env.MONGO_URI) {
+      console.error('👉 ACTION REQUIRED ON RENDER:');
+      console.error('1. Go to your Render Dashboard -> Web Service -> "Environment" tab');
+      console.error('2. Add Environment Variable: MONGO_URI=<your MongoDB Atlas connection string>');
+    } else {
+      console.error('[MongoDB] Make sure your MongoDB host IP whitelist allows 0.0.0.0/0 (access from anywhere) on MongoDB Atlas.');
+    }
     throw error;
   }
 };
