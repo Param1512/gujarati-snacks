@@ -3,9 +3,9 @@
  */
 const generateInvoiceHtml = (order, settings) => {
   const store = settings || {
-    storeName: 'Giriraj Homemade Gujarati Snacks',
+    storeName: 'Gujarati Homemade Nasta & Snacks',
     phone: '+91 98250 12345',
-    email: 'orders@girirajnasta.com',
+    email: 'orders@gujaratinasta.com',
     address: {
       shopNo: 'Shop 4, Shreeji Complex',
       street: '150 Feet Ring Road',
@@ -146,7 +146,7 @@ const generateInvoiceHtml = (order, settings) => {
         </div>
 
         <div style="margin-top: 40px; border-top: 1px dashed #cbd5e1; padding-top: 16px; font-size: 12px; color: #64748b; text-align: center;">
-          <p>Thank you for choosing Giriraj Homemade Gujarati Snacks! Authentic taste made fresh in Rajkot.</p>
+          <p>Thank you for choosing Gujarati Homemade Nasta & Snacks! Authentic taste made fresh in Rajkot.</p>
           <p>For order queries, contact WhatsApp: ${store.phone} | This is a computer-generated invoice.</p>
         </div>
       </div>

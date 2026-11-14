@@ -58,7 +58,7 @@ exports.register = async (req, res, next) => {
       role: 'customer',
     });
 
-    sendTokenResponse(user, 201, res, 'Registration successful! Welcome to Giriraj Snacks.');
+    sendTokenResponse(user, 201, res, 'Registration successful! Welcome to Gujarati Nasta & Snacks.');
   } catch (error) {
     next(error);
   }

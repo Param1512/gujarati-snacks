@@ -24,7 +24,7 @@ const Footer = () => {
             <h2 className="font-editorial text-4xl sm:text-5xl md:text-6xl font-bold tracking-tight text-[#FFF0DC]">
               {language === 'gu' && settings.storeNameGujarati
                 ? settings.storeNameGujarati
-                : 'Giriraj'}
+                : (settings.storeName || 'Gujarati Nasta & Snacks')}
               <span className="text-[#D6B77A]">.</span>
             </h2>
             <p className="font-heading text-sm uppercase tracking-widest text-[#D6B77A] mt-2">
@@ -141,7 +141,7 @@ const Footer = () => {
               </div>
               <div className="flex items-center gap-2">
                 <Mail className="w-3.5 h-3.5 text-[#D6B77A] shrink-0" />
-                <span>{settings.storeEmail || 'orders@girirajsnacks.com'}</span>
+                <span>{settings.storeEmail || 'orders@gujaratinasta.com'}</span>
               </div>
             </div>
           </div>
@@ -149,7 +149,7 @@ const Footer = () => {
 
         {/* Bottom Copyright & Guarantee Badges */}
         <div className="pt-8 flex flex-col sm:flex-row items-center justify-between gap-4 text-xs text-[#FFF0DC]/60 font-sans">
-          <p>© {new Date().getFullYear()} Giriraj Homemade Gujarati Snacks. All rights reserved.</p>
+          <p>© {new Date().getFullYear()} Gujarati Homemade Nasta & Snacks. All rights reserved.</p>
           <div className="flex items-center gap-4 text-xs">
             <span className="text-[#D6B77A]">100% Pure Filtered Groundnut Oil</span>
             <span>•</span>

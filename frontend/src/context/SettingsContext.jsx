@@ -5,12 +5,12 @@ const SettingsContext = createContext();
 
 export const SettingsProvider = ({ children }) => {
   const [settings, setSettings] = useState({
-    storeName: 'Giriraj Homemade Gujarati Snacks',
-    storeNameGujarati: 'ગિરિરાજ હોમમેડ ગુજરાતી નાસ્તા',
+    storeName: 'Gujarati Homemade Nasta & Snacks',
+    storeNameGujarati: 'ગુજરાતી હોમમેડ નાસ્તા અને સ્નેક્સ',
     tagline: 'Authentic Kathiyawadi Namkeen, Made Fresh Daily With Pure Groundnut Oil',
     phone: '+91 98250 12345',
     whatsappNumber: '919825012345',
-    email: 'orders@girirajnasta.com',
+    email: 'orders@gujaratinasta.com',
     address: {
       shopNo: 'Shop 4, Shreeji Complex',
       street: '150 Feet Ring Road',
@@ -29,8 +29,8 @@ export const SettingsProvider = ({ children }) => {
     freeDeliveryThreshold: 999,
     supportedPincodes: ['360001', '360002', '360003', '360004', '360005'],
     socialLinks: {
-      instagram: 'https://instagram.com/girirajnasta',
-      facebook: 'https://facebook.com/girirajnasta',
+      instagram: 'https://instagram.com/gujaratinasta',
+      facebook: 'https://facebook.com/gujaratinasta',
     },
     policies: {},
   });

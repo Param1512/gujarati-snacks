@@ -116,7 +116,7 @@ export const CartProvider = ({ children }) => {
   // Generate WhatsApp cart message
   const getWhatsAppCartMessage = (phoneNumber = '919825012345') => {
     if (items.length === 0) return '';
-    let msg = `*Namaste Giriraj Homemade Gujarati Snacks!* 🥟\n\nI want to order the following fresh homemade snacks:\n\n`;
+    let msg = `*Namaste Gujarati Nasta & Snacks!* 🥟\n\nI want to order the following fresh homemade snacks:\n\n`;
     items.forEach((item, idx) => {
       msg += `${idx + 1}. *${item.name}* (${item.weightLabel}) x ${item.quantity} = ₹${item.itemSubtotal}\n`;
     });

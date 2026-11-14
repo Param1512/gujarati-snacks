@@ -453,10 +453,10 @@ const seedDatabase = async () => {
       console.log('[Seed] Created Welcome Coupon: SWAGAT10');
     }
 
-    const existingFlatCoupon = await Coupon.findOne({ code: 'GIRIRAJ50' });
+    const existingFlatCoupon = await Coupon.findOne({ code: 'NASTA50' });
     if (!existingFlatCoupon) {
       await Coupon.create({
-        code: 'GIRIRAJ50',
+        code: 'NASTA50',
         description: 'Flat ₹50 OFF on orders above ₹699',
         discountType: 'fixed',
         discountValue: 50,
@@ -465,14 +465,14 @@ const seedDatabase = async () => {
         usageLimit: 500,
         isActive: true,
       });
-      console.log('[Seed] Created Flat Coupon: GIRIRAJ50');
+      console.log('[Seed] Created Flat Coupon: NASTA50');
     }
 
     // 6. Ensure Business Settings exist
     let settings = await BusinessSettings.findOne();
     if (!settings) {
       settings = await BusinessSettings.create({});
-      console.log('[Seed] Initialized Business Settings for Giriraj Homemade Gujarati Snacks');
+      console.log('[Seed] Initialized Business Settings for Gujarati Homemade Nasta & Snacks');
     }
 
     console.log('[Seed] ✅ Database seeding completed successfully! All 10 snacks and categories are in MongoDB.');

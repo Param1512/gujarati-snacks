@@ -56,7 +56,7 @@ const AdminLayout = () => {
             </span>
           </div>
           <div className="font-heading font-black text-xl tracking-tight text-white group-hover:text-[#D6B77A] transition-colors flex items-center gap-2">
-            <span className="uppercase">Giriraj Executive</span>
+            <span className="uppercase">Gujarati Nasta Executive</span>
             <span className="font-serif italic text-base text-[#D6B77A]">✦</span>
           </div>
           <div className="text-[11px] text-[#FFF0DC]/60 font-sans mt-0.5">
@@ -130,10 +130,10 @@ const AdminLayout = () => {
 
         <div className="text-center">
           <div className="font-heading font-black text-sm uppercase tracking-wider text-white">
-            Giriraj Executive
+            Gujarati Nasta
           </div>
           <div className="text-[9px] font-mono text-[#D6B77A] uppercase tracking-widest">
-            Kitchen Console
+            Executive Console
           </div>
         </div>
 

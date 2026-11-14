@@ -12,13 +12,13 @@ const businessSettingsSchema = new mongoose.Schema(
   {
     storeName: {
       type: String,
-      default: 'Giriraj Homemade Gujarati Snacks',
+      default: 'Gujarati Homemade Nasta & Snacks',
       required: true,
       trim: true,
     },
     storeNameGujarati: {
       type: String,
-      default: 'ગિરિરાજ હોમમેડ ગુજરાતી નાસ્તા',
+      default: 'ગુજરાતી હોમમેડ નાસ્તા અને સ્નેક્સ',
       trim: true,
     },
     tagline: {
@@ -39,7 +39,7 @@ const businessSettingsSchema = new mongoose.Schema(
     },
     email: {
       type: String,
-      default: 'orders@girirajnasta.com',
+      default: 'orders@gujaratinasta.com',
     },
     address: {
       shopNo: { type: String, default: 'Shop 4, Shreeji Complex' },
@@ -96,8 +96,8 @@ const businessSettingsSchema = new mongoose.Schema(
       ],
     },
     socialLinks: {
-      instagram: { type: String, default: 'https://instagram.com/girirajnasta' },
-      facebook: { type: String, default: 'https://facebook.com/girirajnasta' },
+      instagram: { type: String, default: 'https://instagram.com/gujaratinasta' },
+      facebook: { type: String, default: 'https://facebook.com/gujaratinasta' },
       youtube: { type: String, default: '' },
     },
     policies: {
@@ -119,7 +119,7 @@ const businessSettingsSchema = new mongoose.Schema(
       aboutUs: {
         type: String,
         default:
-          'Giriraj Homemade Gujarati Snacks started in our family kitchen in Rajkot with a commitment to pure taste, genuine spices, pure sing-tel (groundnut oil), and zero artificial preservatives. Every batch of Gathiya, Chevdo, Chakdi, and Sev is hand-crafted following time-tested ancestral recipes.',
+          'Gujarati Homemade Nasta & Snacks started in our family kitchen in Rajkot with a commitment to pure taste, genuine spices, pure sing-tel (groundnut oil), and zero artificial preservatives. Every batch of Gathiya, Chevdo, Chakdi, and Sev is hand-crafted following time-tested ancestral recipes.',
       },
       faq: {
         type: [faqSchema],

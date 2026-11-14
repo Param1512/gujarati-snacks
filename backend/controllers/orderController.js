@@ -469,7 +469,7 @@ exports.updateOrderStatus = async (req, res, next) => {
     }
 
     const statusDescriptions = {
-      confirmed: 'Order has been confirmed by Giriraj Snacks team.',
+      confirmed: 'Order has been confirmed by Gujarati Nasta & Snacks team.',
       preparing: 'Fresh snacks are being prepared and kitchen quality checks are in progress.',
       packed: 'Snacks have been vacuum sealed and packed in hygienic food-grade pouches.',
       dispatched: 'Parcel has been dispatched via local courier / delivery executive.',

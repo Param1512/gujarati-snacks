@@ -54,7 +54,7 @@ const Register = () => {
             Create an <span className="font-serif italic font-normal lowercase text-[#790B13]">account</span>
           </h1>
           <p className="text-xs text-[#21191A]/70 font-sans leading-relaxed">
-            Join Giriraj Snacks for fresh homemade namkeen delivered directly to your doorstep.
+            Join Gujarati Nasta & Snacks for fresh homemade namkeen delivered directly to your doorstep.
           </p>
         </div>
 

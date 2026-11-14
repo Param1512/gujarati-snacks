@@ -65,14 +65,14 @@ const Navbar = () => {
           {/* Brand Identity / Premium Emblem */}
           <Link to="/" className="flex items-center gap-2 sm:gap-3 shrink-0 group">
             <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-[#790B13] to-[#50000D] text-[#FFF0DC] border border-[#D6B77A]/40 flex items-center justify-center font-heading font-bold text-base sm:text-xl shadow-md group-hover:scale-105 transition-all">
-              <span className="font-gujarati text-base sm:text-lg leading-none font-bold text-[#D6B77A]">ગી</span>
+              <span className="font-gujarati text-base sm:text-lg leading-none font-bold text-[#D6B77A]">ગુ</span>
             </div>
             <div>
               <div className="font-heading font-black text-lg sm:text-2xl tracking-tight text-[#50000D] flex items-center gap-1.5 leading-none">
                 <span>
                   {language === 'gu' && settings.storeNameGujarati
                     ? settings.storeNameGujarati
-                    : 'Giriraj'}
+                    : (settings.storeName || 'Gujarati Nasta & Snacks')}
                 </span>
                 <span className="w-1.5 h-1.5 rounded-full bg-[#D6B77A]" />
               </div>
@@ -292,12 +292,12 @@ const Navbar = () => {
               <div className="p-5 flex items-center justify-between border-b border-[#D6B77A]/25 bg-[#FFF0DC]/50">
                 <div className="flex items-center gap-2.5">
                   <div className="w-8 h-8 rounded-lg bg-[#50000D] text-[#D6B77A] flex items-center justify-center font-gujarati font-bold text-sm border border-[#D6B77A]/40">
-                    ગી
+                    ગુ
                   </div>
                   <span className="font-heading font-black text-lg text-[#50000D] tracking-tight">
                     {language === 'gu' && settings.storeNameGujarati
                       ? settings.storeNameGujarati
-                      : 'Giriraj'}
+                      : (settings.storeName || 'Gujarati Nasta & Snacks')}
                   </span>
                 </div>
                 <button

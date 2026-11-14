@@ -494,7 +494,7 @@ const Home = () => {
             Uncompromising Standards
           </span>
           <h2 className="font-editorial text-3xl sm:text-4xl text-[#50000D] font-bold">
-            The Giriraj Promise
+            Our Homemade Quality Promise
           </h2>
           <p className="text-xs sm:text-sm text-[#21191A]/70">
             Every bite carries the integrity of traditional Gujarati craftsmanship.
@@ -568,7 +568,7 @@ const Home = () => {
                 ))}
               </div>
               <p className="text-xs sm:text-sm text-[#21191A]/80 italic leading-relaxed font-editorial">
-                "Finding authentic Kathiyawadi Tikha Gathiya made in pure Sing-Tel outside Rajkot was impossible until I ordered from Giriraj. The crunch and pepper heat are extraordinary."
+                "Finding authentic Kathiyawadi Tikha Gathiya made in pure Sing-Tel outside Rajkot was impossible until I ordered from Gujarati Nasta. The crunch and pepper heat are extraordinary."
               </p>
             </div>
             <div className="border-t border-[#D6B77A]/20 pt-4">
@@ -602,7 +602,7 @@ const Home = () => {
                 ))}
               </div>
               <p className="text-xs sm:text-sm text-[#21191A]/80 italic leading-relaxed font-editorial">
-                "Ordered the 2kg family pack of Chakdi and Methi Chatpati. Arrived in pristine condition with aroma-lock seals. Extraordinary taste and prompt delivery!"
+                "Ordered the 2kg family pack of Chakdi and Methi Chatpati. Arrived in pristine condition with freshness-locked airtight seals. Extraordinary taste and prompt delivery!"
               </p>
             </div>
             <div className="border-t border-[#D6B77A]/20 pt-4">

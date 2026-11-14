@@ -29,8 +29,8 @@ const AnnouncementBar = () => {
         {/* Right Side: Morning Frying Batch & Language Switcher */}
         <div className="flex items-center gap-4">
           <div className="hidden md:flex items-center gap-2 text-[11px] text-[#D6B77A] font-medium">
-            <span className="w-1.5 h-1.5 rounded-full bg-[#D6B77A] animate-pulse" />
-            <span className="tracking-wide">Fresh Morning Batch: Fried in Rajkot</span>
+            <span className="w-1.5 h-1.5 rounded-full bg-[#D6B77A]" />
+            <span className="tracking-wide">Authentic Kathiyawadi Taste • Rajkot, Gujarat</span>
           </div>
 
           <div className="flex items-center gap-1 border-l border-[#D6B77A]/20 pl-3">

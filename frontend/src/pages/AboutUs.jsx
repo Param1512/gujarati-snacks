@@ -36,7 +36,7 @@ const AboutUs = () => {
             </div>
             <p>
               {settings.policies?.aboutUs ||
-                'Giriraj Homemade Gujarati Snacks began in our family kitchen in Rajkot with an uncompromising commitment to authentic taste, hand-selected spices, pure sing-tel (groundnut oil), and zero artificial preservatives. Every batch of Gathiya, Chevdo, Chakdi, and Sev is hand-crafted following time-tested ancestral recipes.'}
+                'Gujarati Homemade Nasta & Snacks began in our family kitchen in Rajkot with an uncompromising commitment to authentic taste, hand-selected spices, pure sing-tel (groundnut oil), and zero artificial preservatives. Every batch of Gathiya, Chevdo, Chakdi, and Sev is hand-crafted following time-tested ancestral recipes.'}
             </p>
             <p>
               Unlike commercial factories that dilute batches with low-grade palm oil and synthetic aromatics, we hold that authentic Gujarati farsan acquires its delicate crispness and signature aroma exclusively from 100% pure filtered Saurashtra groundnut oil.

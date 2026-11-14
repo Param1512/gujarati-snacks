@@ -20,8 +20,8 @@ const createFirstAdmin = async () => {
       }
     });
 
-    const adminEmail = (parsedArgs.email || process.env.ADMIN_EMAIL || 'admin@girirajnasta.com').toLowerCase();
-    const adminName = parsedArgs.name || process.env.ADMIN_NAME || 'Giriraj Store Admin';
+    const adminEmail = (parsedArgs.email || process.env.ADMIN_EMAIL || 'admin@gujaratinasta.com').toLowerCase();
+    const adminName = parsedArgs.name || process.env.ADMIN_NAME || 'Gujarati Nasta Store Admin';
     const adminPhone = parsedArgs.phone || process.env.ADMIN_PHONE || '+91 98250 12345';
     // Generate secure random password if not supplied
     const generatedPassword = crypto.randomBytes(8).toString('base64').replace(/[^a-zA-Z0-9]/g, 'X') + '!9G';
@@ -52,7 +52,7 @@ const createFirstAdmin = async () => {
       console.log(` Email    : ${admin.email}`);
       console.log(` Password : ${adminPassword}`);
       console.log(` Role     : ${admin.role}`);
-      console.log(` Store    : Giriraj Homemade Gujarati Snacks`);
+      console.log(` Store    : Gujarati Homemade Nasta & Snacks`);
       console.log(`======================================================\n`);
     }
 
