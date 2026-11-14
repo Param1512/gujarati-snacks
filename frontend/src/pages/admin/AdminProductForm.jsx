@@ -105,36 +105,36 @@ const AdminProductForm = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8 text-[#000000]">
+    <div className="max-w-4xl mx-auto space-y-8 text-[#21191A] font-sans">
       {/* Editorial Top Bar */}
-      <div className="border-b border-[#EAE3D9] pb-6 flex items-center justify-between">
+      <div className="border-b border-[#D6B77A]/20 pb-6 flex items-center justify-between">
         <Link
           to="/admin/products"
-          className="text-xs font-bold uppercase tracking-wider text-[#000000] hover:text-[#C84B20] flex items-center gap-2 transition-colors"
+          className="text-xs font-mono uppercase tracking-widest text-[#790B13] hover:underline flex items-center gap-2 font-bold"
         >
-          <ArrowLeft className="w-4 h-4" /> Return to Catalog
+          <ArrowLeft className="w-4 h-4 text-[#D6B77A]" /> Return to Catalog
         </Link>
-        <span className="text-xs font-mono text-[#555555]">
+        <span className="text-xs font-mono text-[#21191A]/50">
           {isEditMode ? 'EDIT_MODE // PRODUCT_RECORD' : 'CREATE_MODE // NEW_SNACK'}
         </span>
       </div>
 
-      <div className="bg-white p-6 sm:p-12 rounded-3xl border border-[#EAE3D9] shadow-sm space-y-8">
+      <div className="bg-white p-6 sm:p-12 rounded-3xl border border-[#D6B77A]/30 shadow-xl space-y-8">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#14382B] text-[#000000] text-xs font-bold mb-2 shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-[#C84B20]" />
-            <span>Master Recipe Entry</span>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF0DC] border border-[#D6B77A]/40 text-[#790B13] text-xs font-mono uppercase tracking-widest mb-2 shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#D6B77A]" />
+            <span>Master Recipe Record</span>
           </div>
-          <h1 className="font-heading font-black text-2xl sm:text-3xl text-[#000000] tracking-tight">
+          <h1 className="font-heading font-black text-2xl sm:text-4xl text-[#21191A] uppercase tracking-tight">
             {isEditMode ? `Edit ${name}` : 'Register New Gujarati Snack'}
           </h1>
-          <p className="text-xs sm:text-sm text-[#555555] font-sans mt-1">
+          <p className="text-xs sm:text-sm text-[#21191A]/70 font-sans mt-1">
             Define pricing on a strict per-kilogram base. The checkout engine computes gram-for-gram prices dynamically.
           </p>
         </div>
 
         {errorMessage && (
-          <div className="p-4 bg-[#C84B20]/10 text-[#C84B20] text-xs rounded-2xl border border-[#C84B20]/20 font-sans font-medium">
+          <div className="p-4 bg-rose-50 text-rose-800 text-xs font-mono rounded-2xl border border-rose-200">
             {errorMessage}
           </div>
         )}
@@ -142,7 +142,7 @@ const AdminProductForm = () => {
         <form onSubmit={handleSubmit} className="space-y-6 text-xs sm:text-sm font-sans">
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Snack Name (English) *
               </label>
               <input
@@ -151,12 +151,12 @@ const AdminProductForm = () => {
                 value={name}
                 onChange={(e) => setName(e.target.value)}
                 placeholder="e.g. Tikha Gathiya"
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Snack Name (Gujarati script)
               </label>
               <input
@@ -164,21 +164,21 @@ const AdminProductForm = () => {
                 value={nameGujarati}
                 onChange={(e) => setNameGujarati(e.target.value)}
                 placeholder="e.g. તીખા ગાંઠીયા"
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#000000] font-gujarati focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs sm:text-sm text-[#21191A] font-gujarati focus:outline-none focus:border-[#790B13]"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Category *
               </label>
               <select
                 required
                 value={category}
                 onChange={(e) => setCategory(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] cursor-pointer"
               >
                 {categories.map((c) => (
                   <option key={c._id} value={c._id}>
@@ -189,7 +189,7 @@ const AdminProductForm = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Price Per Kilogram (₹/kg) *
               </label>
               <input
@@ -199,40 +199,40 @@ const AdminProductForm = () => {
                 value={pricePerKg}
                 onChange={(e) => setPricePerKg(e.target.value)}
                 placeholder="e.g. 500"
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm font-mono font-bold text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs sm:text-sm font-mono font-bold text-[#790B13] focus:outline-none focus:border-[#790B13]"
               />
             </div>
           </div>
 
           {/* Dynamic Price Preview helper */}
           {pricePerKg && (
-            <div className="bg-[#FAF7F2] p-5 rounded-2xl border border-[#EAE3D9] space-y-2">
-              <span className="text-xs font-semibold uppercase tracking-wider text-[#555555] block">
-                Calculated Customer Unit Packs:
+            <div className="bg-[#FFF0DC] p-5 rounded-2xl border border-[#D6B77A]/40 space-y-2">
+              <span className="text-xs font-mono uppercase tracking-wider text-[#790B13] font-bold block">
+                Calculated Patron Weight Tiers:
               </span>
-              <div className="grid grid-cols-4 gap-3 text-center text-xs">
-                <div className="bg-white p-3 rounded-xl border border-[#EAE3D9]">
-                  <span className="text-[#555555] block font-mono text-xs">250g</span>
-                  <span className="font-heading font-black text-[#000000]">₹{Math.round((pricePerKg * 250) / 1000)}</span>
+              <div className="grid grid-cols-4 gap-3 text-center text-xs font-mono">
+                <div className="bg-white p-3 rounded-xl border border-[#D6B77A]/30">
+                  <span className="text-[#21191A]/60 block text-xs">250g</span>
+                  <span className="font-heading font-black text-sm text-[#790B13]">₹{Math.round((pricePerKg * 250) / 1000)}</span>
                 </div>
-                <div className="bg-white p-3 rounded-xl border border-[#EAE3D9]">
-                  <span className="text-[#555555] block font-mono text-xs">500g</span>
-                  <span className="font-heading font-black text-[#000000]">₹{Math.round((pricePerKg * 500) / 1000)}</span>
+                <div className="bg-white p-3 rounded-xl border border-[#D6B77A]/30">
+                  <span className="text-[#21191A]/60 block text-xs">500g</span>
+                  <span className="font-heading font-black text-sm text-[#790B13]">₹{Math.round((pricePerKg * 500) / 1000)}</span>
                 </div>
-                <div className="bg-white p-3 rounded-xl border border-[#EAE3D9]">
-                  <span className="text-[#555555] block font-mono text-xs">1kg</span>
-                  <span className="font-heading font-black text-[#000000]">₹{Math.round(pricePerKg)}</span>
+                <div className="bg-white p-3 rounded-xl border border-[#D6B77A]/30">
+                  <span className="text-[#21191A]/60 block text-xs">1kg</span>
+                  <span className="font-heading font-black text-sm text-[#790B13]">₹{Math.round(pricePerKg)}</span>
                 </div>
-                <div className="bg-white p-3 rounded-xl border border-[#EAE3D9]">
-                  <span className="text-[#555555] block font-mono text-xs">2kg</span>
-                  <span className="font-heading font-black text-[#000000]">₹{Math.round(pricePerKg * 2)}</span>
+                <div className="bg-white p-3 rounded-xl border border-[#D6B77A]/30">
+                  <span className="text-[#21191A]/60 block text-xs">2kg</span>
+                  <span className="font-heading font-black text-sm text-[#790B13]">₹{Math.round(pricePerKg * 2)}</span>
                 </div>
               </div>
             </div>
           )}
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+            <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
               Description & Tasting Notes *
             </label>
             <textarea
@@ -241,12 +241,12 @@ const AdminProductForm = () => {
               value={description}
               onChange={(e) => setDescription(e.target.value)}
               placeholder="Describe taste profile, sing-tel frying, hing balance, and texture..."
-              className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000]"
+              className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl p-4 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13]"
             />
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+            <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
               Image URL *
             </label>
             <input
@@ -255,14 +255,14 @@ const AdminProductForm = () => {
               value={imageUrl}
               onChange={(e) => setImageUrl(e.target.value)}
               placeholder="/images/snacks/tikha-gathiya.jpg or https://..."
-              className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs font-mono text-[#000000] focus:outline-none focus:border-[#000000]"
+              className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs font-mono text-[#21191A] focus:outline-none focus:border-[#790B13]"
             />
           </div>
 
           {!isEditMode && (
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-2 border-t border-[#EAE3D9]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-3 border-t border-[#D6B77A]/20">
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+                <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                   Initial Stock (Grams) *
                 </label>
                 <input
@@ -272,12 +272,12 @@ const AdminProductForm = () => {
                   value={initialStockGrams}
                   onChange={(e) => setInitialStockGrams(e.target.value)}
                   placeholder="15000 (15 kg)"
-                  className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs font-mono text-[#000000] focus:outline-none focus:border-[#000000]"
+                  className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs font-mono text-[#21191A] focus:outline-none focus:border-[#790B13]"
                 />
               </div>
 
               <div>
-                <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+                <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                   Low Stock Threshold (Grams)
                 </label>
                 <input
@@ -285,7 +285,7 @@ const AdminProductForm = () => {
                   value={lowStockThresholdGrams}
                   onChange={(e) => setLowStockThresholdGrams(e.target.value)}
                   placeholder="2000 (2 kg)"
-                  className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs font-mono text-[#000000] focus:outline-none focus:border-[#000000]"
+                  className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs font-mono text-[#21191A] focus:outline-none focus:border-[#790B13]"
                 />
               </div>
             </div>
@@ -293,7 +293,7 @@ const AdminProductForm = () => {
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Shelf Life
               </label>
               <input
@@ -301,12 +301,12 @@ const AdminProductForm = () => {
                 value={shelfLife}
                 onChange={(e) => setShelfLife(e.target.value)}
                 placeholder="60 days from packaging"
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Storage Instructions
               </label>
               <input
@@ -314,56 +314,56 @@ const AdminProductForm = () => {
                 value={storageInstructions}
                 onChange={(e) => setStorageInstructions(e.target.value)}
                 placeholder="Store in an airtight container..."
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
           </div>
 
-          <div className="flex flex-wrap gap-6 pt-4 border-t border-[#EAE3D9]">
-            <label className="flex items-center gap-2 cursor-pointer text-xs font-bold">
+          <div className="flex flex-wrap gap-6 pt-4 border-t border-[#D6B77A]/20">
+            <label className="flex items-center gap-2.5 cursor-pointer text-xs font-mono uppercase tracking-wider text-[#21191A] font-bold">
               <input
                 type="checkbox"
                 checked={isBestseller}
                 onChange={(e) => setIsBestseller(e.target.checked)}
-                className="accent-[#000000] w-4 h-4 rounded"
+                className="accent-[#790B13] w-4 h-4 rounded"
               />
-              <span className="uppercase tracking-wider text-[#000000]">Mark as Bestseller</span>
+              <span>Mark as Bestseller</span>
             </label>
 
-            <label className="flex items-center gap-2 cursor-pointer text-xs font-bold">
+            <label className="flex items-center gap-2.5 cursor-pointer text-xs font-mono uppercase tracking-wider text-[#21191A] font-bold">
               <input
                 type="checkbox"
                 checked={isFeatured}
                 onChange={(e) => setIsFeatured(e.target.checked)}
-                className="accent-[#000000] w-4 h-4 rounded"
+                className="accent-[#790B13] w-4 h-4 rounded"
               />
-              <span className="uppercase tracking-wider text-[#000000]">Feature on Homepage</span>
+              <span>Feature on Homepage</span>
             </label>
 
-            <label className="flex items-center gap-2 cursor-pointer text-xs font-bold">
+            <label className="flex items-center gap-2.5 cursor-pointer text-xs font-mono uppercase tracking-wider text-[#21191A] font-bold">
               <input
                 type="checkbox"
                 checked={isActive}
                 onChange={(e) => setIsActive(e.target.checked)}
-                className="accent-[#000000] w-4 h-4 rounded"
+                className="accent-[#790B13] w-4 h-4 rounded"
               />
-              <span className="uppercase tracking-wider text-[#000000]">Active / Open for Sale</span>
+              <span>Active / Open for Sale</span>
             </label>
           </div>
 
-          <div className="flex gap-4 pt-4 border-t border-[#EAE3D9]">
+          <div className="flex gap-4 pt-4 border-t border-[#D6B77A]/20">
             <button
               type="submit"
               disabled={loading}
-              className="bg-[#C84B20] hover:bg-[#A33A16] text-white px-8 py-3 rounded-full font-bold text-xs uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-colors shadow-sm disabled:opacity-50"
+              className="bg-[#790B13] hover:bg-[#50000D] text-[#FFF0DC] px-8 py-3.5 rounded-full font-mono uppercase tracking-widest font-bold text-xs flex items-center gap-2 cursor-pointer transition-all shadow-lg shadow-[#790B13]/25 disabled:opacity-50"
             >
-              <Save className="w-4 h-4" />
+              <Save className="w-4 h-4 text-[#D6B77A]" />
               <span>{loading ? 'Saving...' : 'Commit Product Record'}</span>
             </button>
             <button
               type="button"
               onClick={() => navigate('/admin/products')}
-              className="px-6 py-3 rounded-full border border-[#EAE3D9] font-bold text-xs uppercase tracking-wider text-[#555555] hover:text-[#000000] hover:border-[#000000] transition-colors cursor-pointer"
+              className="px-6 py-3.5 rounded-full border border-[#D6B77A]/40 font-mono uppercase tracking-wider font-bold text-xs text-[#21191A]/70 hover:text-[#790B13] hover:border-[#790B13] transition-colors cursor-pointer"
             >
               Cancel
             </button>

@@ -17,7 +17,7 @@ const ContactUs = () => {
   const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [phone, setPhone] = useState('');
-  const [subject, setSubject] = useState('Snack Enquiry');
+  const [subject, setSubject] = useState('Snack Commission');
   const [message, setMessage] = useState('');
   const [sent, setSent] = useState(false);
 
@@ -31,139 +31,141 @@ const ContactUs = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2] py-12 sm:py-16 text-[#000000]">
+    <div className="min-h-screen bg-[#FFF9F2] py-12 sm:py-20 text-[#21191A] font-sans selection:bg-[#790B13] selection:text-white">
       <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        {/* Header */}
-        <div className="text-center max-w-2xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#14382B] text-[#000000] text-xs font-bold shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-[#C84B20]" />
-            <span>Direct Inquiries & Kitchen Counter</span>
-            <span className="font-script text-base text-[#C84B20]">Always Fresh ✨</span>
+        {/* Editorial Header */}
+        <div className="text-center max-w-2xl mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFF0DC] border border-[#D6B77A]/40 text-[#790B13] text-xs font-mono uppercase tracking-widest shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#D6B77A]" />
+            <span>Direct Kitchen Concierge</span>
+            <span className="text-[#D6B77A]">✦ Rajkot Dispatch</span>
           </div>
-          <h1 className="font-heading font-black text-3xl sm:text-5xl text-[#000000] tracking-tight">
-            Contact Rajkot Kitchen
+          <h1 className="font-heading font-black text-3xl sm:text-5xl text-[#21191A] tracking-tight uppercase">
+            Contact Rajkot <span className="font-serif italic font-normal lowercase text-[#790B13]">kitchen</span>
           </h1>
-          <p className="text-sm sm:text-base text-[#555555] font-sans leading-relaxed">
-            Have questions about ingredients, custom spice balances, wedding parcels, or doorstep dispatch to your pincode? We are always here to assist.
+          <p className="text-sm sm:text-base text-[#21191A]/70 font-sans leading-relaxed">
+            Inquiries regarding ingredients, custom spice adjustments, wedding commissions, or express doorstep dispatch to your pincode. We are honoured to assist.
           </p>
         </div>
 
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           {/* Contact Information Card */}
-          <div className="lg:col-span-5 bg-[#000000] text-white p-8 sm:p-10 rounded-3xl shadow-xl space-y-8">
+          <div className="lg:col-span-5 bg-[#3A000A] text-[#FFF0DC] p-8 sm:p-10 rounded-3xl shadow-2xl space-y-8 border border-[#D6B77A]/30">
             <div>
-              <span className="inline-block text-xs font-bold uppercase tracking-wider text-[#D89B2B] mb-2">
-                Workshop & Dispatch Desk
+              <span className="inline-block text-xs font-mono uppercase tracking-widest text-[#D6B77A] font-bold mb-2">
+                Heritage Workshop & Atelier
               </span>
-              <h2 className="font-heading font-black text-2xl sm:text-3xl text-white tracking-tight">
+              <h2 className="font-heading font-black text-2xl sm:text-3xl text-[#FFF0DC] tracking-tight uppercase">
                 {settings.storeName}
               </h2>
-              <p className="text-xs sm:text-sm text-white/80 mt-1 font-sans">
+              <p className="text-xs sm:text-sm text-[#FFF0DC]/70 mt-1 font-sans">
                 Authentic Homemade Gujarati Namkeen & Farsan
               </p>
             </div>
 
-            <div className="space-y-5 text-xs sm:text-sm divide-y divide-white/10 pt-2">
-              <div className="pt-4 first:pt-0 flex items-start gap-3.5">
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                  <MapPin className="w-4 h-4 text-[#D89B2B]" />
+            <div className="space-y-6 text-xs sm:text-sm divide-y divide-[#D6B77A]/15 pt-2">
+              <div className="pt-4 first:pt-0 flex items-start gap-4">
+                <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-[#D6B77A]/30">
+                  <MapPin className="w-4 h-4 text-[#D6B77A]" />
                 </div>
                 <div className="leading-relaxed">
-                  <span className="block text-[11px] font-bold uppercase tracking-wider text-[#D89B2B] mb-0.5">Physical Kitchen</span>
-                  {settings.address?.shopNo}, {settings.address?.street},<br />
-                  {settings.address?.area}, {settings.address?.city}, {settings.address?.state} - {settings.address?.pincode}
+                  <span className="block text-[11px] font-mono uppercase tracking-wider text-[#D6B77A] font-bold mb-1">Culinary Workshop</span>
+                  <span className="text-[#FFF0DC]/80">
+                    {settings.address?.shopNo}, {settings.address?.street},<br />
+                    {settings.address?.area}, {settings.address?.city}, {settings.address?.state} - {settings.address?.pincode}
+                  </span>
                 </div>
               </div>
 
-              <div className="pt-4 flex items-start gap-3.5">
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                  <Phone className="w-4 h-4 text-[#D89B2B]" />
+              <div className="pt-4 flex items-start gap-4">
+                <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-[#D6B77A]/30">
+                  <Phone className="w-4 h-4 text-[#D6B77A]" />
                 </div>
                 <div>
-                  <span className="block text-[11px] font-bold uppercase tracking-wider text-[#D89B2B] mb-0.5">Kitchen Helpline</span>
-                  <a href={`tel:${settings.phone}`} className="hover:text-[#D89B2B] font-bold text-white transition-colors">
+                  <span className="block text-[11px] font-mono uppercase tracking-wider text-[#D6B77A] font-bold mb-1">Direct Telephone</span>
+                  <a href={`tel:${settings.phone}`} className="hover:text-[#D6B77A] font-mono font-bold text-[#FFF0DC] transition-colors">
                     {settings.phone}
                   </a>
                 </div>
               </div>
 
-              <div className="pt-4 flex items-start gap-3.5">
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                  <Mail className="w-4 h-4 text-[#D89B2B]" />
+              <div className="pt-4 flex items-start gap-4">
+                <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-[#D6B77A]/30">
+                  <Mail className="w-4 h-4 text-[#D6B77A]" />
                 </div>
                 <div>
-                  <span className="block text-[11px] font-bold uppercase tracking-wider text-[#D89B2B] mb-0.5">Direct Email</span>
-                  <a href={`mailto:${settings.email}`} className="hover:text-[#D89B2B] text-white transition-colors">
+                  <span className="block text-[11px] font-mono uppercase tracking-wider text-[#D6B77A] font-bold mb-1">Electronic Dispatch</span>
+                  <a href={`mailto:${settings.email}`} className="hover:text-[#D6B77A] text-[#FFF0DC] transition-colors">
                     {settings.email}
                   </a>
                 </div>
               </div>
 
-              <div className="pt-4 flex items-start gap-3.5">
-                <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center shrink-0">
-                  <Clock className="w-4 h-4 text-[#D89B2B]" />
+              <div className="pt-4 flex items-start gap-4">
+                <div className="w-9 h-9 rounded-full bg-white/10 flex items-center justify-center shrink-0 border border-[#D6B77A]/30">
+                  <Clock className="w-4 h-4 text-[#D6B77A]" />
                 </div>
                 <div>
-                  <span className="block text-[11px] font-bold uppercase tracking-wider text-[#D89B2B] mb-0.5">Frying & Counter Hours</span>
-                  <span>Monday to Sunday: 08:00 – 21:00 IST</span>
+                  <span className="block text-[11px] font-mono uppercase tracking-wider text-[#D6B77A] font-bold mb-1">Frying & Counter Schedule</span>
+                  <span className="text-[#FFF0DC]/80">Monday through Sunday: 08:00 – 21:00 IST</span>
                 </div>
               </div>
             </div>
 
-            <div className="pt-4 border-t border-white/10">
+            <div className="pt-4 border-t border-[#D6B77A]/20">
               <a
                 href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(
                   'Namaste! I would like to inquire about your homemade Gujarati snacks.'
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full bg-[#C84B20] hover:bg-[#A33A16] text-white py-3.5 px-6 rounded-full font-bold text-xs sm:text-sm flex items-center justify-between transition-all shadow-md shadow-[#C84B20]/25 active:scale-98 cursor-pointer"
+                className="w-full bg-[#790B13] hover:bg-[#50000D] text-[#FFF0DC] py-4 px-6 rounded-full font-mono uppercase tracking-widest font-bold text-xs flex items-center justify-between transition-all shadow-lg shadow-[#790B13]/30 active:scale-98 cursor-pointer border border-[#D6B77A]/40 group"
               >
                 <span className="flex items-center gap-2">
-                  <MessageCircle className="w-4 h-4 text-white" />
+                  <MessageCircle className="w-4 h-4 text-[#D6B77A]" />
                   Direct WhatsApp Inquiry
                 </span>
-                <ArrowRight className="w-4 h-4" />
+                <ArrowRight className="w-4 h-4 text-[#D6B77A] group-hover:translate-x-1 transition-transform" />
               </a>
             </div>
           </div>
 
           {/* Message Form Card */}
-          <div className="lg:col-span-7 bg-white p-8 sm:p-10 rounded-3xl border border-[#EAE3D9] shadow-sm space-y-6">
-            <div className="space-y-1">
-              <span className="font-script text-xl text-[#C84B20]">Drop us a note ⤵</span>
-              <h2 className="font-heading font-black text-2xl text-[#000000]">
-                Send a Message
+          <div className="lg:col-span-7 bg-white p-8 sm:p-12 rounded-3xl border border-[#D6B77A]/30 shadow-xl space-y-6">
+            <div className="space-y-2 border-b border-[#D6B77A]/20 pb-4">
+              <span className="font-mono text-xs uppercase tracking-widest text-[#790B13] font-bold">Inquiry Submission</span>
+              <h2 className="font-heading font-black text-2xl uppercase tracking-tight text-[#21191A]">
+                Dispatch a Message
               </h2>
-              <p className="text-xs sm:text-sm text-[#555555] font-sans">
-                Leave your details below. A kitchen coordinator will respond within 4 working hours.
+              <p className="text-xs sm:text-sm text-[#21191A]/70 font-sans">
+                Leave your specifications below. An artisan coordinator will respond within 4 working hours.
               </p>
             </div>
 
             {sent ? (
-              <div className="p-8 sm:p-10 text-center bg-[#EBF4EF] rounded-2xl border border-[#14382B]/60 space-y-3">
-                <CheckCircle2 className="w-12 h-12 text-[#000000] mx-auto" />
-                <h3 className="font-heading font-bold text-lg text-[#000000]">
-                  Message Dispatched Successfully!
+              <div className="p-8 sm:p-12 text-center bg-[#FFF0DC] rounded-2xl border border-[#D6B77A]/40 space-y-4">
+                <CheckCircle2 className="w-14 h-14 text-[#790B13] mx-auto" />
+                <h3 className="font-heading font-black text-xl text-[#21191A] uppercase tracking-tight">
+                  Message Dispatched with Honour!
                 </h3>
-                <p className="text-xs sm:text-sm text-[#555555] font-sans max-w-sm mx-auto">
-                  Thank you for reaching out. Our family kitchen representative will reply shortly via phone or email.
+                <p className="text-xs sm:text-sm text-[#21191A]/70 font-sans max-w-sm mx-auto leading-relaxed">
+                  Thank you for reaching out. Our family kitchen representative will reply promptly via telephone or email.
                 </p>
                 <div className="pt-2">
                   <button
                     onClick={() => setSent(false)}
-                    className="bg-[#000000] text-white text-xs font-semibold px-6 py-2.5 rounded-full hover:bg-[#1a1a1a] transition-colors cursor-pointer"
+                    className="bg-[#21191A] hover:bg-[#790B13] text-[#FFF0DC] text-xs font-mono uppercase tracking-wider px-8 py-3.5 rounded-full transition-colors cursor-pointer"
                   >
-                    Send Another Message
+                    Send Another Inquiry
                   </button>
                 </div>
               </div>
             ) : (
-              <form onSubmit={handleSubmit} className="space-y-4 font-sans">
-                <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
+              <form onSubmit={handleSubmit} className="space-y-5 font-sans">
+                <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
                   <div>
-                    <label className="block text-xs font-semibold text-[#555555] mb-1.5">
-                      Your Name *
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
+                      Full Name *
                     </label>
                     <input
                       type="text"
@@ -171,13 +173,13 @@ const ContactUs = () => {
                       value={name}
                       onChange={(e) => setName(e.target.value)}
                       placeholder="e.g. Anandbhai Patel"
-                      className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-2xl px-4 py-3 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000] transition-colors"
+                      className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] transition-colors"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-[#555555] mb-1.5">
-                      Phone Number *
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
+                      Mobile Number *
                     </label>
                     <input
                       type="tel"
@@ -185,13 +187,13 @@ const ContactUs = () => {
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="+91 98250 12345"
-                      className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-2xl px-4 py-3 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000] transition-colors"
+                      className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] transition-colors"
                     />
                   </div>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#555555] mb-1.5">
+                  <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                     Email Address *
                   </label>
                   <input
@@ -200,24 +202,24 @@ const ContactUs = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="patel@example.com"
-                    className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-2xl px-4 py-3 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000] transition-colors"
+                    className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#555555] mb-1.5">
-                    Subject
+                  <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
+                    Subject / Occasion
                   </label>
                   <input
                     type="text"
                     value={subject}
                     onChange={(e) => setSubject(e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-2xl px-4 py-3 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000] transition-colors"
+                    className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#555555] mb-1.5">
+                  <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                     Your Message *
                   </label>
                   <textarea
@@ -226,17 +228,17 @@ const ContactUs = () => {
                     value={message}
                     onChange={(e) => setMessage(e.target.value)}
                     placeholder="How can we assist you with our homemade snacks, special batch requests, or delivery schedules?"
-                    className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-2xl p-4 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000] transition-colors"
+                    className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl p-4 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] transition-colors"
                   />
                 </div>
 
                 <div className="pt-2">
                   <button
                     type="submit"
-                    className="w-full sm:w-auto bg-[#C84B20] hover:bg-[#A33A16] text-white px-8 py-3.5 rounded-full font-bold text-xs sm:text-sm inline-flex items-center justify-center gap-2 cursor-pointer transition-all shadow-md shadow-[#C84B20]/25 active:scale-98"
+                    className="w-full sm:w-auto bg-[#790B13] hover:bg-[#50000D] text-[#FFF0DC] px-10 py-4 rounded-full font-mono uppercase tracking-widest font-bold text-xs inline-flex items-center justify-center gap-2 cursor-pointer transition-all shadow-lg shadow-[#790B13]/25 active:scale-98 group"
                   >
                     <span>Submit Inquiry</span>
-                    <ArrowRight className="w-4 h-4" />
+                    <ArrowRight className="w-4 h-4 text-[#D6B77A] group-hover:translate-x-1 transition-transform" />
                   </button>
                 </div>
               </form>

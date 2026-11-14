@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { useSettings } from '../context/SettingsContext';
-import { Plus, Minus, HelpCircle, MessageCircle } from 'lucide-react';
+import { Plus, Minus, HelpCircle, MessageCircle, ArrowRight, Sparkles } from 'lucide-react';
 
 const FAQ = () => {
   const { settings } = useSettings();
@@ -40,20 +40,20 @@ const FAQ = () => {
   ];
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2] py-12 sm:py-16 text-[#000000]">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
-        {/* Header */}
-        <div className="text-center max-w-2xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#14382B] text-[#000000] text-xs font-bold shadow-xs">
-            <HelpCircle className="w-3.5 h-3.5 text-[#C84B20]" />
-            <span>Got questions? We have answers</span>
-            <span className="font-script text-base text-[#C84B20]">Healthy snacks, happy you! ✦</span>
+    <div className="min-h-screen bg-[#FFF9F2] py-16 sm:py-24 text-[#21191A] font-sans selection:bg-[#790B13] selection:text-white">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
+        {/* Editorial Header */}
+        <div className="text-center max-w-2xl mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFF0DC] border border-[#D6B77A]/40 text-[#790B13] text-xs font-mono uppercase tracking-widest shadow-xs">
+            <HelpCircle className="w-3.5 h-3.5 text-[#D6B77A]" />
+            <span>Curated Knowledge Base</span>
+            <span className="text-[#D6B77A]">✦ Pure Taste</span>
           </div>
-          <h1 className="font-heading font-black text-3xl sm:text-5xl text-[#000000] tracking-tight">
-            Frequently Asked Questions
+          <h1 className="font-heading font-black text-3xl sm:text-5xl text-[#21191A] uppercase tracking-tight">
+            Frequently Asked <span className="font-serif italic font-normal lowercase text-[#790B13]">questions</span>
           </h1>
-          <p className="text-sm sm:text-base text-[#555555] font-sans leading-relaxed">
-            Everything you need to know about our groundnut oil standard, daily small-batch frying, moisture-proof packing, and express transit timelines.
+          <p className="text-sm sm:text-base text-[#21191A]/70 font-sans leading-relaxed">
+            Everything you need to know about our groundnut oil standard, daily small-batch frying, moisture-proof barrier pouches, and nationwide transit timelines.
           </p>
         </div>
 
@@ -66,36 +66,36 @@ const FAQ = () => {
                 key={idx}
                 className={`rounded-2xl transition-all border ${
                   isOpen
-                    ? 'bg-white border-[#000000]/40 shadow-sm'
-                    : 'bg-white/60 hover:bg-white border-[#EAE3D9]'
+                    ? 'bg-white border-[#790B13]/40 shadow-md'
+                    : 'bg-white/80 hover:bg-white border-[#D6B77A]/30'
                 }`}
               >
                 <button
                   type="button"
                   onClick={() => setOpenIndex(isOpen ? null : idx)}
-                  className="w-full flex items-center justify-between text-left p-5 sm:p-6 cursor-pointer gap-4"
+                  className="w-full flex items-center justify-between text-left p-6 sm:p-7 cursor-pointer gap-4"
                 >
                   <div className="flex items-center gap-4">
-                    <span className="w-7 h-7 rounded-full bg-[#14382B] text-[#000000] text-xs font-bold flex items-center justify-center shrink-0">
-                      {idx + 1}
+                    <span className="w-8 h-8 rounded-full bg-[#FFF0DC] border border-[#D6B77A]/40 text-[#790B13] text-xs font-mono font-bold flex items-center justify-center shrink-0">
+                      0{idx + 1}
                     </span>
-                    <h3 className="font-heading font-bold text-base sm:text-lg text-[#000000]">
+                    <h3 className="font-heading font-black text-base sm:text-lg text-[#21191A] uppercase tracking-tight">
                       {faq.question}
                     </h3>
                   </div>
                   <span
-                    className={`w-8 h-8 rounded-full flex items-center justify-center shrink-0 transition-colors ${
+                    className={`w-9 h-9 rounded-full flex items-center justify-center shrink-0 transition-colors ${
                       isOpen
-                        ? 'bg-[#000000] text-[#14382B]'
-                        : 'bg-[#FAF7F2] text-[#000000] border border-[#EAE3D9]'
+                        ? 'bg-[#790B13] text-[#FFF0DC]'
+                        : 'bg-[#FFF9F2] text-[#21191A] border border-[#D6B77A]/30'
                     }`}
                   >
-                    {isOpen ? <Minus className="w-4 h-4" /> : <Plus className="w-4 h-4" />}
+                    {isOpen ? <Minus className="w-4 h-4 text-[#D6B77A]" /> : <Plus className="w-4 h-4" />}
                   </span>
                 </button>
 
                 {isOpen && (
-                  <div className="px-6 pb-6 pt-1 text-xs sm:text-sm text-[#555555] font-sans leading-relaxed border-t border-[#EAE3D9] ml-11">
+                  <div className="px-7 pb-7 pt-2 text-xs sm:text-sm text-[#21191A]/80 font-sans leading-relaxed border-t border-[#D6B77A]/20 ml-12">
                     {faq.answer}
                   </div>
                 )}
@@ -105,23 +105,24 @@ const FAQ = () => {
         </div>
 
         {/* Bottom Assistance Note */}
-        <div className="bg-[#EBF4EF] p-6 sm:p-8 rounded-3xl border border-[#14382B]/60 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-4 shadow-sm">
+        <div className="bg-[#FFF0DC] p-8 sm:p-10 rounded-3xl border border-[#D6B77A]/40 flex flex-col sm:flex-row items-start sm:items-center justify-between gap-6 shadow-sm">
           <div>
-            <div className="font-heading font-bold text-base text-[#000000]">
-              Have an unlisted query?
+            <div className="font-heading font-black text-lg text-[#21191A] uppercase tracking-tight">
+              Have an unlisted culinary query?
             </div>
-            <div className="text-xs sm:text-sm text-[#555555] font-sans mt-0.5">
-              Reach out to our Rajkot workshop team directly on WhatsApp or phone.
+            <div className="text-xs sm:text-sm text-[#21191A]/70 font-sans mt-1">
+              Reach out to our Rajkot workshop team directly on WhatsApp or telephone.
             </div>
           </div>
           <a
             href={`https://wa.me/${settings.whatsappNumber}`}
             target="_blank"
             rel="noopener noreferrer"
-            className="bg-[#C84B20] hover:bg-[#A33A16] text-white px-6 py-3 rounded-full text-xs sm:text-sm font-semibold transition-all shadow-md shadow-[#C84B20]/25 active:scale-98 flex items-center gap-2 shrink-0 cursor-pointer"
+            className="bg-[#790B13] hover:bg-[#50000D] text-[#FFF0DC] px-8 py-4 rounded-full text-xs font-mono uppercase tracking-widest font-bold transition-all shadow-lg shadow-[#790B13]/20 active:scale-98 flex items-center gap-2 shrink-0 cursor-pointer group"
           >
-            <MessageCircle className="w-4 h-4" />
-            <span>Chat on WhatsApp →</span>
+            <MessageCircle className="w-4 h-4 text-[#D6B77A]" />
+            <span>Chat on WhatsApp</span>
+            <ArrowRight className="w-4 h-4 text-[#D6B77A] group-hover:translate-x-1 transition-transform" />
           </a>
         </div>
       </div>

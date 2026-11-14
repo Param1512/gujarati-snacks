@@ -67,46 +67,46 @@ const AdminCoupons = () => {
   };
 
   return (
-    <div className="space-y-8 text-[#000000]">
+    <div className="space-y-8 text-[#21191A] font-sans">
       {/* Editorial Header */}
-      <div className="border-b border-[#EAE3D9] pb-6 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+      <div className="border-b border-[#D6B77A]/20 pb-8 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#14382B] text-[#000000] text-xs font-bold mb-2 shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-[#C84B20]" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF0DC] border border-[#D6B77A]/40 text-[#790B13] text-xs font-mono uppercase tracking-widest mb-2 shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#D6B77A]" />
             <span>Promotions & Vouchers</span>
           </div>
-          <h1 className="font-heading font-black text-3xl sm:text-4xl tracking-tight text-[#000000]">
-            Coupons Management
+          <h1 className="font-heading font-black text-3xl sm:text-5xl tracking-tight text-[#21191A] uppercase">
+            Coupons <span className="font-serif italic font-normal lowercase text-[#790B13]">management</span>
           </h1>
-          <p className="text-xs sm:text-sm text-[#555555] font-sans mt-1">
+          <p className="text-xs sm:text-sm text-[#21191A]/70 font-sans mt-1">
             Percentage markdowns, flat festive rebates, minimum checkout gates, and redemption limits.
           </p>
         </div>
 
         <button
           onClick={() => setShowCreate(!showCreate)}
-          className="bg-[#000000] hover:bg-[#C84B20] text-white px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-colors cursor-pointer shadow-sm"
+          className="bg-[#790B13] hover:bg-[#50000D] text-[#FFF0DC] px-6 py-3.5 rounded-full text-xs font-mono uppercase tracking-wider font-bold flex items-center gap-2 transition-all shadow-lg shadow-[#790B13]/25 cursor-pointer"
         >
-          {showCreate ? <X className="w-4 h-4 text-[#14382B]" /> : <Plus className="w-4 h-4 text-[#14382B]" />}
+          {showCreate ? <X className="w-4 h-4 text-[#D6B77A]" /> : <Plus className="w-4 h-4 text-[#D6B77A]" />}
           <span>{showCreate ? 'Close Form' : 'Generate New Coupon'}</span>
         </button>
       </div>
 
       {/* Create Coupon Drawer/Form */}
       {showCreate && (
-        <form onSubmit={handleCreateCoupon} className="bg-white p-6 sm:p-8 rounded-3xl border border-[#EAE3D9] shadow-sm space-y-6 text-xs sm:text-sm font-sans">
-          <div className="border-b border-[#EAE3D9] pb-4">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#555555] block">
+        <form onSubmit={handleCreateCoupon} className="bg-white p-6 sm:p-10 rounded-3xl border border-[#D6B77A]/30 shadow-xl space-y-6 text-xs sm:text-sm font-sans">
+          <div className="border-b border-[#D6B77A]/20 pb-4">
+            <span className="text-xs font-mono uppercase tracking-widest text-[#790B13] font-bold block mb-1">
               Promotion Config
             </span>
-            <h3 className="font-heading font-black text-xl text-[#000000] tracking-tight">
+            <h3 className="font-heading font-black text-xl text-[#21191A] uppercase tracking-tight">
               Create Promotional Voucher
             </h3>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Voucher Code *
               </label>
               <input
@@ -115,18 +115,18 @@ const AdminCoupons = () => {
                 value={code}
                 onChange={(e) => setCode(e.target.value.toUpperCase())}
                 placeholder="e.g. FESTIVE15"
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 font-mono text-xs uppercase text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 font-mono text-xs uppercase text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Discount Mechanism *
               </label>
               <select
                 value={discountType}
                 onChange={(e) => setDiscountType(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs text-[#21191A] focus:outline-none focus:border-[#790B13] cursor-pointer"
               >
                 <option value="percentage">Percentage Markdown (%)</option>
                 <option value="fixed">Fixed Deduction (₹)</option>
@@ -134,7 +134,7 @@ const AdminCoupons = () => {
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Discount Value *
               </label>
               <input
@@ -143,38 +143,38 @@ const AdminCoupons = () => {
                 min="1"
                 value={discountValue}
                 onChange={(e) => setDiscountValue(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 font-mono text-xs text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 font-mono text-xs text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Minimum Cart Threshold (₹)
               </label>
               <input
                 type="number"
                 value={minOrderValue}
                 onChange={(e) => setMinOrderValue(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 font-mono text-xs text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 font-mono text-xs text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Max Deduction Cap (₹)
               </label>
               <input
                 type="number"
                 value={maxDiscount}
                 onChange={(e) => setMaxDiscount(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 font-mono text-xs text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 font-mono text-xs text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Expiration Date *
               </label>
               <input
@@ -182,7 +182,7 @@ const AdminCoupons = () => {
                 required
                 value={expiryDate}
                 onChange={(e) => setExpiryDate(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 font-mono text-xs text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 font-mono text-xs text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
           </div>
@@ -190,14 +190,14 @@ const AdminCoupons = () => {
           <div className="flex gap-3 pt-2">
             <button
               type="submit"
-              className="bg-[#C84B20] hover:bg-[#A33A16] text-white px-6 py-2.5 rounded-full font-bold text-xs uppercase tracking-wider cursor-pointer transition-colors shadow-sm"
+              className="bg-[#790B13] hover:bg-[#50000D] text-[#FFF0DC] px-8 py-3 rounded-full font-mono font-bold text-xs uppercase tracking-wider cursor-pointer transition-all shadow-md shadow-[#790B13]/25"
             >
               Issue Coupon Voucher
             </button>
             <button
               type="button"
               onClick={() => setShowCreate(false)}
-              className="px-5 py-2.5 rounded-full border border-[#EAE3D9] font-bold text-xs uppercase tracking-wider text-[#555555] hover:text-[#000000] hover:border-[#000000] transition-colors"
+              className="px-6 py-3 rounded-full border border-[#D6B77A]/40 font-mono font-bold text-xs uppercase tracking-wider text-[#21191A]/70 hover:text-[#790B13] hover:border-[#790B13] transition-colors cursor-pointer"
             >
               Cancel
             </button>
@@ -206,52 +206,52 @@ const AdminCoupons = () => {
       )}
 
       {/* Coupons Table */}
-      <div className="bg-white border border-[#EAE3D9] rounded-3xl overflow-hidden shadow-sm">
+      <div className="bg-white border border-[#D6B77A]/30 rounded-3xl overflow-hidden shadow-xl">
         {loading ? (
-          <div className="py-20 text-center text-xs text-[#555555] font-heading font-bold uppercase tracking-wider">
+          <div className="py-20 text-center text-xs text-[#790B13] font-mono font-bold uppercase tracking-widest">
             Loading coupon ledger...
           </div>
         ) : coupons.length === 0 ? (
-          <div className="py-20 text-center text-xs text-[#555555] font-sans">
+          <div className="py-20 text-center text-xs text-[#21191A]/60 font-sans">
             No active coupons found.
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs sm:text-sm font-sans">
-              <thead className="bg-[#FAF7F2] text-[#555555] uppercase text-xs tracking-wider border-b border-[#EAE3D9]">
+              <thead className="bg-[#FFF9F2] text-[#21191A]/70 uppercase font-mono text-xs tracking-wider border-b border-[#D6B77A]/20">
                 <tr>
-                  <th className="py-3.5 px-4 font-semibold">Coupon Voucher</th>
-                  <th className="py-3.5 px-4 font-semibold">Markdown Rate</th>
-                  <th className="py-3.5 px-4 font-semibold">Min. Order</th>
-                  <th className="py-3.5 px-4 font-semibold">Validity End</th>
-                  <th className="py-3.5 px-4 font-semibold">Redemption Count</th>
-                  <th className="py-3.5 px-4 text-right font-semibold">Action</th>
+                  <th className="py-4 px-5 font-bold">Coupon Voucher</th>
+                  <th className="py-4 px-5 font-bold">Markdown Rate</th>
+                  <th className="py-4 px-5 font-bold">Min. Order</th>
+                  <th className="py-4 px-5 font-bold">Validity End</th>
+                  <th className="py-4 px-5 font-bold">Redemption Count</th>
+                  <th className="py-4 px-5 text-right font-bold">Action</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E5E5E0]">
+              <tbody className="divide-y divide-[#D6B77A]/15 font-mono">
                 {coupons.map((c) => (
-                  <tr key={c._id} className="hover:bg-[#FAF7F2] transition-colors">
-                    <td className="py-4 px-4 font-mono font-bold text-sm text-[#000000]">
-                      <span className="px-2.5 py-1 bg-[#FAF7F2] border border-[#EAE3D9] rounded-lg">
+                  <tr key={c._id} className="hover:bg-[#FFF9F2] transition-colors">
+                    <td className="py-4 px-5 font-mono font-bold text-sm text-[#21191A]">
+                      <span className="px-3 py-1 bg-[#FFF0DC] border border-[#D6B77A]/40 text-[#790B13] rounded-lg">
                         {c.code}
                       </span>
                     </td>
-                    <td className="py-4 px-4 font-heading font-black text-sm text-[#C84B20]">
+                    <td className="py-4 px-5 font-heading font-black text-sm text-[#790B13]">
                       {c.discountType === 'percentage' ? `${c.discountValue}% OFF` : `₹${c.discountValue} OFF`}
                     </td>
-                    <td className="py-4 px-4 text-[#555555] font-mono">
+                    <td className="py-4 px-5 text-[#21191A]/70">
                       ₹{c.minOrderValue}
                     </td>
-                    <td className="py-4 px-4 text-[#555555] font-mono">
+                    <td className="py-4 px-5 text-[#21191A]/70">
                       {new Date(c.expiryDate).toLocaleDateString()}
                     </td>
-                    <td className="py-4 px-4 font-mono text-xs font-bold text-[#000000]">
+                    <td className="py-4 px-5 text-xs font-bold text-[#21191A]">
                       {c.usedCount} / {c.usageLimit}
                     </td>
-                    <td className="py-4 px-4 text-right">
+                    <td className="py-4 px-5 text-right">
                       <button
                         onClick={() => handleDelete(c._id)}
-                        className="text-[#555555] hover:text-[#C84B20] p-2 rounded-xl border border-[#EAE3D9] hover:border-[#C84B20] cursor-pointer transition-colors"
+                        className="text-[#21191A]/50 hover:text-rose-700 p-2 rounded-xl border border-[#D6B77A]/40 hover:border-rose-300 cursor-pointer transition-colors"
                         title="Delete Coupon"
                       >
                         <Trash2 className="w-3.5 h-3.5" />

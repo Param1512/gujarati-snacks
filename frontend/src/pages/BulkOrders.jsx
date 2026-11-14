@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import api from '../services/api';
 import { useSettings } from '../context/SettingsContext';
-import { Check, MessageCircle, Package } from 'lucide-react';
+import { Check, MessageCircle, Package, Sparkles, ShieldCheck, ArrowRight } from 'lucide-react';
 
 const BulkOrders = () => {
   const { settings } = useSettings();
@@ -72,73 +72,77 @@ const BulkOrders = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2] py-10 sm:py-16 text-[#000000]">
-      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-        {/* Header */}
-        <div className="text-center max-w-2xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#14382B] text-[#000000] text-xs font-bold shadow-xs">
-            <Package className="w-3.5 h-3.5 text-[#000000]" />
-            <span>Catering & Corporate Gifting</span>
-            <span className="font-script text-base text-[#C84B20]">Fresh batch guaranteed ✨</span>
+    <div className="min-h-screen bg-[#FFF9F2] py-12 sm:py-20 text-[#21191A] font-sans selection:bg-[#790B13] selection:text-white">
+      <div className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 space-y-12">
+        {/* Luxury Editorial Header */}
+        <div className="text-center max-w-2xl mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFF0DC] border border-[#D6B77A]/40 text-[#790B13] text-xs font-mono uppercase tracking-widest shadow-xs">
+            <Package className="w-3.5 h-3.5 text-[#D6B77A]" />
+            <span>Curated Commissions & Gifting</span>
+            <span className="text-[#D6B77A]">✦ Fresh Small Batches</span>
           </div>
-          <h1 className="font-heading font-black text-3xl sm:text-5xl text-[#000000] tracking-tight">
-            Bulk Orders & Event Catering
+          <h1 className="font-heading font-black text-3xl sm:text-5xl lg:text-6xl text-[#21191A] tracking-tight uppercase leading-none">
+            Bulk Orders & <span className="font-serif italic font-normal lowercase text-[#790B13]">celebration</span> Hampers
           </h1>
-          <p className="text-sm sm:text-base text-[#555555] font-sans leading-relaxed">
-            Directly from our Rajkot master kitchen. Freshly prepared in pure groundnut oil with authentic Kathiyawadi recipes for weddings, festivals, corporate gifting, and community gatherings.
+          <p className="text-sm sm:text-base text-[#21191A]/70 font-sans leading-relaxed">
+            Directly from our heritage Rajkot kitchen. Prepared in cold-pressed pure groundnut oil with authentic Kathiyawadi secret recipes for royal weddings, corporate gifting, Diwali hampers, and family gatherings.
           </p>
         </div>
 
         {submitted ? (
-          <div className="bg-[#EBF4EF] p-10 sm:p-14 rounded-3xl border border-[#14382B]/60 text-center space-y-5 shadow-sm">
-            <div className="w-16 h-16 bg-[#000000] text-[#14382B] rounded-full flex items-center justify-center mx-auto shadow-md">
-              <Check className="w-8 h-8" />
+          <div className="bg-[#FFF0DC] p-10 sm:p-14 rounded-3xl border border-[#D6B77A]/40 text-center space-y-6 shadow-sm">
+            <div className="w-20 h-20 bg-[#790B13] text-[#D6B77A] rounded-full flex items-center justify-center mx-auto shadow-xl ring-8 ring-[#FFF0DC]">
+              <Check className="w-10 h-10" />
             </div>
-            <div className="space-y-2">
-              <h2 className="font-heading font-bold text-2xl text-[#000000]">
-                Bulk Enquiry Received!
+            <div className="space-y-3">
+              <span className="font-mono text-xs uppercase tracking-widest text-[#790B13] font-bold">Commission Confirmed</span>
+              <h2 className="font-heading font-black text-2xl sm:text-4xl text-[#21191A] uppercase tracking-tight">
+                Enquiry Received with Honour
               </h2>
-              <p className="text-sm text-[#555555] max-w-md mx-auto font-sans leading-relaxed">
-                Thank you, <strong className="text-[#000000]">{name}</strong>. Our kitchen manager will review your required quantities and call you at <strong className="text-[#000000]">{phone}</strong> within 4 hours with special wholesale pricing.
+              <p className="text-sm sm:text-base text-[#21191A]/70 max-w-md mx-auto leading-relaxed">
+                Thank you, <strong className="text-[#21191A]">{name}</strong>. Our master artisan will review your required volume and contact you at <strong className="text-[#790B13]">{phone}</strong> within 4 hours with bespoke tier pricing and sample options.
               </p>
             </div>
             <div className="pt-4 flex flex-col sm:flex-row items-center justify-center gap-4">
               <button
                 onClick={() => setSubmitted(false)}
-                className="w-full sm:w-auto bg-[#000000] hover:bg-[#1a1a1a] text-white text-xs font-semibold px-8 py-3.5 rounded-full transition-colors shadow-sm cursor-pointer"
+                className="w-full sm:w-auto bg-[#21191A] hover:bg-[#790B13] text-[#FFF0DC] text-xs font-mono uppercase tracking-widest px-8 py-4 rounded-full transition-all shadow-md cursor-pointer"
               >
                 Submit Another Inquiry
               </button>
               <a
                 href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(
-                  `Namaste! I just submitted bulk enquiry for ${name} (${approximateQuantityKg} kg).`
+                  `Namaste! I just submitted a bulk enquiry for ${name} (${approximateQuantityKg} kg).`
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto bg-white border border-[#EAE3D9] hover:border-[#000000] text-[#000000] text-xs font-semibold px-6 py-3.5 rounded-full transition-colors flex items-center justify-center gap-2 shadow-sm cursor-pointer"
+                className="w-full sm:w-auto bg-white border border-[#D6B77A]/40 hover:border-[#790B13] text-[#21191A] text-xs font-mono uppercase tracking-widest px-8 py-4 rounded-full transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer"
               >
-                <MessageCircle className="w-4 h-4 text-[#000000]" />
+                <MessageCircle className="w-4 h-4 text-[#790B13]" />
                 <span>Chat on WhatsApp</span>
               </a>
             </div>
           </div>
         ) : (
-          <form onSubmit={handleSubmit} className="bg-white p-6 sm:p-10 rounded-3xl border border-[#EAE3D9] shadow-sm space-y-8 font-sans">
+          <form onSubmit={handleSubmit} className="bg-white p-6 sm:p-12 rounded-3xl border border-[#D6B77A]/30 shadow-xl space-y-10">
             {errorMessage && (
-              <div className="p-4 bg-rose-50 text-rose-800 border border-rose-200 rounded-2xl text-xs font-semibold">
+              <div className="p-4 bg-rose-50 text-rose-800 border border-rose-200 rounded-2xl text-xs font-mono">
                 {errorMessage}
               </div>
             )}
 
-            {/* Contact Details */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 border-b border-[#EAE3D9] pb-2">
-                <span className="w-6 h-6 rounded-full bg-[#000000] text-[#14382B] text-xs font-bold flex items-center justify-center">1</span>
-                <h3 className="font-heading font-bold text-base text-[#000000]">Contact Information</h3>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+            {/* Step 1: Contact Details */}
+            <div className="space-y-5">
+              <div className="flex items-center gap-3 border-b border-[#D6B77A]/20 pb-3">
+                <span className="w-7 h-7 rounded-full bg-[#790B13] text-[#D6B77A] text-xs font-mono font-bold flex items-center justify-center shadow-xs">01</span>
                 <div>
-                  <label className="block text-xs font-semibold text-[#555555] mb-1.5">
+                  <h3 className="font-heading font-black text-lg text-[#21191A] uppercase tracking-tight">Contact Information</h3>
+                  <p className="text-xs text-[#21191A]/60">Your private details for the quotation</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
+                <div>
+                  <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                     Full Name *
                   </label>
                   <input
@@ -147,12 +151,12 @@ const BulkOrders = () => {
                     value={name}
                     onChange={(e) => setName(e.target.value)}
                     placeholder="e.g. Ketanbhai Joshi"
-                    className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-2xl px-4 py-3 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000] transition-colors"
+                    className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#555555] mb-1.5">
+                  <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                     Mobile Number *
                   </label>
                   <input
@@ -161,12 +165,12 @@ const BulkOrders = () => {
                     value={phone}
                     onChange={(e) => setPhone(e.target.value)}
                     placeholder="e.g. 98250 12345"
-                    className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-2xl px-4 py-3 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000] transition-colors"
+                    className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#555555] mb-1.5">
+                  <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                     Email Address
                   </label>
                   <input
@@ -174,38 +178,41 @@ const BulkOrders = () => {
                     value={email}
                     onChange={(e) => setEmail(e.target.value)}
                     placeholder="name@example.com"
-                    className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-2xl px-4 py-3 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000] transition-colors"
+                    className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] transition-colors"
                   />
                 </div>
               </div>
             </div>
 
-            {/* Event Specs */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 border-b border-[#EAE3D9] pb-2">
-                <span className="w-6 h-6 rounded-full bg-[#000000] text-[#14382B] text-xs font-bold flex items-center justify-center">2</span>
-                <h3 className="font-heading font-bold text-base text-[#000000]">Event & Volume Details</h3>
-              </div>
-              <div className="grid grid-cols-1 sm:grid-cols-4 gap-4">
+            {/* Step 2: Event Specs */}
+            <div className="space-y-5">
+              <div className="flex items-center gap-3 border-b border-[#D6B77A]/20 pb-3">
+                <span className="w-7 h-7 rounded-full bg-[#790B13] text-[#D6B77A] text-xs font-mono font-bold flex items-center justify-center shadow-xs">02</span>
                 <div>
-                  <label className="block text-xs font-semibold text-[#555555] mb-1.5">
+                  <h3 className="font-heading font-black text-lg text-[#21191A] uppercase tracking-tight">Event & Volume Specifications</h3>
+                  <p className="text-xs text-[#21191A]/60">Scale and timeline considerations</p>
+                </div>
+              </div>
+              <div className="grid grid-cols-1 sm:grid-cols-4 gap-5">
+                <div>
+                  <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                     Event Type
                   </label>
                   <select
                     value={eventType}
                     onChange={(e) => setEventType(e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-2xl px-4 py-3 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000] transition-colors"
+                    className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] transition-colors cursor-pointer"
                   >
                     <option value="Family Function">Family Gathering</option>
                     <option value="Wedding / Engagement">Wedding / Reception</option>
                     <option value="Corporate Gifting">Corporate Hampers</option>
                     <option value="Festival / Community">Festival / Community</option>
-                    <option value="Other">Other</option>
+                    <option value="Other">Other Occasion</option>
                   </select>
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#555555] mb-1.5">
+                  <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                     Expected Guests
                   </label>
                   <input
@@ -213,13 +220,13 @@ const BulkOrders = () => {
                     min="10"
                     value={approximateGuests}
                     onChange={(e) => setApproximateGuests(e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-2xl px-4 py-3 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000] transition-colors"
+                    className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#555555] mb-1.5">
-                    Approx. Quantity (KG) *
+                  <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
+                    Approx. Volume (KG) *
                   </label>
                   <input
                     type="number"
@@ -227,34 +234,37 @@ const BulkOrders = () => {
                     required
                     value={approximateQuantityKg}
                     onChange={(e) => setApproximateQuantityKg(e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-2xl px-4 py-3 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000] transition-colors"
+                    className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#555555] mb-1.5">
-                    Delivery Date
+                  <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
+                    Required Delivery Date
                   </label>
                   <input
                     type="date"
                     value={eventDate}
                     onChange={(e) => setEventDate(e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-2xl px-4 py-3 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000] transition-colors"
+                    className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] transition-colors"
                   />
                 </div>
               </div>
             </div>
 
-            {/* Preferred Snacks Selection */}
-            <div className="space-y-4">
-              <div className="flex items-center justify-between border-b border-[#EAE3D9] pb-2">
-                <div className="flex items-center gap-2">
-                  <span className="w-6 h-6 rounded-full bg-[#000000] text-[#14382B] text-xs font-bold flex items-center justify-center">3</span>
-                  <h3 className="font-heading font-bold text-base text-[#000000]">Preferred Snack Varieties</h3>
+            {/* Step 3: Preferred Varieties */}
+            <div className="space-y-5">
+              <div className="flex items-center justify-between border-b border-[#D6B77A]/20 pb-3">
+                <div className="flex items-center gap-3">
+                  <span className="w-7 h-7 rounded-full bg-[#790B13] text-[#D6B77A] text-xs font-mono font-bold flex items-center justify-center shadow-xs">03</span>
+                  <div>
+                    <h3 className="font-heading font-black text-lg text-[#21191A] uppercase tracking-tight">Preferred Snack Varieties</h3>
+                    <p className="text-xs text-[#21191A]/60">Select all snacks you wish to include in your order</p>
+                  </div>
                 </div>
-                <span className="font-script text-sm text-[#C84B20]">Pick all that apply ⤵</span>
+                <span className="font-mono text-xs uppercase tracking-widest text-[#790B13] font-bold">Select Multiple</span>
               </div>
-              <div className="grid grid-cols-2 sm:grid-cols-5 gap-2.5">
+              <div className="grid grid-cols-2 sm:grid-cols-5 gap-3">
                 {snackCheckboxes.map((snk) => {
                   const isChecked = preferredSnacks.includes(snk);
                   return (
@@ -262,10 +272,10 @@ const BulkOrders = () => {
                       type="button"
                       key={snk}
                       onClick={() => handleToggleSnack(snk)}
-                      className={`px-3 py-2.5 rounded-full text-xs font-semibold transition-all cursor-pointer border text-center ${
+                      className={`px-3 py-3 rounded-xl text-xs font-medium transition-all cursor-pointer border text-center ${
                         isChecked
-                          ? 'bg-[#C84B20] text-white border-[#C84B20] shadow-sm font-bold'
-                          : 'bg-[#FAF7F2] text-[#555555] border-[#EAE3D9] hover:border-[#C84B20] hover:text-[#000000]'
+                          ? 'bg-[#790B13] text-[#FFF0DC] border-[#790B13] shadow-md font-bold'
+                          : 'bg-[#FFF9F2] text-[#21191A]/80 border-[#D6B77A]/30 hover:border-[#790B13] hover:text-[#790B13]'
                       }`}
                     >
                       {snk}
@@ -275,49 +285,52 @@ const BulkOrders = () => {
               </div>
             </div>
 
-            {/* Location & Instructions */}
-            <div className="space-y-4">
-              <div className="flex items-center gap-2 border-b border-[#EAE3D9] pb-2">
-                <span className="w-6 h-6 rounded-full bg-[#000000] text-[#14382B] text-xs font-bold flex items-center justify-center">4</span>
-                <h3 className="font-heading font-bold text-base text-[#000000]">Delivery Details & Notes</h3>
+            {/* Step 4: Venue & Notes */}
+            <div className="space-y-5">
+              <div className="flex items-center gap-3 border-b border-[#D6B77A]/20 pb-3">
+                <span className="w-7 h-7 rounded-full bg-[#790B13] text-[#D6B77A] text-xs font-mono font-bold flex items-center justify-center shadow-xs">04</span>
+                <div>
+                  <h3 className="font-heading font-black text-lg text-[#21191A] uppercase tracking-tight">Venue Details & Custom Requests</h3>
+                  <p className="text-xs text-[#21191A]/60">Logistics and packaging requirements</p>
+                </div>
               </div>
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-4">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
                 <div className="sm:col-span-2">
-                  <label className="block text-xs font-semibold text-[#555555] mb-1.5">
-                    Delivery Venue / Hall Address
+                  <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
+                    Delivery Address / Hall Venue
                   </label>
                   <input
                     type="text"
                     value={deliveryAddress}
                     onChange={(e) => setDeliveryAddress(e.target.value)}
-                    placeholder="Full street address or hall venue"
-                    className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-2xl px-4 py-3 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000] transition-colors"
+                    placeholder="Full street address, hall name, or banquet venue"
+                    className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] transition-colors"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-semibold text-[#555555] mb-1.5">
+                  <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                     City
                   </label>
                   <input
                     type="text"
                     value={city}
                     onChange={(e) => setCity(e.target.value)}
-                    className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-2xl px-4 py-3 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000] transition-colors"
+                    className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] transition-colors"
                   />
                 </div>
               </div>
 
               <div>
-                <label className="block text-xs font-semibold text-[#555555] mb-1.5">
-                  Special Instructions or Packaging Preferences
+                <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
+                  Custom Packaging, Labeling, or Spice Notes
                 </label>
                 <textarea
                   rows={3}
                   value={notes}
                   onChange={(e) => setNotes(e.target.value)}
-                  placeholder="E.g., custom 250g individual pouch packaging for return gifts, mild spice level..."
-                  className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-2xl p-4 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000] transition-colors"
+                  placeholder="E.g., custom 250g individual pouch packaging for return gifts with personalized wedding seals, mild spice blend..."
+                  className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl p-4 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] transition-colors"
                 />
               </div>
             </div>
@@ -326,9 +339,10 @@ const BulkOrders = () => {
               <button
                 type="submit"
                 disabled={submitting}
-                className="w-full sm:w-auto bg-[#C84B20] hover:bg-[#A33A16] text-white text-xs sm:text-sm font-semibold px-8 py-3.5 rounded-full transition-all cursor-pointer disabled:opacity-50 shadow-md shadow-[#C84B20]/25 hover:shadow-lg active:scale-98 flex items-center justify-center gap-2"
+                className="w-full sm:w-auto bg-[#790B13] hover:bg-[#50000D] text-[#FFF0DC] text-xs font-mono uppercase tracking-widest px-10 py-4 rounded-full transition-all cursor-pointer disabled:opacity-50 shadow-lg shadow-[#790B13]/20 hover:shadow-xl active:scale-98 flex items-center justify-center gap-2 group"
               >
-                <span>{submitting ? 'Submitting Enquiry...' : 'Submit Bulk Enquiry →'}</span>
+                <span>{submitting ? 'Transmitting Commission...' : 'Submit Wholesale Commission'}</span>
+                <ArrowRight className="w-4 h-4 text-[#D6B77A] group-hover:translate-x-1 transition-transform" />
               </button>
 
               <a
@@ -337,10 +351,10 @@ const BulkOrders = () => {
                 )}`}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="w-full sm:w-auto border border-[#EAE3D9] hover:border-[#000000] bg-white text-[#000000] text-xs sm:text-sm font-semibold px-6 py-3.5 rounded-full transition-colors flex items-center justify-center gap-2 shadow-sm hover:bg-[#FAF7F2] cursor-pointer"
+                className="w-full sm:w-auto border border-[#D6B77A]/40 hover:border-[#790B13] bg-white text-[#21191A] text-xs font-mono uppercase tracking-widest px-8 py-4 rounded-full transition-colors flex items-center justify-center gap-2 shadow-sm hover:bg-[#FFF0DC]/40 cursor-pointer"
               >
-                <MessageCircle className="w-4 h-4 text-[#000000]" />
-                <span>Direct WhatsApp Inquiry</span>
+                <MessageCircle className="w-4 h-4 text-[#790B13]" />
+                <span>Direct Artisan Concierge</span>
               </a>
             </div>
           </form>

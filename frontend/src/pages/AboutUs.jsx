@@ -1,37 +1,37 @@
 import React from 'react';
 import { useSettings } from '../context/SettingsContext';
-import { Sparkles, Flame, Leaf, Award, Heart } from 'lucide-react';
+import { Sparkles, Flame, Leaf, Award, ArrowRight } from 'lucide-react';
 import { Link } from 'react-router-dom';
 
 const AboutUs = () => {
   const { settings } = useSettings();
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2] py-12 sm:py-16 text-[#1C1815]">
-      <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-16">
-        {/* Header */}
-        <div className="text-center max-w-3xl mx-auto space-y-3">
-          <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#EBF4EF] text-[#14382B] text-xs font-bold border border-[#14382B]/15">
-            <Sparkles className="w-3.5 h-3.5 text-[#D89B2B]" />
+    <div className="min-h-screen bg-[#FFF9F2] py-16 sm:py-24 text-[#21191A] font-sans selection:bg-[#790B13] selection:text-white">
+      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 space-y-20">
+        {/* Editorial Header */}
+        <div className="text-center max-w-3xl mx-auto space-y-4">
+          <div className="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-[#FFF0DC] border border-[#D6B77A]/40 text-[#790B13] text-xs font-mono uppercase tracking-widest shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#D6B77A]" />
             <span>Heritage Archive • Rajkot, Saurashtra</span>
-            <span className="font-script text-base text-[#C84B20]">Pure Sing-Tel ✦</span>
+            <span className="text-[#D6B77A]">✦ Pure Groundnut Oil</span>
           </div>
-          <h1 className="font-heading font-black text-3xl sm:text-5xl text-[#14382B] tracking-tight">
-            Our Kitchen Story & Philosophy
+          <h1 className="font-heading font-black text-3xl sm:text-6xl text-[#21191A] uppercase tracking-tight leading-none">
+            Our Kitchen <span className="font-serif italic font-normal lowercase text-[#790B13]">heritage</span> & Philosophy
           </h1>
-          <p className="text-sm sm:text-base text-[#6E675F] font-sans leading-relaxed">
-            How an independent family kitchen in Rajkot continues to preserve ancestral Kathiyawadi farsan techniques without industrial shortcuts or palm oil.
+          <p className="text-sm sm:text-base text-[#21191A]/70 font-sans leading-relaxed">
+            How an independent family culinary atelier in Rajkot preserves ancestral Kathiyawadi farsan techniques without industrial shortcuts or palm oil.
           </p>
         </div>
 
-        {/* Narrative & Image Section */}
-        <div className="grid grid-cols-1 md:grid-cols-12 gap-8 lg:gap-12 items-center">
-          <div className="md:col-span-6 space-y-5 text-sm sm:text-base text-[#6E675F] font-sans leading-relaxed">
-            <div className="space-y-1">
-              <span className="font-script text-2xl text-[#C84B20]">Real ingredients. Real flavour.</span>
-              <h2 className="font-heading font-black text-2xl sm:text-3xl text-[#14382B]">
+        {/* Narrative & Visual Section */}
+        <div className="grid grid-cols-1 md:grid-cols-12 gap-10 lg:gap-16 items-center">
+          <div className="md:col-span-6 space-y-6 text-sm sm:text-base text-[#21191A]/80 font-sans leading-relaxed">
+            <div className="space-y-2">
+              <span className="font-serif italic text-2xl text-[#790B13] block">Real ingredients. Authentic legacy.</span>
+              <h2 className="font-heading font-black text-2xl sm:text-4xl text-[#21191A] uppercase tracking-tight">
                 100% Saurashtra Sing-Tel. <br />
-                Zero Palm Oil Blends.
+                <span className="text-[#790B13]">Zero Palm Oil Compromises.</span>
               </h2>
             </div>
             <p>
@@ -47,25 +47,26 @@ const AboutUs = () => {
             <div className="pt-2">
               <Link
                 to="/snacks"
-                className="inline-flex items-center gap-2 bg-[#C84B20] hover:bg-[#A33A16] text-white text-xs sm:text-sm font-semibold px-6 py-3.5 rounded-full transition-all shadow-warm-glow cursor-pointer"
+                className="inline-flex items-center gap-2 bg-[#790B13] hover:bg-[#50000D] text-[#FFF0DC] text-xs font-mono uppercase tracking-widest font-bold px-8 py-4 rounded-full transition-all shadow-lg shadow-[#790B13]/25 cursor-pointer group"
               >
-                <span>Explore Our Fresh Batches →</span>
+                <span>Explore Our Fresh Batches</span>
+                <ArrowRight className="w-4 h-4 text-[#D6B77A] group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
           </div>
 
           <div className="md:col-span-6">
-            <div className="bg-white p-4 rounded-3xl border border-[#EAE3D9] shadow-gourmet space-y-3">
-              <div className="aspect-4/3 rounded-2xl overflow-hidden bg-[#FAF7F2]">
+            <div className="bg-white p-5 rounded-3xl border border-[#D6B77A]/30 shadow-2xl space-y-4">
+              <div className="aspect-4/3 rounded-2xl overflow-hidden bg-[#FFF9F2] border border-[#D6B77A]/20">
                 <img
                   src="/images/snacks/tikha-gathiya.jpg"
                   alt="Traditional Morning Kadhais in Rajkot"
-                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-500"
+                  className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                 />
               </div>
-              <div className="flex items-center justify-between px-2 pt-1 text-xs text-[#6E675F] font-medium">
-                <span className="flex items-center gap-1.5 text-[#14382B] font-bold">
-                  <Flame className="w-3.5 h-3.5 text-[#C84B20]" /> Daily Morning Kadhais
+              <div className="flex items-center justify-between px-3 pt-2 text-xs text-[#21191A]/70 font-mono uppercase">
+                <span className="flex items-center gap-2 text-[#790B13] font-bold">
+                  <Flame className="w-4 h-4 text-[#D6B77A]" /> Daily Morning Kadhais
                 </span>
                 <span>Rajkot, Gujarat</span>
               </div>
@@ -73,40 +74,40 @@ const AboutUs = () => {
           </div>
         </div>
 
-        {/* 3 Pillars */}
-        <div className="grid grid-cols-1 sm:grid-cols-3 gap-6">
-          <div className="bg-white p-8 rounded-3xl border border-[#EAE3D9] space-y-3 shadow-gourmet">
-            <div className="w-12 h-12 rounded-2xl bg-[#EBF4EF] text-[#14382B] flex items-center justify-center shadow-xs">
-              <Leaf className="w-6 h-6 text-[#14382B]" />
+        {/* 3 Luxury Pillars */}
+        <div className="grid grid-cols-1 sm:grid-cols-3 gap-8">
+          <div className="bg-white p-8 sm:p-10 rounded-3xl border border-[#D6B77A]/30 space-y-4 shadow-lg hover:border-[#790B13]/40 transition-colors">
+            <div className="w-14 h-14 rounded-2xl bg-[#FFF0DC] text-[#790B13] flex items-center justify-center border border-[#D6B77A]/40 shadow-xs">
+              <Leaf className="w-7 h-7 text-[#790B13]" />
             </div>
-            <h3 className="font-heading font-black text-lg text-[#14382B]">
+            <h3 className="font-heading font-black text-xl text-[#21191A] uppercase tracking-tight">
               Stone-Ground Ingredients
             </h3>
-            <p className="text-xs sm:text-sm text-[#6E675F] font-sans leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#21191A]/70 font-sans leading-relaxed">
               Fresh chickpea flour, freshly cracked black pepper (mari), ajwain seeds, and Saurashtra rock salt. No artificial colours or chemicals.
             </p>
           </div>
 
-          <div className="bg-white p-8 rounded-3xl border border-[#EAE3D9] space-y-3 shadow-gourmet">
-            <div className="w-12 h-12 rounded-2xl bg-[#FDF4EC] text-[#C84B20] flex items-center justify-center shadow-xs">
-              <Flame className="w-6 h-6 text-[#C84B20]" />
+          <div className="bg-white p-8 sm:p-10 rounded-3xl border border-[#D6B77A]/30 space-y-4 shadow-lg hover:border-[#790B13]/40 transition-colors">
+            <div className="w-14 h-14 rounded-2xl bg-[#FFF0DC] text-[#790B13] flex items-center justify-center border border-[#D6B77A]/40 shadow-xs">
+              <Flame className="w-7 h-7 text-[#790B13]" />
             </div>
-            <h3 className="font-heading font-black text-lg text-[#14382B]">
+            <h3 className="font-heading font-black text-xl text-[#21191A] uppercase tracking-tight">
               Daily Morning Batches
             </h3>
-            <p className="text-xs sm:text-sm text-[#6E675F] font-sans leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#21191A]/70 font-sans leading-relaxed">
               Fried before dawn in small controlled rounds to eliminate warehouse resting time. Never stale warehouse inventory.
             </p>
           </div>
 
-          <div className="bg-white p-8 rounded-3xl border border-[#EAE3D9] space-y-3 shadow-gourmet">
-            <div className="w-12 h-12 rounded-2xl bg-[#FDF7EB] text-[#D89B2B] flex items-center justify-center shadow-xs">
-              <Award className="w-6 h-6 text-[#D89B2B]" />
+          <div className="bg-white p-8 sm:p-10 rounded-3xl border border-[#D6B77A]/30 space-y-4 shadow-lg hover:border-[#790B13]/40 transition-colors">
+            <div className="w-14 h-14 rounded-2xl bg-[#FFF0DC] text-[#790B13] flex items-center justify-center border border-[#D6B77A]/40 shadow-xs">
+              <Award className="w-7 h-7 text-[#790B13]" />
             </div>
-            <h3 className="font-heading font-black text-lg text-[#14382B]">
+            <h3 className="font-heading font-black text-xl text-[#21191A] uppercase tracking-tight">
               Rajkot Provenance
             </h3>
-            <p className="text-xs sm:text-sm text-[#6E675F] font-sans leading-relaxed">
+            <p className="text-xs sm:text-sm text-[#21191A]/70 font-sans leading-relaxed">
               Proudly rooted in Saurashtra culture. Local fast delivery in Rajkot; tracked express courier nationwide across India.
             </p>
           </div>

@@ -32,92 +32,94 @@ const AdminReviews = () => {
   };
 
   return (
-    <div className="space-y-8 text-[#000000]">
+    <div className="space-y-8 text-[#21191A] font-sans">
       {/* Editorial Header */}
-      <div className="border-b border-[#EAE3D9] pb-6">
-        <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#14382B] text-[#000000] text-xs font-bold mb-2 shadow-xs">
-          <Sparkles className="w-3.5 h-3.5 text-[#C84B20]" />
-          <span>Quality Feedback & Moderation</span>
+      <div className="border-b border-[#D6B77A]/20 pb-8 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+        <div>
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF0DC] border border-[#D6B77A]/40 text-[#790B13] text-xs font-mono uppercase tracking-widest mb-2 shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#D6B77A]" />
+            <span>Quality Feedback & Moderation</span>
+          </div>
+          <h1 className="font-heading font-black text-3xl sm:text-5xl tracking-tight text-[#21191A] uppercase">
+            Reviews <span className="font-serif italic font-normal lowercase text-[#790B13]">moderation</span> ({reviews.length})
+          </h1>
+          <p className="text-xs sm:text-sm text-[#21191A]/70 font-sans mt-1">
+            Verified patron testimonials, star assessments, and community feedback publishing queue.
+          </p>
         </div>
-        <h1 className="font-heading font-black text-3xl sm:text-4xl tracking-tight text-[#000000]">
-          Reviews Moderation ({reviews.length})
-        </h1>
-        <p className="text-xs sm:text-sm text-[#555555] font-sans mt-1">
-          Verified patron testimonials, star assessments, and community feedback publishing queue.
-        </p>
       </div>
 
-      <div className="bg-white border border-[#EAE3D9] rounded-3xl overflow-hidden shadow-sm">
+      <div className="bg-white border border-[#D6B77A]/30 rounded-3xl overflow-hidden shadow-xl">
         {loading ? (
-          <div className="py-20 text-center text-xs text-[#555555] font-heading font-bold uppercase tracking-wider">
+          <div className="py-20 text-center text-xs text-[#790B13] font-mono font-bold uppercase tracking-widest">
             Loading reviews ledger...
           </div>
         ) : reviews.length === 0 ? (
-          <div className="py-20 text-center text-xs text-[#555555] font-sans">
+          <div className="py-20 text-center text-xs text-[#21191A]/60 font-sans">
             No customer reviews submitted yet.
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs sm:text-sm font-sans">
-              <thead className="bg-[#FAF7F2] text-[#555555] uppercase text-xs tracking-wider border-b border-[#EAE3D9]">
+              <thead className="bg-[#FFF9F2] text-[#21191A]/70 uppercase font-mono text-xs tracking-wider border-b border-[#D6B77A]/20">
                 <tr>
-                  <th className="py-3.5 px-4 font-semibold">Snack Item</th>
-                  <th className="py-3.5 px-4 font-semibold">Patron</th>
-                  <th className="py-3.5 px-4 font-semibold">Rating</th>
-                  <th className="py-3.5 px-4 font-semibold">Feedback Critique</th>
-                  <th className="py-3.5 px-4 font-semibold">Status</th>
-                  <th className="py-3.5 px-4 text-right font-semibold">Moderation</th>
+                  <th className="py-4 px-5 font-bold">Snack Item</th>
+                  <th className="py-4 px-5 font-bold">Patron</th>
+                  <th className="py-4 px-5 font-bold">Rating</th>
+                  <th className="py-4 px-5 font-bold">Feedback Critique</th>
+                  <th className="py-4 px-5 font-bold">Status</th>
+                  <th className="py-4 px-5 text-right font-bold">Moderation</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E5E5E0]">
+              <tbody className="divide-y divide-[#D6B77A]/15 font-sans">
                 {reviews.map((rev) => (
-                  <tr key={rev._id} className="hover:bg-[#FAF7F2] transition-colors">
-                    <td className="py-4 px-4 font-heading font-bold text-sm text-[#000000]">
+                  <tr key={rev._id} className="hover:bg-[#FFF9F2] transition-colors">
+                    <td className="py-4 px-5 font-heading font-black text-xs uppercase text-[#21191A]">
                       {rev.product?.name}
                     </td>
 
-                    <td className="py-4 px-4">
-                      <span className="font-semibold text-[#000000] block">{rev.userName}</span>
+                    <td className="py-4 px-5">
+                      <span className="font-bold text-xs uppercase text-[#21191A] block">{rev.userName}</span>
                       {rev.isVerifiedPurchase && (
-                        <span className="text-xs text-[#000000] font-mono">
+                        <span className="text-[10px] text-emerald-800 font-mono font-bold">
                           ✓ Verified Purchase
                         </span>
                       )}
                     </td>
 
-                    <td className="py-4 px-4">
-                      <div className="flex text-[#D89B2B]">
+                    <td className="py-4 px-5">
+                      <div className="flex text-[#D6B77A]">
                         {[...Array(rev.rating)].map((_, i) => (
-                          <Star key={i} className="w-3.5 h-3.5 fill-[#D89B2B]" />
+                          <Star key={i} className="w-3.5 h-3.5 fill-[#D6B77A]" />
                         ))}
                       </div>
                     </td>
 
-                    <td className="py-4 px-4 max-w-sm text-[#555555]">
-                      {rev.title && <strong className="block text-[#000000] font-bold">{rev.title}</strong>}
+                    <td className="py-4 px-5 max-w-sm text-[#21191A]/80 text-xs">
+                      {rev.title && <strong className="block text-[#21191A] font-bold uppercase mb-0.5">{rev.title}</strong>}
                       <span className="line-clamp-2 leading-relaxed">{rev.comment}</span>
                     </td>
 
-                    <td className="py-4 px-4">
+                    <td className="py-4 px-5">
                       <span
-                        className={`px-2.5 py-0.5 border text-xs font-bold rounded-full uppercase tracking-wider ${
+                        className={`px-3 py-1 border text-[10px] font-mono font-bold rounded-full uppercase tracking-wider ${
                           rev.status === 'approved'
-                            ? 'border-[#14382B] bg-[#14382B] text-[#000000]'
+                            ? 'border-emerald-300 bg-emerald-50 text-emerald-800'
                             : rev.status === 'rejected'
-                            ? 'border-[#C84B20]/20 bg-[#C84B20]/10 text-[#C84B20]'
-                            : 'border-[#EAE3D9] bg-[#FAF7F2] text-[#000000]'
+                            ? 'border-rose-300 bg-rose-50 text-rose-800'
+                            : 'border-[#D6B77A]/40 bg-[#FFF0DC] text-[#790B13]'
                         }`}
                       >
                         {rev.status}
                       </span>
                     </td>
 
-                    <td className="py-4 px-4 text-right">
-                      <div className="flex justify-end gap-1.5">
+                    <td className="py-4 px-5 text-right">
+                      <div className="flex justify-end gap-2">
                         {rev.status !== 'approved' && (
                           <button
                             onClick={() => handleStatusUpdate(rev._id, 'approved')}
-                            className="bg-[#000000] hover:bg-[#14382B] hover:text-[#000000] text-white p-2 rounded-xl cursor-pointer transition-colors"
+                            className="bg-emerald-700 hover:bg-emerald-800 text-white p-2 rounded-xl cursor-pointer transition-colors shadow-xs"
                             title="Approve Review"
                           >
                             <Check className="w-3.5 h-3.5" />
@@ -126,7 +128,7 @@ const AdminReviews = () => {
                         {rev.status !== 'rejected' && (
                           <button
                             onClick={() => handleStatusUpdate(rev._id, 'rejected')}
-                            className="bg-[#FAF7F2] hover:bg-[#C84B20] hover:text-white text-[#555555] p-2 rounded-xl cursor-pointer border border-[#EAE3D9] transition-colors"
+                            className="bg-[#FFF9F2] hover:bg-rose-700 hover:text-white text-[#21191A]/70 p-2 rounded-xl cursor-pointer border border-[#D6B77A]/30 transition-colors shadow-xs"
                             title="Reject Review"
                           >
                             <X className="w-3.5 h-3.5" />

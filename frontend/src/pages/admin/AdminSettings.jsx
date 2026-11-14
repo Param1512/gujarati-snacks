@@ -105,43 +105,43 @@ const AdminSettings = () => {
   };
 
   return (
-    <div className="max-w-4xl mx-auto space-y-8 text-[#000000]">
+    <div className="max-w-4xl mx-auto space-y-8 text-[#21191A] font-sans">
       {/* Editorial Header */}
-      <div className="border-b border-[#EAE3D9] pb-6">
-        <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#14382B] text-[#000000] text-xs font-bold mb-2 shadow-xs">
-          <Sparkles className="w-3.5 h-3.5 text-[#C84B20]" />
+      <div className="border-b border-[#D6B77A]/20 pb-8">
+        <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF0DC] border border-[#D6B77A]/40 text-[#790B13] text-xs font-mono uppercase tracking-widest mb-2 shadow-xs">
+          <Sparkles className="w-3.5 h-3.5 text-[#D6B77A]" />
           <span>Workshop Master Parameters</span>
         </div>
-        <h1 className="font-heading font-black text-3xl sm:text-4xl tracking-tight text-[#000000]">
-          Store Settings & Logistics
+        <h1 className="font-heading font-black text-3xl sm:text-5xl tracking-tight text-[#21191A] uppercase">
+          Store Settings & <span className="font-serif italic font-normal lowercase text-[#790B13]">logistics</span>
         </h1>
-        <p className="text-xs sm:text-sm text-[#555555] font-sans mt-1">
+        <p className="text-xs sm:text-sm text-[#21191A]/70 font-sans mt-1">
           Brand identity, Rajkot kitchen location, dispatch tariffs, and payment gateways.
         </p>
       </div>
 
       {message && (
-        <div className="p-4 bg-[#EBF4EF] text-[#000000] text-xs rounded-2xl border border-[#14382B] font-sans flex items-center gap-2 font-medium">
-          <CheckCircle2 className="w-4 h-4 text-[#000000]" />
+        <div className="p-4 bg-[#FFF0DC] text-[#790B13] text-xs font-mono rounded-2xl border border-[#D6B77A]/40 flex items-center gap-2 font-bold">
+          <CheckCircle2 className="w-4 h-4 text-[#790B13]" />
           <span>{message}</span>
         </div>
       )}
 
-      <form onSubmit={handleSave} className="bg-white p-6 sm:p-12 rounded-3xl border border-[#EAE3D9] shadow-sm space-y-8 text-xs sm:text-sm font-sans">
+      <form onSubmit={handleSave} className="bg-white p-6 sm:p-12 rounded-3xl border border-[#D6B77A]/30 shadow-xl space-y-8 text-xs sm:text-sm font-sans">
         {/* Brand Identity */}
         <div className="space-y-4">
-          <div className="border-b border-[#EAE3D9] pb-3">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#555555] block">
+          <div className="border-b border-[#D6B77A]/20 pb-4">
+            <span className="text-xs font-mono uppercase tracking-widest text-[#790B13] font-bold block mb-1">
               Section 01
             </span>
-            <h2 className="font-heading font-black text-base text-[#000000]">
+            <h2 className="font-heading font-black text-lg text-[#21191A] uppercase tracking-tight">
               Brand Nomenclature & Tagline
             </h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-5">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Brand Name (English) *
               </label>
               <input
@@ -149,50 +149,50 @@ const AdminSettings = () => {
                 required
                 value={storeName}
                 onChange={(e) => setStoreName(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Brand Name (Gujarati script)
               </label>
               <input
                 type="text"
                 value={storeNameGujarati}
                 onChange={(e) => setStoreNameGujarati(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#000000] font-gujarati focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs sm:text-sm text-[#21191A] font-gujarati focus:outline-none focus:border-[#790B13]"
               />
             </div>
           </div>
 
           <div>
-            <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+            <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
               Brand Descriptor / Subtitle
             </label>
             <input
               type="text"
               value={tagline}
               onChange={(e) => setTagline(e.target.value)}
-              className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000]"
+              className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13]"
             />
           </div>
         </div>
 
         {/* Contact Numbers & WhatsApp */}
-        <div className="space-y-4 pt-4 border-t border-[#EAE3D9]">
-          <div className="border-b border-[#EAE3D9] pb-3">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#555555] block">
+        <div className="space-y-4 pt-4 border-t border-[#D6B77A]/20">
+          <div className="border-b border-[#D6B77A]/20 pb-4">
+            <span className="text-xs font-mono uppercase tracking-widest text-[#790B13] font-bold block mb-1">
               Section 02
             </span>
-            <h2 className="font-heading font-black text-base text-[#000000]">
+            <h2 className="font-heading font-black text-lg text-[#21191A] uppercase tracking-tight">
               Dispatch Desk & Digital Channels
             </h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Voice Contact *
               </label>
               <input
@@ -200,12 +200,12 @@ const AdminSettings = () => {
                 required
                 value={phone}
                 onChange={(e) => setPhone(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs font-mono text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs font-mono text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 WhatsApp API Key Number *
               </label>
               <input
@@ -214,12 +214,12 @@ const AdminSettings = () => {
                 value={whatsappNumber}
                 onChange={(e) => setWhatsappNumber(e.target.value)}
                 placeholder="919825012345"
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs font-mono text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs font-mono text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Orders Email *
               </label>
               <input
@@ -227,158 +227,158 @@ const AdminSettings = () => {
                 required
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs font-mono text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs font-mono text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
           </div>
         </div>
 
         {/* Rajkot Kitchen Address */}
-        <div className="space-y-4 pt-4 border-t border-[#EAE3D9]">
-          <div className="border-b border-[#EAE3D9] pb-3">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#555555] block">
+        <div className="space-y-4 pt-4 border-t border-[#D6B77A]/20">
+          <div className="border-b border-[#D6B77A]/20 pb-4">
+            <span className="text-xs font-mono uppercase tracking-widest text-[#790B13] font-bold block mb-1">
               Section 03
             </span>
-            <h2 className="font-heading font-black text-base text-[#000000]">
+            <h2 className="font-heading font-black text-lg text-[#21191A] uppercase tracking-tight">
               Physical Kitchen Location
             </h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Unit / Counter No.
               </label>
               <input
                 type="text"
                 value={shopNo}
                 onChange={(e) => setShopNo(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Street / Avenue
               </label>
               <input
                 type="text"
                 value={street}
                 onChange={(e) => setStreet(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Area / Locality
               </label>
               <input
                 type="text"
                 value={area}
                 onChange={(e) => setArea(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-3 gap-5">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 City
               </label>
               <input
                 type="text"
                 value={city}
                 onChange={(e) => setCity(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 State
               </label>
               <input
                 type="text"
                 value={state}
                 onChange={(e) => setState(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Postal Code
               </label>
               <input
                 type="text"
                 value={pincode}
                 onChange={(e) => setPincode(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs font-mono text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs font-mono text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
           </div>
         </div>
 
         {/* Delivery Rates & Payment Rules */}
-        <div className="space-y-4 pt-4 border-t border-[#EAE3D9]">
-          <div className="border-b border-[#EAE3D9] pb-3">
-            <span className="text-xs font-semibold uppercase tracking-wider text-[#555555] block">
+        <div className="space-y-4 pt-4 border-t border-[#D6B77A]/20">
+          <div className="border-b border-[#D6B77A]/20 pb-4">
+            <span className="text-xs font-mono uppercase tracking-widest text-[#790B13] font-bold block mb-1">
               Section 04
             </span>
-            <h2 className="font-heading font-black text-base text-[#000000]">
+            <h2 className="font-heading font-black text-lg text-[#21191A] uppercase tracking-tight">
               Courier Tariffs & Gateway Policy
             </h2>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-3 gap-5">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Rajkot Local Delivery (₹)
               </label>
               <input
                 type="number"
                 value={localRajkotDelivery}
                 onChange={(e) => setLocalRajkotDelivery(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs font-mono text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs font-mono text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Gujarat / Interstate Express (₹)
               </label>
               <input
                 type="number"
                 value={standardShipping}
                 onChange={(e) => setStandardShipping(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs font-mono text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs font-mono text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
 
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Complimentary Delivery Threshold (₹)
               </label>
               <input
                 type="number"
                 value={freeDeliveryThreshold}
                 onChange={(e) => setFreeDeliveryThreshold(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs font-mono text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs font-mono text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>
           </div>
 
           <div className="grid grid-cols-1 sm:grid-cols-2 gap-6 pt-3">
             <div>
-              <label className="block text-xs font-bold uppercase tracking-wider text-[#000000] mb-2">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                 Kitchen Operational State
               </label>
               <select
                 value={operatingStatus}
                 onChange={(e) => setOperatingStatus(e.target.value)}
-                className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-xl px-3.5 py-2.5 text-xs font-bold uppercase tracking-wider text-[#000000] focus:outline-none focus:border-[#000000]"
+                className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs font-mono font-bold uppercase tracking-wider text-[#21191A] focus:outline-none focus:border-[#790B13] cursor-pointer"
               >
                 <option value="open">Open (Accepting Orders)</option>
                 <option value="taking_preorders">Taking Pre-orders Only</option>
@@ -387,14 +387,14 @@ const AdminSettings = () => {
             </div>
 
             <div className="flex items-center pt-5">
-              <label className="flex items-center gap-2 cursor-pointer font-bold text-xs">
+              <label className="flex items-center gap-2.5 cursor-pointer font-bold text-xs font-mono uppercase tracking-wider text-[#21191A]">
                 <input
                   type="checkbox"
                   checked={allowCashOnDelivery}
                   onChange={(e) => setAllowCashOnDelivery(e.target.checked)}
-                  className="accent-[#000000] w-4 h-4 rounded"
+                  className="accent-[#790B13] w-4 h-4 rounded"
                 />
-                <span className="uppercase tracking-wider text-[#000000]">
+                <span>
                   Authorize Cash on Delivery (COD) Checkouts
                 </span>
               </label>
@@ -402,13 +402,13 @@ const AdminSettings = () => {
           </div>
         </div>
 
-        <div className="pt-4 border-t border-[#EAE3D9]">
+        <div className="pt-4 border-t border-[#D6B77A]/20">
           <button
             type="submit"
             disabled={saving}
-            className="bg-[#C84B20] hover:bg-[#A33A16] text-white px-8 py-3 rounded-full font-bold text-xs uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-colors shadow-sm disabled:opacity-50"
+            className="bg-[#790B13] hover:bg-[#50000D] text-[#FFF0DC] px-8 py-3.5 rounded-full font-mono font-bold text-xs uppercase tracking-wider flex items-center gap-2 cursor-pointer transition-all shadow-lg shadow-[#790B13]/25 disabled:opacity-50"
           >
-            <Save className="w-4 h-4" />
+            <Save className="w-4 h-4 text-[#D6B77A]" />
             <span>{saving ? 'Synchronizing...' : 'Save Configuration'}</span>
           </button>
         </div>

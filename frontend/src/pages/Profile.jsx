@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useAuth } from '../context/AuthContext';
 import api from '../services/api';
-import { User, MapPin, Lock, Plus, Trash2, Sparkles } from 'lucide-react';
+import { User, MapPin, Lock, Plus, Trash2, Sparkles, ArrowRight } from 'lucide-react';
 
 const Profile = () => {
   const { user, updateProfile } = useAuth();
@@ -48,7 +48,7 @@ const Profile = () => {
     setProfileMsg('');
     try {
       await updateProfile({ name, phone });
-      setProfileMsg('Profile updated successfully.');
+      setProfileMsg('Patron details updated with honour.');
     } catch (err) {
       setProfileMsg('Failed: ' + err.message);
     }
@@ -64,7 +64,7 @@ const Profile = () => {
         newPassword,
       });
       if (res.success) {
-        setPasswordMsg('Password changed successfully.');
+        setPasswordMsg('Password security successfully updated.');
         setCurrentPassword('');
         setNewPassword('');
       }
@@ -106,64 +106,64 @@ const Profile = () => {
   };
 
   return (
-    <div className="min-h-screen bg-[#FAF7F2] py-10 sm:py-16 text-[#000000]">
+    <div className="min-h-screen bg-[#FFF9F2] py-12 sm:py-20 text-[#21191A] font-sans selection:bg-[#790B13] selection:text-white">
       <div className="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8 space-y-10">
-        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#EAE3D9] pb-6">
+        <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-4 border-b border-[#D6B77A]/20 pb-8">
           <div>
-            <div className="inline-flex items-center gap-2 px-3.5 py-1 rounded-full bg-[#14382B] text-[#000000] text-xs font-bold mb-2 shadow-xs">
-              <Sparkles className="w-3.5 h-3.5 text-[#C84B20]" />
-              <span>Customer Account</span>
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFF0DC] border border-[#D6B77A]/40 text-[#790B13] text-xs font-mono uppercase tracking-widest mb-2 shadow-xs">
+              <Sparkles className="w-3.5 h-3.5 text-[#D6B77A]" />
+              <span>Patron Sanctuary</span>
             </div>
-            <h1 className="font-heading font-black text-3xl sm:text-4xl text-[#000000] tracking-tight">
-              Profile & Addresses
+            <h1 className="font-heading font-black text-3xl sm:text-5xl text-[#21191A] uppercase tracking-tight">
+              Profile & <span className="font-serif italic font-normal lowercase text-[#790B13]">destinations</span>
             </h1>
           </div>
-          <span className="text-xs font-bold text-[#000000] bg-white border border-[#EAE3D9] px-4 py-1.5 rounded-full w-fit">
+          <span className="text-xs font-mono uppercase tracking-widest text-[#790B13] bg-white border border-[#D6B77A]/40 px-5 py-2 rounded-full w-fit shadow-xs font-bold">
             {user?.email}
           </span>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-4 gap-6">
+        <div className="grid grid-cols-1 md:grid-cols-4 gap-8">
           {/* Sidebar Tabs */}
-          <div className="bg-white p-3 rounded-3xl border border-[#EAE3D9] space-y-1 h-fit shadow-sm">
+          <div className="bg-white p-3 rounded-3xl border border-[#D6B77A]/30 space-y-1.5 h-fit shadow-sm">
             <button
               onClick={() => setActiveTab('profile')}
-              className={`w-full text-left px-4 py-3 rounded-2xl transition-all cursor-pointer flex items-center gap-2.5 text-xs font-semibold ${
+              className={`w-full text-left px-4 py-3 rounded-2xl transition-all cursor-pointer flex items-center gap-3 text-xs font-mono uppercase tracking-wider font-bold ${
                 activeTab === 'profile'
-                  ? 'bg-[#000000] text-[#14382B] font-bold shadow-xs'
-                  : 'text-[#555555] hover:bg-[#FAF7F2] hover:text-[#000000]'
+                  ? 'bg-[#790B13] text-[#FFF0DC] shadow-md'
+                  : 'text-[#21191A]/70 hover:bg-[#FFF0DC]/40 hover:text-[#790B13]'
               }`}
             >
-              <User className="w-4 h-4" />
+              <User className="w-4 h-4 text-[#D6B77A]" />
               <span>Personal Details</span>
             </button>
             <button
               onClick={() => setActiveTab('addresses')}
-              className={`w-full text-left px-4 py-3 rounded-2xl transition-all cursor-pointer flex items-center justify-between text-xs font-semibold ${
+              className={`w-full text-left px-4 py-3 rounded-2xl transition-all cursor-pointer flex items-center justify-between text-xs font-mono uppercase tracking-wider font-bold ${
                 activeTab === 'addresses'
-                  ? 'bg-[#000000] text-[#14382B] font-bold shadow-xs'
-                  : 'text-[#555555] hover:bg-[#FAF7F2] hover:text-[#000000]'
+                  ? 'bg-[#790B13] text-[#FFF0DC] shadow-md'
+                  : 'text-[#21191A]/70 hover:bg-[#FFF0DC]/40 hover:text-[#790B13]'
               }`}
             >
-              <span className="flex items-center gap-2.5">
-                <MapPin className="w-4 h-4" />
+              <span className="flex items-center gap-3">
+                <MapPin className="w-4 h-4 text-[#D6B77A]" />
                 <span>Addresses</span>
               </span>
               <span className={`text-[10px] px-2 py-0.5 rounded-full font-bold ${
-                activeTab === 'addresses' ? 'bg-[#14382B]/20 text-[#14382B]' : 'bg-[#EBF4EF] text-[#000000]'
+                activeTab === 'addresses' ? 'bg-white/20 text-white' : 'bg-[#FFF0DC] text-[#790B13]'
               }`}>
                 {addresses.length}
               </span>
             </button>
             <button
               onClick={() => setActiveTab('password')}
-              className={`w-full text-left px-4 py-3 rounded-2xl transition-all cursor-pointer flex items-center gap-2.5 text-xs font-semibold ${
+              className={`w-full text-left px-4 py-3 rounded-2xl transition-all cursor-pointer flex items-center gap-3 text-xs font-mono uppercase tracking-wider font-bold ${
                 activeTab === 'password'
-                  ? 'bg-[#000000] text-[#14382B] font-bold shadow-xs'
-                  : 'text-[#555555] hover:bg-[#FAF7F2] hover:text-[#000000]'
+                  ? 'bg-[#790B13] text-[#FFF0DC] shadow-md'
+                  : 'text-[#21191A]/70 hover:bg-[#FFF0DC]/40 hover:text-[#790B13]'
               }`}
             >
-              <Lock className="w-4 h-4" />
+              <Lock className="w-4 h-4 text-[#D6B77A]" />
               <span>Password</span>
             </button>
           </div>
@@ -171,20 +171,20 @@ const Profile = () => {
           {/* Content Area */}
           <div className="md:col-span-3">
             {activeTab === 'profile' && (
-              <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#EAE3D9] space-y-6 shadow-sm">
-                <h2 className="font-heading font-black text-lg text-[#000000] border-b border-[#EAE3D9] pb-3">
+              <div className="bg-white p-6 sm:p-10 rounded-3xl border border-[#D6B77A]/30 space-y-6 shadow-sm">
+                <h2 className="font-heading font-black text-xl text-[#21191A] uppercase tracking-tight border-b border-[#D6B77A]/20 pb-4">
                   Personal Information
                 </h2>
 
                 {profileMsg && (
-                  <div className="p-3.5 bg-[#EBF4EF] text-[#000000] text-xs sm:text-sm rounded-2xl border border-[#14382B]/60 font-medium">
+                  <div className="p-4 bg-[#FFF0DC] text-[#790B13] text-xs font-mono rounded-xl border border-[#D6B77A]/40 font-bold">
                     {profileMsg}
                   </div>
                 )}
 
-                <form onSubmit={handleUpdateProfile} className="space-y-4 text-xs sm:text-sm font-sans">
+                <form onSubmit={handleUpdateProfile} className="space-y-5 text-xs font-sans">
                   <div>
-                    <label className="block text-xs font-semibold text-[#555555] mb-1.5">
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                       Full Name
                     </label>
                     <input
@@ -192,24 +192,24 @@ const Profile = () => {
                       required
                       value={name}
                       onChange={(e) => setName(e.target.value)}
-                      className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-2xl px-4 py-3 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000] transition-colors"
+                      className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] transition-colors"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-[#555555] mb-1.5">
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                       Email Address (Account Identifier)
                     </label>
                     <input
                       type="email"
                       disabled
                       value={user?.email || ''}
-                      className="w-full bg-[#FAF7F2]/50 border border-[#EAE3D9] rounded-2xl px-4 py-3 text-xs sm:text-sm text-[#555555] cursor-not-allowed opacity-80"
+                      className="w-full bg-[#FFF9F2]/50 border border-[#D6B77A]/20 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-[#21191A]/50 cursor-not-allowed"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-[#555555] mb-1.5">
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                       Contact Phone Number
                     </label>
                     <input
@@ -217,16 +217,17 @@ const Profile = () => {
                       value={phone}
                       onChange={(e) => setPhone(e.target.value)}
                       placeholder="+91 98250 12345"
-                      className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-2xl px-4 py-3 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000] transition-colors"
+                      className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] transition-colors"
                     />
                   </div>
 
                   <div className="pt-2">
                     <button
                       type="submit"
-                      className="bg-[#C84B20] hover:bg-[#A33A16] text-white px-7 py-3 rounded-full text-xs sm:text-sm font-semibold transition-all shadow-md shadow-[#C84B20]/25 active:scale-98 cursor-pointer"
+                      className="bg-[#790B13] hover:bg-[#50000D] text-[#FFF0DC] px-8 py-4 rounded-full text-xs font-mono uppercase tracking-widest font-bold transition-all shadow-md shadow-[#790B13]/25 active:scale-98 cursor-pointer flex items-center gap-2 group"
                     >
-                      Save Profile Details
+                      <span>Save Patron Details</span>
+                      <ArrowRight className="w-4 h-4 text-[#D6B77A] group-hover:translate-x-1 transition-transform" />
                     </button>
                   </div>
                 </form>
@@ -234,16 +235,16 @@ const Profile = () => {
             )}
 
             {activeTab === 'addresses' && (
-              <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#EAE3D9] space-y-6 shadow-sm">
-                <div className="flex justify-between items-center border-b border-[#EAE3D9] pb-3">
-                  <h2 className="font-heading font-black text-lg text-[#000000]">
+              <div className="bg-white p-6 sm:p-10 rounded-3xl border border-[#D6B77A]/30 space-y-6 shadow-sm">
+                <div className="flex justify-between items-center border-b border-[#D6B77A]/20 pb-4">
+                  <h2 className="font-heading font-black text-xl text-[#21191A] uppercase tracking-tight">
                     Saved Delivery Addresses
                   </h2>
                   <button
                     onClick={() => setShowAddAddress(!showAddAddress)}
-                    className="bg-[#000000] hover:bg-[#1a1a1a] text-[#14382B] text-xs font-semibold px-4 py-2 rounded-full flex items-center gap-1.5 cursor-pointer transition-colors shadow-xs"
+                    className="bg-[#790B13] hover:bg-[#50000D] text-[#FFF0DC] text-xs font-mono uppercase tracking-wider font-bold px-5 py-2.5 rounded-full flex items-center gap-1.5 cursor-pointer transition-colors shadow-xs"
                   >
-                    <Plus className="w-3.5 h-3.5" />
+                    <Plus className="w-3.5 h-3.5 text-[#D6B77A]" />
                     <span>{showAddAddress ? 'Close Form' : 'Add New'}</span>
                   </button>
                 </div>
@@ -252,14 +253,14 @@ const Profile = () => {
                 {showAddAddress && (
                   <form
                     onSubmit={handleAddAddress}
-                    className="bg-[#FAF7F2] p-5 sm:p-6 rounded-2xl border border-[#EAE3D9] space-y-4 text-xs sm:text-sm"
+                    className="bg-[#FFF9F2] p-6 rounded-2xl border border-[#D6B77A]/30 space-y-4 text-xs"
                   >
-                    <span className="font-heading font-black text-sm text-[#000000] block">
+                    <span className="font-heading font-black text-sm uppercase text-[#21191A] block">
                       New Address Entry
                     </span>
-                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-3">
+                    <div className="grid grid-cols-1 sm:grid-cols-2 gap-4">
                       <div>
-                        <label className="block text-xs font-semibold text-[#555555] mb-1">Full Name *</label>
+                        <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-1.5">Full Name *</label>
                         <input
                           type="text"
                           required
@@ -267,11 +268,11 @@ const Profile = () => {
                           onChange={(e) =>
                             setNewAddress({ ...newAddress, fullName: e.target.value })
                           }
-                          className="w-full bg-white border border-[#EAE3D9] rounded-xl px-3 py-2.5 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000]"
+                          className="w-full bg-white border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs text-[#21191A] focus:outline-none focus:border-[#790B13]"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-[#555555] mb-1">Phone *</label>
+                        <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-1.5">Phone *</label>
                         <input
                           type="tel"
                           required
@@ -279,13 +280,13 @@ const Profile = () => {
                           onChange={(e) =>
                             setNewAddress({ ...newAddress, phone: e.target.value })
                           }
-                          className="w-full bg-white border border-[#EAE3D9] rounded-xl px-3 py-2.5 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000]"
+                          className="w-full bg-white border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs text-[#21191A] focus:outline-none focus:border-[#790B13]"
                         />
                       </div>
                     </div>
 
                     <div>
-                      <label className="block text-xs font-semibold text-[#555555] mb-1">Street Address *</label>
+                      <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-1.5">Street Address *</label>
                       <input
                         type="text"
                         required
@@ -293,35 +294,35 @@ const Profile = () => {
                         onChange={(e) =>
                           setNewAddress({ ...newAddress, addressLine1: e.target.value })
                         }
-                        className="w-full bg-white border border-[#EAE3D9] rounded-xl px-3 py-2.5 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000]"
+                        className="w-full bg-white border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs text-[#21191A] focus:outline-none focus:border-[#790B13]"
                       />
                     </div>
 
                     <div className="grid grid-cols-3 gap-3">
                       <div>
-                        <label className="block text-xs font-semibold text-[#555555] mb-1">City</label>
+                        <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-1.5">City</label>
                         <input
                           type="text"
                           value={newAddress.city}
                           onChange={(e) =>
                             setNewAddress({ ...newAddress, city: e.target.value })
                           }
-                          className="w-full bg-white border border-[#EAE3D9] rounded-xl px-3 py-2.5 text-xs sm:text-sm text-[#000000]"
+                          className="w-full bg-white border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs text-[#21191A]"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-[#555555] mb-1">State</label>
+                        <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-1.5">State</label>
                         <input
                           type="text"
                           value={newAddress.state}
                           onChange={(e) =>
                             setNewAddress({ ...newAddress, state: e.target.value })
                           }
-                          className="w-full bg-white border border-[#EAE3D9] rounded-xl px-3 py-2.5 text-xs sm:text-sm text-[#000000]"
+                          className="w-full bg-white border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs text-[#21191A]"
                         />
                       </div>
                       <div>
-                        <label className="block text-xs font-semibold text-[#555555] mb-1">Pincode *</label>
+                        <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-1.5">Pincode *</label>
                         <input
                           type="text"
                           required
@@ -329,22 +330,22 @@ const Profile = () => {
                           onChange={(e) =>
                             setNewAddress({ ...newAddress, pincode: e.target.value })
                           }
-                          className="w-full bg-white border border-[#EAE3D9] rounded-xl px-3 py-2.5 text-xs sm:text-sm text-[#000000]"
+                          className="w-full bg-white border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs text-[#21191A]"
                         />
                       </div>
                     </div>
 
-                    <div className="flex gap-2 pt-1">
+                    <div className="flex gap-3 pt-2">
                       <button
                         type="submit"
-                        className="bg-[#000000] hover:bg-[#1a1a1a] text-[#14382B] px-5 py-2.5 rounded-full text-xs font-semibold cursor-pointer shadow-xs"
+                        className="bg-[#790B13] hover:bg-[#50000D] text-[#FFF0DC] px-6 py-2.5 rounded-full text-xs font-mono uppercase tracking-wider font-bold cursor-pointer shadow-xs"
                       >
                         Save Address
                       </button>
                       <button
                         type="button"
                         onClick={() => setShowAddAddress(false)}
-                        className="px-4 py-2.5 border border-[#EAE3D9] text-[#555555] rounded-full text-xs font-semibold hover:bg-white cursor-pointer"
+                        className="px-5 py-2.5 border border-[#D6B77A]/30 text-[#21191A]/70 rounded-full text-xs font-mono uppercase tracking-wider hover:bg-white cursor-pointer"
                       >
                         Cancel
                       </button>
@@ -357,29 +358,29 @@ const Profile = () => {
                   {addresses.map((addr) => (
                     <div
                       key={addr._id}
-                      className="p-5 rounded-2xl border border-[#EAE3D9] bg-[#FAF7F2] flex flex-col justify-between"
+                      className="p-6 rounded-2xl border border-[#D6B77A]/30 bg-[#FFF9F2] flex flex-col justify-between hover:border-[#790B13]/40 transition-colors shadow-xs"
                     >
                       <div>
-                        <div className="flex justify-between items-center mb-1">
-                          <span className="font-heading font-bold text-sm text-[#000000]">{addr.fullName}</span>
+                        <div className="flex justify-between items-center mb-2">
+                          <span className="font-heading font-black text-sm uppercase text-[#21191A]">{addr.fullName}</span>
                           {addr.isDefault && (
-                            <span className="text-[10px] bg-[#14382B] text-[#000000] font-bold uppercase px-2 py-0.5 rounded-full">
+                            <span className="text-[10px] font-mono bg-[#FFF0DC] border border-[#D6B77A]/40 text-[#790B13] font-bold uppercase px-2.5 py-0.5 rounded-full">
                               Default
                             </span>
                           )}
                         </div>
-                        <p className="text-xs text-[#555555] leading-relaxed font-sans">
+                        <p className="text-xs text-[#21191A]/70 leading-relaxed font-sans">
                           {addr.addressLine1}
                           {addr.addressLine2 ? `, ${addr.addressLine2}` : ''}<br />
                           {addr.city}, {addr.state} - {addr.pincode}<br />
-                          <span className="mt-1 block font-medium text-[#000000]">Phone: {addr.phone}</span>
+                          <span className="mt-2 block font-mono text-[#21191A] font-bold">Phone: {addr.phone}</span>
                         </p>
                       </div>
 
-                      <div className="pt-3 border-t border-[#EAE3D9] mt-3 flex justify-end">
+                      <div className="pt-4 border-t border-[#D6B77A]/20 mt-4 flex justify-end">
                         <button
                           onClick={() => handleDeleteAddress(addr._id)}
-                          className="text-[#555555] hover:text-[#C84B20] text-xs font-semibold flex items-center gap-1 cursor-pointer transition-colors"
+                          className="text-[#21191A]/50 hover:text-[#790B13] text-xs font-mono uppercase tracking-wider flex items-center gap-1 cursor-pointer transition-colors"
                         >
                           <Trash2 className="w-3.5 h-3.5" /> Delete
                         </button>
@@ -391,25 +392,25 @@ const Profile = () => {
             )}
 
             {activeTab === 'password' && (
-              <div className="bg-white p-6 sm:p-8 rounded-3xl border border-[#EAE3D9] space-y-6 shadow-sm">
-                <h2 className="font-heading font-black text-lg text-[#000000] border-b border-[#EAE3D9] pb-3">
-                  Change Password
+              <div className="bg-white p-6 sm:p-10 rounded-3xl border border-[#D6B77A]/30 space-y-6 shadow-sm">
+                <h2 className="font-heading font-black text-xl text-[#21191A] uppercase tracking-tight border-b border-[#D6B77A]/20 pb-4">
+                  Security & Password
                 </h2>
 
                 {passwordMsg && (
-                  <div className="p-3.5 bg-[#EBF4EF] text-[#000000] text-xs sm:text-sm rounded-2xl border border-[#14382B]/60 font-medium">
+                  <div className="p-4 bg-[#FFF0DC] text-[#790B13] text-xs font-mono rounded-xl border border-[#D6B77A]/40 font-bold">
                     {passwordMsg}
                   </div>
                 )}
                 {passwordErr && (
-                  <div className="p-3.5 bg-rose-50 text-rose-800 text-xs sm:text-sm rounded-2xl border border-rose-200 font-medium">
+                  <div className="p-4 bg-rose-50 text-rose-800 text-xs font-mono rounded-xl border border-rose-200 font-medium">
                     {passwordErr}
                   </div>
                 )}
 
-                <form onSubmit={handleChangePassword} className="space-y-4 max-w-md text-xs sm:text-sm font-sans">
+                <form onSubmit={handleChangePassword} className="space-y-4 max-w-md text-xs font-sans">
                   <div>
-                    <label className="block text-xs font-semibold text-[#555555] mb-1.5">
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                       Current Password
                     </label>
                     <input
@@ -417,12 +418,12 @@ const Profile = () => {
                       required
                       value={currentPassword}
                       onChange={(e) => setCurrentPassword(e.target.value)}
-                      className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-2xl px-4 py-3 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000] transition-colors"
+                      className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] transition-colors"
                     />
                   </div>
 
                   <div>
-                    <label className="block text-xs font-semibold text-[#555555] mb-1.5">
+                    <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
                       New Password (min. 6 characters)
                     </label>
                     <input
@@ -430,14 +431,14 @@ const Profile = () => {
                       required
                       value={newPassword}
                       onChange={(e) => setNewPassword(e.target.value)}
-                      className="w-full bg-[#FAF7F2] border border-[#EAE3D9] rounded-2xl px-4 py-3 text-xs sm:text-sm text-[#000000] focus:outline-none focus:border-[#000000] transition-colors"
+                      className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3.5 text-xs sm:text-sm text-[#21191A] focus:outline-none focus:border-[#790B13] transition-colors"
                     />
                   </div>
 
                   <div className="pt-2">
                     <button
                       type="submit"
-                      className="bg-[#C84B20] hover:bg-[#A33A16] text-white px-7 py-3 rounded-full text-xs sm:text-sm font-semibold transition-all shadow-md shadow-[#C84B20]/25 active:scale-98 cursor-pointer"
+                      className="bg-[#790B13] hover:bg-[#50000D] text-[#FFF0DC] px-8 py-4 rounded-full text-xs font-mono uppercase tracking-widest font-bold transition-all shadow-md shadow-[#790B13]/25 active:scale-98 cursor-pointer"
                     >
                       Update Password
                     </button>

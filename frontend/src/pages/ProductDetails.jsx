@@ -16,9 +16,10 @@ import {
   MessageCircle,
   X,
   ArrowRight,
-  Leaf,
   ShieldCheck,
   Sparkles,
+  Package,
+  Clock,
 } from 'lucide-react';
 
 const ProductDetails = () => {
@@ -76,8 +77,8 @@ const ProductDetails = () => {
 
   if (loading) {
     return (
-      <div className="py-32 text-center font-heading text-xs text-[#6E675F] font-bold">
-        <div className="w-8 h-8 border-2 border-[#14382B] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
+      <div className="py-32 text-center font-heading text-xs text-[#21191A]/70 font-bold uppercase tracking-wider">
+        <div className="w-8 h-8 border-2 border-[#790B13] border-t-transparent rounded-full animate-spin mx-auto mb-4" />
         <p>Loading Snack Dossier...</p>
       </div>
     );
@@ -86,13 +87,13 @@ const ProductDetails = () => {
   if (!product) {
     return (
       <div className="max-w-md mx-auto py-24 px-4 text-center font-heading">
-        <h2 className="font-bold text-2xl text-[#1C1815]">Product Not Found</h2>
-        <p className="text-xs text-[#6E675F] font-sans mt-2 mb-6">
+        <h2 className="font-editorial text-3xl font-bold text-[#50000D]">Snack Not Found</h2>
+        <p className="text-xs text-[#21191A]/70 font-sans mt-2 mb-6">
           The requested snack entry could not be located in our kitchen registry.
         </p>
         <Link
           to="/snacks"
-          className="bg-[#C84B20] hover:bg-[#A33A16] text-white text-xs font-heading font-bold px-6 py-3 rounded-full shadow-warm-glow"
+          className="bg-[#50000D] hover:bg-[#790B13] text-[#FFF0DC] text-xs font-heading font-bold uppercase tracking-wider px-6 py-3 rounded-full shadow-md"
         >
           Browse All Snacks
         </Link>
@@ -152,32 +153,34 @@ const ProductDetails = () => {
   ];
 
   return (
-    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-10 sm:py-16 font-sans text-[#1C1815] space-y-16">
+    <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-12 sm:py-16 font-sans text-[#21191A] space-y-16">
+      
       {/* Breadcrumb Navigation */}
-      <nav className="font-heading text-xs font-semibold text-[#6E675F] flex items-center gap-2">
-        <Link to="/" className="hover:text-[#1C1815]">Home</Link>
+      <nav className="font-heading text-xs uppercase tracking-wider text-[#21191A]/60 flex items-center gap-2">
+        <Link to="/" className="hover:text-[#790B13]">Home</Link>
         <span>/</span>
-        <Link to="/snacks" className="hover:text-[#1C1815]">Shop</Link>
+        <Link to="/snacks" className="hover:text-[#790B13]">Shop</Link>
         <span>/</span>
-        <span className="text-[#14382B] font-bold">{product.name}</span>
+        <span className="text-[#50000D] font-bold">{product.name}</span>
       </nav>
 
       {/* Product Presentation Section */}
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-start">
+        
         {/* Left: Product Gallery */}
         <div className="lg:col-span-6 space-y-4">
-          <div className="aspect-square bg-white rounded-3xl border border-[#EAE3D9] relative overflow-hidden shadow-gourmet p-6 flex items-center justify-center">
+          <div className="aspect-square bg-[#FFF9F2] rounded-3xl border border-[#D6B77A]/30 relative overflow-hidden shadow-sm p-6 flex items-center justify-center">
             <img
               src={selectedImage || '/images/snacks/tikha-gathiya.jpg'}
               alt={product.name}
-              className="w-full h-full object-cover rounded-2xl"
+              className="w-full h-full object-cover rounded-2xl shadow-xs"
             />
             <button
               onClick={() => toggleWishlist(product._id)}
-              className="absolute top-4 right-4 p-2.5 bg-white/90 backdrop-blur-xs rounded-full border border-[#EAE3D9] text-[#6E675F] hover:text-[#C84B20] hover:border-[#C84B20] transition-all cursor-pointer shadow-xs"
+              className="absolute top-4 right-4 p-2.5 bg-white/90 backdrop-blur-xs rounded-full border border-[#D6B77A]/30 text-[#21191A]/50 hover:text-[#790B13] hover:border-[#790B13]/40 transition-all cursor-pointer shadow-xs"
               title="Add to Wishlist"
             >
-              <Heart className={`w-4 h-4 ${isFavorited ? 'fill-[#C84B20] text-[#C84B20]' : ''}`} />
+              <Heart className={`w-4 h-4 ${isFavorited ? 'fill-[#790B13] text-[#790B13]' : ''}`} />
             </button>
           </div>
 
@@ -189,7 +192,7 @@ const ProductDetails = () => {
                   key={i}
                   onClick={() => setSelectedImage(img.url)}
                   className={`w-20 h-20 bg-white rounded-2xl border-2 p-1.5 transition-all shrink-0 cursor-pointer ${
-                    selectedImage === img.url ? 'border-[#14382B] shadow-xs' : 'border-[#EAE3D9] opacity-70 hover:opacity-100'
+                    selectedImage === img.url ? 'border-[#50000D] shadow-xs' : 'border-[#D6B77A]/30 opacity-70 hover:opacity-100'
                   }`}
                 >
                   <img src={img.url} alt="" className="w-full h-full object-cover rounded-xl" />
@@ -199,51 +202,51 @@ const ProductDetails = () => {
           )}
 
           {/* Technical Quality Strip */}
-          <div className="grid grid-cols-2 gap-3 font-heading text-xs">
-            <div className="bg-[#EBF4EF] p-4 rounded-2xl border border-[#EAE3D9] space-y-0.5">
-              <span className="text-[11px] text-[#6E675F] font-semibold block flex items-center gap-1">
-                <Leaf className="w-3.5 h-3.5 text-[#14382B]" /> Cooking Medium
+          <div className="grid grid-cols-2 gap-3 font-heading text-xs uppercase tracking-wider">
+            <div className="bg-[#FFF0DC] p-4 rounded-2xl border border-[#D6B77A]/30 space-y-0.5">
+              <span className="text-[10px] text-[#21191A]/70 font-semibold block flex items-center gap-1">
+                <Sparkles className="w-3.5 h-3.5 text-[#790B13]" /> Frying Medium
               </span>
-              <span className="font-bold text-[#14382B] block text-sm">100% Pure Sing-Tel</span>
+              <span className="font-bold text-[#50000D] block text-xs">100% Pure Sing-Tel</span>
             </div>
-            <div className="bg-[#EBF4EF] p-4 rounded-2xl border border-[#EAE3D9] space-y-0.5">
-              <span className="text-[11px] text-[#6E675F] font-semibold block flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5 text-[#D89B2B]" /> Batch Freshness
+            <div className="bg-[#FFF0DC] p-4 rounded-2xl border border-[#D6B77A]/30 space-y-0.5">
+              <span className="text-[10px] text-[#21191A]/70 font-semibold block flex items-center gap-1">
+                <Clock className="w-3.5 h-3.5 text-[#790B13]" /> Batch Schedule
               </span>
-              <span className="font-bold text-[#14382B] block text-sm">Daily Morning Frying</span>
+              <span className="font-bold text-[#50000D] block text-xs">Fresh Morning Kadai</span>
             </div>
           </div>
         </div>
 
         {/* Right: Product Dossier & Purchase Engine */}
         <div className="lg:col-span-6 space-y-6">
-          <div className="border-b border-[#EAE3D9] pb-6 space-y-2">
-            <div className="flex items-center justify-between text-xs font-heading font-semibold text-[#6E675F]">
-              <span className="bg-[#EBF4EF] text-[#14382B] font-bold px-2.5 py-0.5 rounded-full text-[11px]">
+          <div className="border-b border-[#D6B77A]/30 pb-6 space-y-2">
+            <div className="flex items-center justify-between text-xs font-heading font-bold text-[#790B13]">
+              <span className="bg-[#FFF0DC] text-[#790B13] border border-[#D6B77A]/30 px-3 py-1 rounded-full uppercase tracking-wider text-[10px]">
                 {product.category?.name || 'Kathiyawadi Nasta'}
               </span>
-              <span className="font-mono text-[#14382B] font-bold text-sm">₹{product.pricePerKg}/kg</span>
+              <span className="font-mono text-[#50000D] font-bold text-sm bg-[#FFF0DC] px-2.5 py-0.5 rounded-md">₹{product.pricePerKg}/kg</span>
             </div>
 
-            <h1 className="font-heading font-black text-3xl sm:text-5xl text-[#14382B] tracking-tight">
+            <h1 className="font-editorial text-3xl sm:text-5xl text-[#50000D] font-bold tracking-tight">
               {language === 'gu' && product.nameGujarati ? product.nameGujarati : product.name}
             </h1>
 
             {/* Ratings summary */}
-            <div className="flex items-center gap-2 pt-1 font-heading text-xs text-[#6E675F]">
-              <div className="flex text-[#D89B2B]">
+            <div className="flex items-center gap-2 pt-1 font-heading text-xs text-[#21191A]/70">
+              <div className="flex text-[#D6B77A]">
                 {[...Array(5)].map((_, i) => (
                   <Star
                     key={i}
                     className={`w-4 h-4 ${
                       i < Math.round(product.ratings?.average || 5)
-                        ? 'fill-[#D89B2B] text-[#D89B2B]'
-                        : 'text-[#EAE3D9]'
+                        ? 'fill-[#D6B77A] text-[#D6B77A]'
+                        : 'text-stone-300'
                     }`}
                   />
                 ))}
               </div>
-              <span className="font-bold text-[#1C1815]">
+              <span className="font-bold text-[#50000D]">
                 {product.ratings?.average > 0 ? product.ratings.average.toFixed(1) : '5.0'}
               </span>
               <span>•</span>
@@ -252,15 +255,15 @@ const ProductDetails = () => {
           </div>
 
           {/* Description */}
-          <p className="text-sm text-[#6E675F] font-sans leading-relaxed">
+          <p className="text-sm text-[#21191A]/80 font-sans leading-relaxed">
             {product.description}
           </p>
 
           {/* Weight Selection & Pricing Form */}
-          <div className="p-6 bg-white rounded-3xl border border-[#EAE3D9] shadow-gourmet space-y-5 font-heading">
-            <div className="flex items-center justify-between text-xs font-bold text-[#1C1815]">
+          <div className="p-6 bg-[#FFF9F2] rounded-3xl border border-[#D6B77A]/30 shadow-sm space-y-5 font-heading">
+            <div className="flex items-center justify-between text-xs font-bold uppercase tracking-wider text-[#50000D]">
               <span>Select Pack Weight:</span>
-              <span className="text-[#C84B20]">Dynamic Grams Pricing</span>
+              <span className="text-[#790B13] text-[11px]">Dynamic Grams Pricing</span>
             </div>
 
             {/* Weight Options Grid */}
@@ -275,8 +278,8 @@ const ProductDetails = () => {
                     onClick={() => setSelectedWeight(opt.weightGrams)}
                     className={`p-3 rounded-2xl border text-center transition-all cursor-pointer ${
                       isSel
-                        ? 'bg-[#14382B] text-white border-[#14382B] shadow-sm'
-                        : 'bg-[#FAF7F2] text-[#1C1815] border-[#EAE3D9] hover:border-[#14382B]'
+                        ? 'bg-[#50000D] text-[#FFF0DC] border-[#D6B77A]/40 shadow-xs'
+                        : 'bg-[#FFF0DC]/60 text-[#21191A] border-[#D6B77A]/30 hover:border-[#790B13]'
                     }`}
                   >
                     <span className="block font-bold text-xs">{opt.label || `${opt.weightGrams}g`}</span>
@@ -289,35 +292,35 @@ const ProductDetails = () => {
             </div>
 
             {/* Quantity and Calculated Price */}
-            <div className="pt-4 border-t border-[#EAE3D9] flex items-center justify-between">
+            <div className="pt-4 border-t border-[#D6B77A]/20 flex items-center justify-between">
               <div>
-                <span className="text-xs text-[#6E675F] font-medium block">
-                  Total Price:
+                <span className="text-[11px] uppercase tracking-wider text-[#21191A]/60 font-bold block">
+                  Total Calculated Price:
                 </span>
                 <div className="flex items-baseline gap-2">
-                  <span className="text-3xl font-black text-[#C84B20]">
+                  <span className="text-3xl font-black text-[#790B13]">
                     ₹{totalPrice}
                   </span>
-                  <span className="text-xs text-[#6E675F]">
+                  <span className="text-xs text-[#21191A]/60 font-sans">
                     ({quantity} × {selectedWeight >= 1000 ? `${selectedWeight / 1000}kg` : `${selectedWeight}g`})
                   </span>
                 </div>
               </div>
 
               {/* Quantity Counter */}
-              <div className="flex items-center border border-[#EAE3D9] rounded-full bg-[#FAF7F2]">
+              <div className="flex items-center border border-[#D6B77A]/40 rounded-full bg-white">
                 <button
                   type="button"
                   onClick={() => setQuantity(Math.max(1, quantity - 1))}
-                  className="p-2 px-3 text-[#1C1815] hover:bg-[#EAE3D9] rounded-l-full cursor-pointer transition-colors"
+                  className="p-2 px-3 text-[#21191A] hover:bg-[#FFF0DC] rounded-l-full cursor-pointer transition-colors"
                 >
                   <Minus className="w-3.5 h-3.5" />
                 </button>
-                <span className="px-3 text-xs font-mono font-bold text-[#1C1815]">{quantity}</span>
+                <span className="px-3 text-xs font-mono font-bold text-[#21191A]">{quantity}</span>
                 <button
                   type="button"
                   onClick={() => setQuantity(quantity + 1)}
-                  className="p-2 px-3 text-[#1C1815] hover:bg-[#EAE3D9] rounded-r-full cursor-pointer transition-colors"
+                  className="p-2 px-3 text-[#21191A] hover:bg-[#FFF0DC] rounded-r-full cursor-pointer transition-colors"
                 >
                   <Plus className="w-3.5 h-3.5" />
                 </button>
@@ -329,19 +332,19 @@ const ProductDetails = () => {
               <button
                 type="button"
                 onClick={handleAddToCart}
-                className={`py-4 px-6 text-sm font-bold rounded-full flex items-center justify-center gap-2 shadow-warm-glow transition-all cursor-pointer ${
+                className={`py-4 px-6 text-xs font-heading font-bold uppercase tracking-wider rounded-full flex items-center justify-center gap-2 shadow-md transition-all cursor-pointer ${
                   addedNotice
-                    ? 'bg-[#14382B] text-[#F7C04A]'
-                    : 'bg-[#C84B20] hover:bg-[#A33A16] text-white hover:scale-102'
+                    ? 'bg-[#174D35] text-white'
+                    : 'bg-[#50000D] hover:bg-[#790B13] text-[#FFF0DC] border border-[#D6B77A]/40'
                 }`}
               >
                 {addedNotice ? (
                   <>
-                    <Check className="w-4 h-4 text-[#F7C04A]" />
-                    <span>Added to Dabba!</span>
+                    <Check className="w-4 h-4 text-white" />
+                    <span>Added to Bag!</span>
                   </>
                 ) : (
-                  <span>Add to Dabba • ₹{totalPrice}</span>
+                  <span>Add to Bag • ₹{totalPrice}</span>
                 )}
               </button>
 
@@ -349,40 +352,40 @@ const ProductDetails = () => {
                 href={productWhatsappUrl}
                 target="_blank"
                 rel="noopener noreferrer"
-                className="py-4 px-6 border border-[#EAE3D9] hover:bg-[#FAF7F2] text-[#14382B] rounded-full text-xs font-bold flex items-center justify-center gap-2 transition-colors text-center cursor-pointer"
+                className="py-4 px-6 border border-[#D6B77A]/40 bg-white hover:bg-[#FFF0DC] text-[#50000D] rounded-full text-xs font-heading font-bold uppercase tracking-wider flex items-center justify-center gap-2 transition-colors text-center cursor-pointer shadow-xs"
               >
-                <MessageCircle className="w-4 h-4 text-[#14382B]" />
+                <MessageCircle className="w-4 h-4 text-[#790B13]" />
                 <span>WhatsApp Order</span>
               </a>
             </div>
           </div>
 
           {/* Technical Specs & Handling Details */}
-          <div className="border border-[#EAE3D9] rounded-3xl p-5 bg-[#EBF4EF] space-y-3 text-xs font-sans">
-            <h2 className="font-heading font-bold text-sm text-[#14382B] border-b border-[#EAE3D9] pb-2 flex items-center gap-2">
-              <ShieldCheck className="w-4 h-4 text-[#14382B]" /> Verified Kitchen & Quality Specifications
+          <div className="border border-[#D6B77A]/30 rounded-3xl p-6 bg-[#FFF0DC]/40 space-y-3.5 text-xs font-sans">
+            <h2 className="font-heading font-bold text-xs uppercase tracking-wider text-[#50000D] border-b border-[#D6B77A]/20 pb-2.5 flex items-center gap-2">
+              <ShieldCheck className="w-4 h-4 text-[#790B13]" /> Verified Quality & Preparation Dossier
             </h2>
-            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3 text-[#6E675F]">
+            <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-[#21191A]/75">
               <div>
-                <span className="font-heading font-bold text-[#1C1815] block">Batch Routine:</span>
-                Fried fresh each morning in Rajkot
+                <span className="font-heading font-bold text-[#50000D] uppercase tracking-wider text-[10px] block">Fresh Routine:</span>
+                Fried fresh daily in Rajkot kitchen
               </div>
               <div>
-                <span className="font-heading font-bold text-[#1C1815] block">Shelf Life:</span>
+                <span className="font-heading font-bold text-[#50000D] uppercase tracking-wider text-[10px] block">Shelf Life:</span>
                 {product.shelfLife || '60 days from packaging'}
               </div>
               <div>
-                <span className="font-heading font-bold text-[#1C1815] block">Packaging Standard:</span>
-                Moisture-sealed food-grade barrier pouch
+                <span className="font-heading font-bold text-[#50000D] uppercase tracking-wider text-[10px] block">Packaging Standard:</span>
+                Moisture-sealed food-grade zip-lock pouch
               </div>
               <div>
-                <span className="font-heading font-bold text-[#1C1815] block">Groundnut Oil:</span>
+                <span className="font-heading font-bold text-[#50000D] uppercase tracking-wider text-[10px] block">Groundnut Oil:</span>
                 100% Saurashtra Sing-Tel (Unblended)
               </div>
             </div>
             {product.storageInstructions && (
-              <p className="text-xs text-[#6E675F] pt-2 border-t border-[#EAE3D9]">
-                <span className="font-heading font-bold text-[#1C1815]">Storage:</span> {product.storageInstructions}
+              <p className="text-xs text-[#21191A]/75 pt-2 border-t border-[#D6B77A]/20">
+                <span className="font-heading font-bold text-[#50000D] uppercase tracking-wider text-[10px]">Storage:</span> {product.storageInstructions}
               </p>
             )}
           </div>
@@ -390,27 +393,27 @@ const ProductDetails = () => {
       </div>
 
       {/* Verified Reviews Section */}
-      <section className="border-t border-[#EAE3D9] pt-12 space-y-8 font-sans">
-        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-[#EAE3D9] pb-4">
+      <section className="border-t border-[#D6B77A]/30 pt-14 space-y-8 font-sans">
+        <div className="flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4 border-b border-[#D6B77A]/20 pb-4">
           <div>
-            <span className="font-heading text-xs font-black uppercase tracking-wider text-[#C84B20] block">
-              Customer Voices
+            <span className="font-heading text-xs font-bold uppercase tracking-widest text-[#790B13] block">
+              Patron Testimonials
             </span>
-            <h2 className="font-heading font-black text-2xl sm:text-3xl text-[#14382B] tracking-tight">
-              Customer Reviews ({reviews.length})
+            <h2 className="font-editorial text-3xl sm:text-4xl text-[#50000D] font-bold tracking-tight">
+              Verified Customer Reviews ({reviews.length})
             </h2>
           </div>
 
           <button
             onClick={() => setShowReviewModal(true)}
-            className="bg-[#14382B] hover:bg-[#0D261C] text-white text-xs font-heading font-bold px-6 py-2.5 rounded-full transition-colors cursor-pointer shadow-xs"
+            className="bg-[#50000D] hover:bg-[#790B13] text-[#FFF0DC] text-xs font-heading font-bold uppercase tracking-wider px-6 py-2.5 rounded-full border border-[#D6B77A]/40 transition-colors cursor-pointer shadow-xs"
           >
-            Submit Feedback
+            Submit Review
           </button>
         </div>
 
         {reviews.length === 0 ? (
-          <div className="text-center py-12 text-[#6E675F] text-xs font-heading">
+          <div className="text-center py-12 text-[#21191A]/60 text-xs font-heading">
             No reviews registered yet. Be the first to submit verified feedback!
           </div>
         ) : (
@@ -418,31 +421,31 @@ const ProductDetails = () => {
             {reviews.map((rev) => (
               <div
                 key={rev._id}
-                className="p-5 bg-white rounded-3xl border border-[#EAE3D9] shadow-gourmet space-y-2.5"
+                className="p-6 bg-[#FFF9F2] rounded-3xl border border-[#D6B77A]/30 shadow-xs space-y-3"
               >
                 <div className="flex items-center justify-between">
-                  <div className="flex text-[#D89B2B]">
+                  <div className="flex text-[#D6B77A]">
                     {[...Array(5)].map((_, i) => (
                       <Star
                         key={i}
                         className={`w-3.5 h-3.5 ${
-                          i < rev.rating ? 'fill-[#D89B2B] text-[#D89B2B]' : 'text-[#EAE3D9]'
+                          i < rev.rating ? 'fill-[#D6B77A] text-[#D6B77A]' : 'text-stone-300'
                         }`}
                       />
                     ))}
                   </div>
-                  <span className="font-mono text-[10px] text-[#6E675F]">
+                  <span className="font-mono text-[10px] text-[#21191A]/60">
                     {new Date(rev.createdAt).toLocaleDateString()}
                   </span>
                 </div>
                 {rev.title && (
-                  <h4 className="font-heading font-bold text-sm text-[#1C1815]">{rev.title}</h4>
+                  <h4 className="font-heading font-bold text-sm text-[#50000D]">{rev.title}</h4>
                 )}
-                <p className="text-xs text-[#6E675F] leading-relaxed font-sans">{rev.comment}</p>
-                <div className="pt-2 border-t border-[#EAE3D9] flex items-center justify-between text-xs font-heading">
-                  <span className="font-bold text-[#1C1815]">{rev.userName}</span>
+                <p className="text-xs text-[#21191A]/75 leading-relaxed font-sans">{rev.comment}</p>
+                <div className="pt-2 border-t border-[#D6B77A]/20 flex items-center justify-between text-xs font-heading">
+                  <span className="font-bold text-[#21191A]">{rev.userName}</span>
                   {rev.isVerifiedPurchase && (
-                    <span className="text-[#14382B] bg-[#EBF4EF] px-2 py-0.5 rounded-full text-[10px] font-bold">
+                    <span className="text-[#50000D] bg-[#FFF0DC] border border-[#D6B77A]/30 px-2.5 py-0.5 rounded-full text-[10px] font-bold uppercase tracking-wider">
                       ✓ Verified Buyer
                     </span>
                   )}
@@ -457,34 +460,34 @@ const ProductDetails = () => {
       {showReviewModal && (
         <div className="fixed inset-0 z-50 overflow-y-auto flex items-center justify-center p-4 font-sans">
           <div
-            className="fixed inset-0 bg-[#0F291E]/60 backdrop-blur-xs"
+            className="fixed inset-0 bg-[#3A000A]/75 backdrop-blur-sm"
             onClick={() => setShowReviewModal(false)}
           />
 
-          <div className="relative bg-[#FAF7F2] border border-[#EAE3D9] rounded-3xl max-w-md w-full p-6 shadow-2xl z-10 animate-in fade-in duration-200">
-            <div className="flex justify-between items-center border-b border-[#EAE3D9] pb-3 mb-4">
-              <h3 className="font-heading font-bold text-base text-[#1C1815]">
+          <div className="relative bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-3xl max-w-md w-full p-6 sm:p-7 shadow-2xl z-10 animate-in fade-in duration-200">
+            <div className="flex justify-between items-center border-b border-[#D6B77A]/20 pb-3 mb-4">
+              <h3 className="font-heading font-bold text-sm uppercase tracking-wider text-[#50000D]">
                 Review {product.name}
               </h3>
-              <button onClick={() => setShowReviewModal(false)} className="text-[#6E675F] hover:text-[#1C1815]">
+              <button onClick={() => setShowReviewModal(false)} className="text-[#21191A]/60 hover:text-[#790B13]">
                 <X className="w-5 h-5" />
               </button>
             </div>
 
             {reviewMessage && (
-              <div className="p-3 mb-4 bg-[#EBF4EF] rounded-xl text-xs font-heading font-bold text-[#14382B] border border-[#14382B]/20">
+              <div className="p-3 mb-4 bg-[#FFF0DC] rounded-xl text-xs font-heading font-bold text-[#50000D] border border-[#D6B77A]/30">
                 {reviewMessage}
               </div>
             )}
 
             {!isAuthenticated ? (
               <div className="text-center py-6 font-heading">
-                <p className="text-xs text-[#6E675F] mb-4">
+                <p className="text-xs text-[#21191A]/70 mb-4">
                   Please log in to your account to submit a verified patron review.
                 </p>
                 <Link
                   to="/login"
-                  className="bg-[#C84B20] hover:bg-[#A33A16] text-white text-xs font-bold px-6 py-2.5 rounded-full inline-block shadow-warm-glow"
+                  className="bg-[#50000D] hover:bg-[#790B13] text-[#FFF0DC] text-xs font-bold uppercase tracking-wider px-6 py-2.5 rounded-full inline-block shadow-sm"
                 >
                   Log In
                 </Link>
@@ -492,7 +495,7 @@ const ProductDetails = () => {
             ) : (
               <form onSubmit={handleReviewSubmit} className="space-y-4 font-heading text-xs">
                 <div>
-                  <label className="block text-xs font-bold text-[#1C1815] mb-1">
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#21191A] mb-1">
                     Rating Score
                   </label>
                   <div className="flex gap-1.5">
@@ -506,8 +509,8 @@ const ProductDetails = () => {
                         <Star
                           className={`w-6 h-6 ${
                             star <= reviewRating
-                              ? 'fill-[#D89B2B] text-[#D89B2B]'
-                              : 'text-[#EAE3D9]'
+                              ? 'fill-[#D6B77A] text-[#D6B77A]'
+                              : 'text-stone-300'
                           }`}
                         />
                       </button>
@@ -516,7 +519,7 @@ const ProductDetails = () => {
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#1C1815] mb-1">
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#21191A] mb-1">
                     Review Headline
                   </label>
                   <input
@@ -524,12 +527,12 @@ const ProductDetails = () => {
                     value={reviewTitle}
                     onChange={(e) => setReviewTitle(e.target.value)}
                     placeholder="e.g. Delicious Kathiyawadi crunch!"
-                    className="w-full bg-white border border-[#EAE3D9] rounded-xl p-2.5 text-xs text-[#1C1815] font-sans focus:outline-none focus:border-[#14382B]"
+                    className="w-full bg-white border border-[#D6B77A]/40 rounded-xl p-2.5 text-xs text-[#21191A] font-sans focus:outline-none focus:border-[#790B13]"
                   />
                 </div>
 
                 <div>
-                  <label className="block text-xs font-bold text-[#1C1815] mb-1">
+                  <label className="block text-[11px] font-bold uppercase tracking-wider text-[#21191A] mb-1">
                     Detailed Critique
                   </label>
                   <textarea
@@ -538,7 +541,7 @@ const ProductDetails = () => {
                     value={reviewComment}
                     onChange={(e) => setReviewComment(e.target.value)}
                     placeholder="Describe taste, spice balance, crispness, and aroma..."
-                    className="w-full bg-white border border-[#EAE3D9] rounded-xl p-2.5 text-xs text-[#1C1815] font-sans focus:outline-none focus:border-[#14382B]"
+                    className="w-full bg-white border border-[#D6B77A]/40 rounded-xl p-2.5 text-xs text-[#21191A] font-sans focus:outline-none focus:border-[#790B13]"
                   />
                 </div>
 
@@ -546,14 +549,14 @@ const ProductDetails = () => {
                   <button
                     type="submit"
                     disabled={reviewSubmitting}
-                    className="flex-1 bg-[#C84B20] hover:bg-[#A33A16] text-white py-3 rounded-full font-bold shadow-warm-glow transition-all cursor-pointer"
+                    className="flex-1 bg-[#50000D] hover:bg-[#790B13] text-[#FFF0DC] py-3 rounded-full font-bold uppercase tracking-wider shadow-sm transition-all cursor-pointer border border-[#D6B77A]/40"
                   >
                     {reviewSubmitting ? 'Submitting...' : 'Post Verified Review'}
                   </button>
                   <button
                     type="button"
                     onClick={() => setShowReviewModal(false)}
-                    className="px-5 py-3 border border-[#EAE3D9] rounded-full text-[#6E675F] hover:text-[#1C1815] font-bold cursor-pointer"
+                    className="px-5 py-3 border border-[#D6B77A]/30 rounded-full text-[#21191A]/70 hover:text-[#50000D] font-bold uppercase tracking-wider cursor-pointer"
                   >
                     Cancel
                   </button>
@@ -566,19 +569,19 @@ const ProductDetails = () => {
 
       {/* Related Products Section */}
       {relatedProducts.length > 0 && (
-        <section className="border-t border-[#EAE3D9] pt-12 space-y-8 font-sans">
-          <div className="flex items-center justify-between border-b border-[#EAE3D9] pb-4">
+        <section className="border-t border-[#D6B77A]/30 pt-14 space-y-8 font-sans">
+          <div className="flex items-center justify-between border-b border-[#D6B77A]/20 pb-4">
             <div>
-              <span className="font-heading text-xs font-bold uppercase tracking-wider text-[#14382B] block">
+              <span className="font-heading text-xs font-bold uppercase tracking-widest text-[#790B13] block">
                 Complementary Varieties
               </span>
-              <h2 className="font-heading font-black text-2xl text-[#14382B] tracking-tight">
+              <h2 className="font-editorial text-3xl text-[#50000D] font-bold tracking-tight">
                 Related Gujarati Farsan
               </h2>
             </div>
             <Link
               to="/snacks"
-              className="font-heading text-xs font-bold text-[#C84B20] hover:underline flex items-center gap-1"
+              className="font-heading text-xs font-bold uppercase tracking-wider text-[#790B13] hover:text-[#50000D] flex items-center gap-1"
             >
               <span>View All</span>
               <ArrowRight className="w-3.5 h-3.5" />

@@ -31,7 +31,7 @@ const AdminProducts = () => {
   }, []);
 
   const handleDelete = async (id, name) => {
-    if (!window.confirm(`Are you sure you want to delete ${name}? This will remove it from the store.`)) {
+    if (!window.confirm(`Are you sure you want to delete ${name}? This will remove it from the catalog.`)) {
       return;
     }
     try {
@@ -51,122 +51,122 @@ const AdminProducts = () => {
   );
 
   return (
-    <div className="space-y-8 text-[#000000]">
+    <div className="space-y-8 text-[#21191A] font-sans">
       {/* Editorial Header */}
-      <div className="border-b border-[#EAE3D9] pb-6 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
+      <div className="border-b border-[#D6B77A]/20 pb-8 flex flex-col sm:flex-row justify-between items-start sm:items-end gap-4">
         <div>
-          <div className="inline-flex items-center gap-2 px-3 py-0.5 rounded-full bg-[#14382B] text-[#000000] text-xs font-bold mb-2 shadow-xs">
-            <Sparkles className="w-3.5 h-3.5 text-[#C84B20]" />
+          <div className="inline-flex items-center gap-2 px-3 py-1 rounded-full bg-[#FFF0DC] border border-[#D6B77A]/40 text-[#790B13] text-xs font-mono uppercase tracking-widest mb-2 shadow-xs">
+            <Sparkles className="w-3.5 h-3.5 text-[#D6B77A]" />
             <span>Catalog Management</span>
           </div>
-          <h1 className="font-heading font-black text-3xl sm:text-4xl tracking-tight text-[#000000]">
+          <h1 className="font-heading font-black text-3xl sm:text-5xl tracking-tight text-[#21191A] uppercase">
             Snack Catalog ({products.length})
           </h1>
-          <p className="text-xs sm:text-sm text-[#555555] font-sans mt-1">
+          <p className="text-xs sm:text-sm text-[#21191A]/70 font-sans mt-1">
             Active and archived snack recipes, unit rates per kilogram, and package specifications.
           </p>
         </div>
 
         <Link
           to="/admin/products/new"
-          className="bg-[#000000] hover:bg-[#C84B20] text-white px-5 py-2.5 rounded-full text-xs font-bold uppercase tracking-wider flex items-center gap-2 transition-colors shadow-sm"
+          className="bg-[#790B13] hover:bg-[#50000D] text-[#FFF0DC] px-6 py-3.5 rounded-full text-xs font-mono uppercase tracking-wider font-bold flex items-center gap-2 transition-all shadow-lg shadow-[#790B13]/25"
         >
-          <Plus className="w-4 h-4 text-[#14382B]" />
+          <Plus className="w-4 h-4 text-[#D6B77A]" />
           <span>Add New Snack</span>
         </Link>
       </div>
 
       {/* Search Bar */}
-      <div className="bg-white p-4 rounded-3xl border border-[#EAE3D9] shadow-sm flex items-center gap-3">
-        <Search className="w-4 h-4 text-[#555555]" />
+      <div className="bg-white p-4 rounded-2xl border border-[#D6B77A]/30 shadow-sm flex items-center gap-3">
+        <Search className="w-4 h-4 text-[#790B13]" />
         <input
           type="text"
           value={searchTerm}
           onChange={(e) => setSearchTerm(e.target.value)}
           placeholder="Search snack by title or URL slug..."
-          className="w-full text-xs sm:text-sm bg-transparent focus:outline-none text-[#000000] placeholder-[#555555] font-sans"
+          className="w-full text-xs sm:text-sm bg-transparent focus:outline-none text-[#21191A] placeholder-[#21191A]/40 font-sans"
         />
       </div>
 
       {/* Products Table */}
-      <div className="bg-white border border-[#EAE3D9] rounded-3xl overflow-hidden shadow-sm">
+      <div className="bg-white border border-[#D6B77A]/30 rounded-3xl overflow-hidden shadow-xl">
         {loading ? (
-          <div className="py-20 text-center text-xs text-[#555555] font-heading font-bold uppercase tracking-wider">
+          <div className="py-20 text-center text-xs text-[#790B13] font-mono font-bold uppercase tracking-widest">
             Loading snack database...
           </div>
         ) : filtered.length === 0 ? (
-          <div className="py-20 text-center text-xs text-[#555555] font-sans">
-            No snacks found matching your search.
+          <div className="py-20 text-center text-xs text-[#21191A]/60 font-sans">
+            No snacks found matching your search query.
           </div>
         ) : (
           <div className="overflow-x-auto">
             <table className="w-full text-left text-xs sm:text-sm font-sans">
-              <thead className="bg-[#FAF7F2] text-[#555555] uppercase text-xs tracking-wider border-b border-[#EAE3D9]">
+              <thead className="bg-[#FFF9F2] text-[#21191A]/70 uppercase font-mono text-xs tracking-wider border-b border-[#D6B77A]/20">
                 <tr>
-                  <th className="py-3.5 px-4 font-semibold">Snack Image & Title</th>
-                  <th className="py-3.5 px-4 font-semibold">Category</th>
-                  <th className="py-3.5 px-4 font-semibold">Price / kg</th>
-                  <th className="py-3.5 px-4 font-semibold">Inventory Stock</th>
-                  <th className="py-3.5 px-4 font-semibold">Pack Sizes</th>
-                  <th className="py-3.5 px-4 font-semibold">Labels</th>
-                  <th className="py-3.5 px-4 text-right font-semibold">Actions</th>
+                  <th className="py-4 px-5 font-bold">Snack Image & Title</th>
+                  <th className="py-4 px-5 font-bold">Category</th>
+                  <th className="py-4 px-5 font-bold">Price / kg</th>
+                  <th className="py-4 px-5 font-bold">Inventory Stock</th>
+                  <th className="py-4 px-5 font-bold">Pack Sizes</th>
+                  <th className="py-4 px-5 font-bold">Labels</th>
+                  <th className="py-4 px-5 text-right font-bold">Actions</th>
                 </tr>
               </thead>
-              <tbody className="divide-y divide-[#E5E5E0]">
+              <tbody className="divide-y divide-[#D6B77A]/15 font-mono">
                 {filtered.map((product) => {
                   const stockGrams = product.inventory?.availableGrams ?? 0;
                   const stockKg = (stockGrams / 1000).toFixed(2);
                   const isLow = stockGrams <= 2000;
 
                   return (
-                    <tr key={product._id} className="hover:bg-[#FAF7F2] transition-colors">
-                      <td className="py-4 px-4">
-                        <div className="flex items-center gap-3">
+                    <tr key={product._id} className="hover:bg-[#FFF9F2] transition-colors">
+                      <td className="py-4 px-5">
+                        <div className="flex items-center gap-3.5">
                           <img
                             src={product.images?.[0]?.url || '/images/snacks/tikha-gathiya.jpg'}
                             alt=""
-                            className="w-12 h-12 rounded-xl object-cover border border-[#EAE3D9] shrink-0"
+                            className="w-12 h-12 rounded-xl object-cover border border-[#D6B77A]/30 shrink-0"
                           />
                           <div>
-                            <span className="font-semibold text-sm text-[#000000] block">
+                            <span className="font-heading font-black text-xs sm:text-sm text-[#21191A] uppercase block">
                               {product.name}
                             </span>
-                            <span className="text-xs text-[#555555] font-mono block">
+                            <span className="text-[11px] text-[#21191A]/50 block">
                               /{product.slug}
                             </span>
                           </div>
                         </div>
                       </td>
 
-                      <td className="py-4 px-4 font-bold text-xs text-[#000000]">
+                      <td className="py-4 px-5 font-bold text-xs text-[#21191A]">
                         {product.category?.name || 'Snacks'}
                       </td>
 
-                      <td className="py-4 px-4 font-heading font-black text-sm text-[#000000]">
+                      <td className="py-4 px-5 font-heading font-black text-sm text-[#790B13]">
                         ₹{product.pricePerKg}/kg
                       </td>
 
-                      <td className="py-4 px-4">
+                      <td className="py-4 px-5">
                         <span
-                          className={`font-mono block text-xs ${
-                            isLow ? 'text-[#C84B20] font-bold' : 'text-[#000000] font-bold'
+                          className={`block text-xs ${
+                            isLow ? 'text-rose-700 font-bold' : 'text-[#21191A] font-bold'
                           }`}
                         >
                           {stockKg} kg ({stockGrams} g)
                         </span>
                         {isLow && (
-                          <span className="inline-block mt-0.5 text-xs border border-[#C84B20]/20 bg-[#C84B20]/10 text-[#C84B20] px-2 py-0.5 rounded-full font-bold uppercase">
+                          <span className="inline-block mt-0.5 text-[10px] border border-rose-300 bg-rose-50 text-rose-800 px-2.5 py-0.5 rounded-full font-bold uppercase">
                             Low Stock
                           </span>
                         )}
                       </td>
 
-                      <td className="py-4 px-4 text-[#555555]">
-                        <div className="flex gap-1 flex-wrap max-w-xs font-mono text-xs">
+                      <td className="py-4 px-5 text-[#21191A]/70">
+                        <div className="flex gap-1.5 flex-wrap max-w-xs text-[11px]">
                           {product.weightOptions?.map((w) => (
                             <span
                               key={w.weightGrams}
-                              className="border border-[#EAE3D9] bg-[#FAF7F2] rounded-md px-1.5 py-0.5 text-[#000000]"
+                              className="border border-[#D6B77A]/30 bg-[#FFF9F2] rounded-md px-2 py-0.5 text-[#21191A]"
                             >
                               {w.label}
                             </span>
@@ -174,33 +174,33 @@ const AdminProducts = () => {
                         </div>
                       </td>
 
-                      <td className="py-4 px-4">
-                        <div className="flex gap-1">
+                      <td className="py-4 px-5">
+                        <div className="flex gap-1.5">
                           {product.isBestseller && (
-                            <span className="border border-[#000000] bg-[#000000] text-[#14382B] text-xs font-bold uppercase px-2 py-0.5 rounded-full">
+                            <span className="border border-[#D6B77A]/40 bg-[#FFF0DC] text-[#790B13] text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full">
                               Bestseller
                             </span>
                           )}
                           {product.isCombo && (
-                            <span className="border border-[#C84B20] bg-[#C84B20] text-white text-xs font-bold uppercase px-2 py-0.5 rounded-full">
+                            <span className="border border-[#790B13] bg-[#790B13] text-[#FFF0DC] text-[10px] font-bold uppercase px-2.5 py-0.5 rounded-full">
                               Combo
                             </span>
                           )}
                         </div>
                       </td>
 
-                      <td className="py-4 px-4 text-right">
+                      <td className="py-4 px-5 text-right">
                         <div className="flex justify-end gap-2">
                           <Link
                             to={`/admin/products/edit/${product._id}`}
-                            className="p-2 rounded-xl border border-[#EAE3D9] text-[#000000] hover:border-[#000000] transition-colors"
+                            className="p-2 rounded-xl border border-[#D6B77A]/40 text-[#21191A] hover:border-[#790B13] hover:text-[#790B13] transition-colors"
                             title="Edit Product"
                           >
                             <Edit className="w-3.5 h-3.5" />
                           </Link>
                           <button
                             onClick={() => handleDelete(product._id, product.name)}
-                            className="p-2 rounded-xl border border-[#EAE3D9] text-[#555555] hover:text-[#C84B20] hover:border-[#C84B20] cursor-pointer transition-colors"
+                            className="p-2 rounded-xl border border-[#D6B77A]/40 text-[#21191A]/50 hover:text-rose-700 hover:border-rose-300 cursor-pointer transition-colors"
                             title="Delete Product"
                           >
                             <Trash2 className="w-3.5 h-3.5" />

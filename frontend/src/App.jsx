@@ -56,7 +56,7 @@ import AdminSettings from './pages/admin/AdminSettings';
 // Customer Storefront Layout
 const StorefrontLayout = () => {
   return (
-    <div className="min-h-screen flex flex-col bg-[#FAF9F5] text-[#000000] selection:bg-[#F04400] selection:text-white">
+    <div className="min-h-screen flex flex-col bg-[#FFF9F2] text-[#21191A] selection:bg-[#790B13] selection:text-[#FFF0DC]">
       <AnnouncementBar />
       <Navbar />
       <main className="flex-1">
