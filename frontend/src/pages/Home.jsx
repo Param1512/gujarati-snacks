@@ -5,6 +5,7 @@ import ProductCard from '../components/product/ProductCard';
 import QuickViewModal from '../components/common/QuickViewModal';
 import { useLanguage } from '../context/LanguageContext';
 import { useSettings } from '../context/SettingsContext';
+import { useCart } from '../context/CartContext';
 import {
   Sparkles,
   ArrowRight,
@@ -18,23 +19,98 @@ import {
   Heart,
   Clock,
   Package,
+  Plus,
+  Check,
+  ChevronDown,
+  ShoppingBag,
+  Zap,
 } from 'lucide-react';
+
+const HERO_FEATURED_SNACKS = [
+  {
+    id: 'gathiya',
+    name: 'Tikha Gathiya',
+    nameGujarati: 'તીખા ગાંઠિયા',
+    tagline: 'Kathiyawadi Signature Besan Strips',
+    desc: 'Crisp, airy besan ribbons spiced with freshly cracked black pepper (mari), ajwain, and pure Saurashtra groundnut oil.',
+    pricePerKg: 500,
+    imageUrl: '/images/snacks/tikha-gathiya.jpg',
+    spice: '🌶️🌶️ Spicy',
+    badge: 'Bestseller #1',
+    slug: 'tikha-gathiya',
+  },
+  {
+    id: 'sev-mamra',
+    name: 'Sev Mamra',
+    nameGujarati: 'સેવ મમરા',
+    tagline: 'Light & Crisp Golden Chai Companion',
+    desc: 'Golden puffed rice blended with crispy thin besan sev, seasoned with turmeric, asafoetida, and tempered in pure Sing-Tel.',
+    pricePerKg: 360,
+    imageUrl: '/images/snacks/sev-mamra.jpg',
+    spice: '✨ Mild Crunch',
+    badge: 'Chai Favourite',
+    slug: 'sev-mamra',
+  },
+  {
+    id: 'chakdi',
+    name: 'Kathiyawadi Chakdi',
+    nameGujarati: 'કાઠિયાવાડી ચકડી',
+    tagline: 'Artisanal Golden Spirals',
+    desc: 'Spiral crunch chakli handcrafted with spiced rice flour, roasted sesame seeds (til), and fragrant ajwain.',
+    pricePerKg: 500,
+    imageUrl: '/images/snacks/chakdi.jpg',
+    spice: '🌶️ Medium',
+    badge: 'Festive Classic',
+    slug: 'chakdi',
+  },
+  {
+    id: 'poha-chevdo',
+    name: 'Plain Poha Chevdo',
+    nameGujarati: 'પ્લેઇન પૌંઆ ચેવડો',
+    tagline: 'Feather-Light Roasted Rice Flakes',
+    desc: 'Ultra-thin roasted poha tossed with crunchy groundnuts, green chillies, curry leaves, and a touch of roasted spices.',
+    pricePerKg: 400,
+    imageUrl: '/images/snacks/plain-poha-chevdo.jpg',
+    spice: '✨ Mild & Light',
+    badge: 'Zero Cholesterol',
+    slug: 'plain-poha-chevdo',
+  },
+];
 
 const Home = () => {
   const { t, language } = useLanguage();
   const { settings } = useSettings();
+  const { addToCart, setIsCartOpen } = useCart();
 
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(true);
   const [quickViewProduct, setQuickViewProduct] = useState(null);
-  const [activeCategorySlug, setActiveCategorySlug] = useState('all');
+
+  // Hero interactive snack reel state
+  const [heroIndex, setHeroIndex] = useState(0);
+  const [heroWeight, setHeroWeight] = useState(500);
+  const [heroJustAdded, setHeroJustAdded] = useState(false);
+
+  // Mood / Craving filter
+  const [activeMood, setActiveMood] = useState('all');
+
+  // Interactive Hamper Box Builder on Home
+  const [hamperItems, setHamperItems] = useState([
+    { name: 'Tikha Gathiya', grams: 250, price: 125 },
+    { name: 'Sev Mamra', grams: 250, price: 90 },
+    { name: 'Plain Poha Chevdo', grams: 500, price: 200 },
+  ]);
+  const [hamperAdded, setHamperAdded] = useState(false);
+
+  // FAQ Accordion
+  const [openFaq, setOpenFaq] = useState(0);
 
   useEffect(() => {
     const fetchData = async () => {
       try {
         const [prodData, catData] = await Promise.all([
-          api.get('/products?limit=12'),
+          api.get('/products?limit=16'),
           api.get('/categories'),
         ]);
 
@@ -54,138 +130,288 @@ const Home = () => {
     fetchData();
   }, []);
 
-  const bestsellers = products.filter((p) => p.isBestseller);
-  const filteredProducts = activeCategorySlug === 'all'
-    ? products
-    : products.filter((p) => p.category?.slug === activeCategorySlug || p.categorySlug === activeCategorySlug);
+  const currentHeroSnack = HERO_FEATURED_SNACKS[heroIndex];
+  const heroDynamicPrice = Math.round((currentHeroSnack.pricePerKg * heroWeight) / 1000);
+
+  const handleHeroAddToCart = () => {
+    // Look up real product in products array or create item object
+    const realProd = products.find((p) => p.slug === currentHeroSnack.slug) || {
+      _id: currentHeroSnack.id,
+      name: currentHeroSnack.name,
+      slug: currentHeroSnack.slug,
+      pricePerKg: currentHeroSnack.pricePerKg,
+      images: [{ url: currentHeroSnack.imageUrl }],
+    };
+    addToCart(realProd, heroWeight, 1);
+    setHeroJustAdded(true);
+    setTimeout(() => setHeroJustAdded(false), 1600);
+    setIsCartOpen(true);
+  };
+
+  // Filter products by mood
+  const filteredProducts = products.filter((p) => {
+    if (activeMood === 'all') return true;
+    const nameLower = (p.name || '').toLowerCase();
+    const catLower = (p.category?.name || p.categorySlug || '').toLowerCase();
+
+    if (activeMood === 'tea-time') {
+      return (
+        nameLower.includes('chevdo') ||
+        nameLower.includes('puri') ||
+        nameLower.includes('nimkin') ||
+        catLower.includes('chivda') ||
+        catLower.includes('puri')
+      );
+    }
+    if (activeMood === 'spicy') {
+      return (
+        nameLower.includes('tikha') ||
+        nameLower.includes('jhaal') ||
+        nameLower.includes('masala') ||
+        catLower.includes('gathiya')
+      );
+    }
+    if (activeMood === 'crispy') {
+      return (
+        nameLower.includes('mamra') ||
+        nameLower.includes('chakdi') ||
+        nameLower.includes('sev')
+      );
+    }
+    if (activeMood === 'combos') {
+      return p.isCombo === true;
+    }
+    return true;
+  });
+
+  const hamperTotalGrams = hamperItems.reduce((acc, it) => acc + it.grams, 0);
+  const hamperTotalPrice = hamperItems.reduce((acc, it) => acc + it.price, 0);
+
+  const handleAddHamperToCart = () => {
+    const customHamperProduct = {
+      _id: 'custom_hamper_box',
+      name: `Custom Gujarati Hamper (${hamperTotalGrams}g)`,
+      slug: 'custom-combo-builder',
+      pricePerKg: Math.round((hamperTotalPrice / hamperTotalGrams) * 1000),
+      images: [{ url: '/images/snacks/tea-time-combo.jpg' }],
+      isCombo: true,
+    };
+    addToCart(customHamperProduct, hamperTotalGrams, 1);
+    setHamperAdded(true);
+    setTimeout(() => setHamperAdded(false), 1600);
+    setIsCartOpen(true);
+  };
 
   return (
     <div className="space-y-16 sm:space-y-24 lg:space-y-32 pb-24 overflow-hidden">
       
       {/* ========================================================
-          1. IMMERSIVE HERO SECTION
-          Deep Burgundy (#50000D / #790B13), Warm Ivory Typography,
-          Asymmetric High-End Editorial Composition
+          1. NEXT-GEN IMMERSIVE CYBER-HERITAGE HERO SECTION
+          Obsidian Burgundy Noir Canvas (#160003 -> #350009 -> #1a0004),
+          Glowing Gold Flare, Interactive Snack Showcase Stage
           ======================================================== */}
-      <section className="relative bg-gradient-to-br from-[#50000D] via-[#790B13] to-[#3A000A] text-[#FFF0DC] pt-16 pb-24 lg:pt-24 lg:pb-32 overflow-hidden border-b border-[#D6B77A]/30">
-        {/* Subtle Luxury Pattern Overlay */}
-        <div className="absolute inset-0 opacity-5 bg-[radial-gradient(#D6B77A_1px,transparent_1px)] [background-size:24px_24px] pointer-events-none" />
+      <section className="relative bg-gradient-to-b from-[#180004] via-[#350009] to-[#1e0005] text-[#FFF0DC] pt-12 pb-20 lg:pt-20 lg:pb-28 overflow-hidden border-b border-[#D6B77A]/25">
         
-        {/* Ambient Gradient Highlights */}
-        <div className="absolute -top-32 -left-32 w-96 h-96 bg-[#D6B77A]/10 rounded-full blur-3xl pointer-events-none" />
-        <div className="absolute -bottom-32 -right-32 w-96 h-96 bg-[#C98789]/15 rounded-full blur-3xl pointer-events-none" />
+        {/* Ambient Radial Golden & Crimson Glow Spheres */}
+        <div className="absolute top-0 left-1/4 w-[500px] h-[500px] bg-[#D6B77A]/12 rounded-full blur-[140px] pointer-events-none" />
+        <div className="absolute bottom-0 right-10 w-[600px] h-[600px] bg-[#790B13]/30 rounded-full blur-[150px] pointer-events-none" />
+        <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#D6B77A_1px,transparent_1px)] [background-size:28px_28px] pointer-events-none" />
 
         <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 relative z-10">
           <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 lg:gap-8 items-center">
             
-            {/* Left Column: Bold Oversized Editorial Typography */}
-            <div className="lg:col-span-7 space-y-8 text-center lg:text-left">
+            {/* Left Column: Bold Oversized Futuristic Editorial Typography */}
+            <div className="lg:col-span-7 space-y-7 text-center lg:text-left">
               
-              <div className="inline-flex items-center gap-2 bg-[#FFF0DC]/10 text-[#D6B77A] border border-[#D6B77A]/30 px-4 py-1.5 rounded-full text-xs font-heading font-bold uppercase tracking-widest">
-                <Sparkles className="w-3.5 h-3.5 text-[#D6B77A]" />
-                Handcrafted in Rajkot • 100% Saurashtra Sing-Tel
+              {/* Live Status Pill with Glowing Emerald Dot */}
+              <div className="inline-flex items-center gap-2.5 bg-[#FFF0DC]/10 backdrop-blur-xl border border-[#D6B77A]/35 px-4 py-1.5 rounded-full text-xs font-heading font-extrabold uppercase tracking-widest text-[#D6B77A] shadow-lg">
+                <span className="relative flex h-2 w-2">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75"></span>
+                  <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500"></span>
+                </span>
+                <span>100% Saurashtra Sing-Tel • Direct From Rajkot</span>
               </div>
 
+              {/* Grand Editorial Headline with Shimmering Gold Accent */}
               <div className="space-y-4">
-                <h1 className="font-heading font-bold text-4xl sm:text-6xl lg:text-7xl tracking-tight text-[#FFF0DC] leading-[1.05]">
-                  THE ART OF <br />
-                  <span className="font-editorial italic font-normal text-[#D6B77A]">Gujarati Taste.</span>
+                <h1 className="font-heading font-black text-4xl sm:text-6xl lg:text-7xl tracking-tight text-[#FFF0DC] leading-[1.04]">
+                  THE FUTURE OF <br />
+                  <span className="text-shimmer-gold font-editorial italic font-normal">
+                    Gujarati Taste.
+                  </span>
                 </h1>
                 
                 <p className="text-base sm:text-lg text-[#FFF0DC]/85 max-w-xl mx-auto lg:mx-0 leading-relaxed font-sans">
-                  Traditional homemade snacks, crafted with care and inspired by the flavours of home. Prepared in pure filtered groundnut oil with ancestral Kathiyawadi spices.
+                  Authentic Kathiyawadi farsan elevated with modern small-batch discipline. Prepared strictly in pure filtered groundnut oil with ancestral spice recipes. Zero palm oil, zero chemical preservatives.
                 </p>
               </div>
 
               {/* Action Buttons */}
-              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-2">
+              <div className="flex flex-wrap items-center justify-center lg:justify-start gap-4 pt-1">
                 <Link
                   to="/snacks"
-                  className="bg-[#D6B77A] hover:bg-[#E9D8C3] text-[#50000D] font-heading font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-full shadow-lg hover:shadow-xl transition-all transform hover:-translate-y-0.5 flex items-center gap-3 cursor-pointer"
+                  className="bg-gradient-to-r from-[#D6B77A] via-[#E9D8C3] to-[#D6B77A] hover:opacity-95 text-[#50000D] font-heading font-extrabold text-xs uppercase tracking-widest px-8 py-4 rounded-full shadow-xl hover:shadow-2xl transition-all transform hover:-translate-y-1 flex items-center gap-3 cursor-pointer"
                 >
-                  <span>EXPLORE OUR COLLECTION</span>
+                  <span>EXPLORE COLLECTION</span>
                   <ArrowRight className="w-4 h-4 text-[#50000D]" />
                 </Link>
 
                 <Link
                   to="/combo-builder"
-                  className="bg-[#3A000A]/80 hover:bg-[#50000D] text-[#FFF0DC] font-heading font-bold text-xs uppercase tracking-widest px-7 py-4 rounded-full border border-[#D6B77A]/40 shadow-md transition-all flex items-center gap-2"
+                  className="bg-[#3A000A]/80 hover:bg-[#50000D] text-[#FFF0DC] font-heading font-bold text-xs uppercase tracking-widest px-7 py-4 rounded-full border border-[#D6B77A]/40 shadow-lg transition-all flex items-center gap-2 backdrop-blur-md transform hover:-translate-y-1"
                 >
                   <Sparkles className="w-4 h-4 text-[#D6B77A]" />
-                  <span>CUSTOM SNACK BOX</span>
+                  <span>BUILD CUSTOM HAMPER</span>
                 </Link>
               </div>
 
-              {/* Quality & Trust Badges */}
-              <div className="grid grid-cols-1 sm:grid-cols-3 gap-3 sm:gap-4 pt-6 sm:pt-8 border-t border-[#D6B77A]/20 text-[11px] sm:text-xs font-heading uppercase tracking-wider text-[#FFF0DC]/80">
-                <div className="flex items-center gap-2 justify-center lg:justify-start">
-                  <ShieldCheck className="w-4 h-4 text-[#D6B77A] shrink-0" />
-                  <span>100% Sing-Tel</span>
+              {/* Quality & Trust Counters Strip */}
+              <div className="grid grid-cols-2 sm:grid-cols-4 gap-4 pt-6 border-t border-[#D6B77A]/20">
+                <div className="bg-[#FFF0DC]/5 backdrop-blur-md p-3.5 rounded-2xl border border-[#D6B77A]/20 text-center lg:text-left">
+                  <span className="block font-heading font-black text-xl sm:text-2xl text-[#D6B77A]">100%</span>
+                  <span className="text-[10px] sm:text-[11px] font-heading font-bold uppercase tracking-wider text-[#FFF0DC]/70">Pure Sing-Tel</span>
                 </div>
-                <div className="flex items-center gap-2 justify-center lg:justify-start">
-                  <Flame className="w-4 h-4 text-[#D6B77A] shrink-0" />
-                  <span>Authentic Homemade</span>
+                <div className="bg-[#FFF0DC]/5 backdrop-blur-md p-3.5 rounded-2xl border border-[#D6B77A]/20 text-center lg:text-left">
+                  <span className="block font-heading font-black text-xl sm:text-2xl text-[#D6B77A]">4.9 ★</span>
+                  <span className="text-[10px] sm:text-[11px] font-heading font-bold uppercase tracking-wider text-[#FFF0DC]/70">8,500+ Orders</span>
                 </div>
-                <div className="flex items-center gap-2 justify-center lg:justify-start">
-                  <Package className="w-4 h-4 text-[#D6B77A] shrink-0" />
-                  <span>250g to 2kg Packs</span>
+                <div className="bg-[#FFF0DC]/5 backdrop-blur-md p-3.5 rounded-2xl border border-[#D6B77A]/20 text-center lg:text-left">
+                  <span className="block font-heading font-black text-xl sm:text-2xl text-[#D6B77A]">250g - 2kg</span>
+                  <span className="text-[10px] sm:text-[11px] font-heading font-bold uppercase tracking-wider text-[#FFF0DC]/70">Flexible Sizes</span>
+                </div>
+                <div className="bg-[#FFF0DC]/5 backdrop-blur-md p-3.5 rounded-2xl border border-[#D6B77A]/20 text-center lg:text-left">
+                  <span className="block font-heading font-black text-xl sm:text-2xl text-[#D6B77A]">Pan-India</span>
+                  <span className="text-[10px] sm:text-[11px] font-heading font-bold uppercase tracking-wider text-[#FFF0DC]/70">Fast Dispatch</span>
                 </div>
               </div>
 
             </div>
 
-            {/* Right Column: Asymmetric Showcase of Signature Food Art */}
+            {/* Right Column: Interactive Snack Showcase Reel Stage */}
             <div className="lg:col-span-5 flex justify-center">
               <div className="relative max-w-md w-full">
                 
-                {/* Decorative Champagne Gold Border Frame */}
-                <div className="absolute -inset-3 rounded-3xl border border-[#D6B77A]/30 transform rotate-2 pointer-events-none" />
+                {/* Decorative Glowing Aura Ring */}
+                <div className="absolute -inset-1 rounded-3xl bg-gradient-to-r from-[#D6B77A]/40 to-[#790B13]/60 blur-lg opacity-70 transform -rotate-1 pointer-events-none" />
 
+                {/* Main Glass Showcase Card */}
                 <div className="relative bg-[#FFF9F2] p-5 sm:p-7 rounded-3xl shadow-2xl text-[#21191A] border border-[#D6B77A]/40">
                   
-                  {/* Signature Pill */}
-                  <div className="absolute -top-3.5 right-6 bg-[#50000D] text-[#D6B77A] border border-[#D6B77A]/40 text-[10px] font-heading font-bold uppercase tracking-widest px-3.5 py-1 rounded-full shadow-md">
-                    ★ Signature Kathiyawadi
+                  {/* Floating Pill Badge */}
+                  <div className="flex items-center justify-between mb-3.5">
+                    <span className="bg-[#50000D] text-[#D6B77A] border border-[#D6B77A]/40 text-[10px] font-heading font-extrabold uppercase tracking-widest px-3 py-1 rounded-full shadow-sm">
+                      {currentHeroSnack.badge}
+                    </span>
+                    <span className="text-[10px] font-heading font-bold text-[#790B13] bg-[#FFF0DC] border border-[#D6B77A]/40 px-2.5 py-0.5 rounded-full">
+                      {currentHeroSnack.spice}
+                    </span>
                   </div>
 
-                  <div className="aspect-4/3 rounded-2xl overflow-hidden bg-[#FFF0DC]/50 mb-5 border border-[#D6B77A]/25 relative">
+                  {/* High-Resolution Food Image */}
+                  <div className="aspect-[4/3] rounded-2xl overflow-hidden bg-gradient-to-b from-[#FFF0DC] to-[#FFF9F2] mb-4 border border-[#D6B77A]/30 relative group">
                     <img
-                      src="/images/snacks/tikha-gathiya.jpg"
-                      alt="Authentic Kathiyawadi Tikha Gathiya"
-                      className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
+                      src={currentHeroSnack.imageUrl}
+                      alt={currentHeroSnack.name}
+                      className="w-full h-full object-cover transform group-hover:scale-106 transition-transform duration-700"
                     />
-                    <div className="absolute bottom-2.5 left-2.5 bg-[#50000D]/80 backdrop-blur-xs text-[#FFF0DC] text-[10px] font-heading font-bold px-2.5 py-1 rounded-md">
-                      100% Pure Sing-Tel
+                    <div className="absolute bottom-2.5 left-2.5 bg-[#50000D]/90 backdrop-blur-md text-[#FFF0DC] text-[10px] font-heading font-bold px-3 py-1 rounded-lg border border-[#D6B77A]/30 shadow-md">
+                      100% Saurashtra Sing-Tel
                     </div>
                   </div>
 
-                  <div className="flex justify-between items-start mb-1.5">
+                  {/* Snack Name & Dynamic Price per kg */}
+                  <div className="flex justify-between items-start mb-2">
                     <div>
                       <span className="text-[10px] font-heading font-bold text-[#790B13] uppercase tracking-wider block">
-                        Gathiya & Farsan
+                        {currentHeroSnack.tagline}
                       </span>
-                      <h3 className="font-heading font-bold text-xl sm:text-2xl text-[#50000D]">
-                        Tikha Gathiya
+                      <h3 className="font-heading font-black text-2xl text-[#50000D] tracking-tight">
+                        {language === 'gu' && currentHeroSnack.nameGujarati ? currentHeroSnack.nameGujarati : currentHeroSnack.name}
                       </h3>
                     </div>
-                    <span className="font-heading font-black text-xl text-[#790B13]">₹500/kg</span>
+                    <div className="text-right">
+                      <span className="font-heading font-black text-2xl text-[#790B13] block">₹{heroDynamicPrice}</span>
+                      <span className="text-[10px] text-[#21191A]/60 font-medium">for {heroWeight}g</span>
+                    </div>
                   </div>
 
-                  <p className="text-xs text-[#21191A]/70 mb-5 leading-relaxed">
-                    Spicy, melt-in-mouth Kathiyawadi besan strips infused with cracked black pepper (mari), ajwain, and pure groundnut oil.
+                  <p className="text-xs text-[#21191A]/70 mb-4 leading-relaxed font-sans line-clamp-2">
+                    {currentHeroSnack.desc}
                   </p>
 
-                  <div className="bg-[#FFF0DC] p-3 rounded-xl flex items-center justify-between mb-5 text-xs font-heading">
-                    <span className="text-[#21191A]/70 uppercase tracking-wider font-bold text-[10px]">Select Weight:</span>
-                    <span className="text-[#50000D] font-bold">250g • 500g • 1kg • 2kg</span>
+                  {/* Interactive Weight Selector Pills Directly on Hero */}
+                  <div className="bg-[#FFF0DC]/80 p-2 rounded-2xl border border-[#D6B77A]/30 mb-4">
+                    <div className="grid grid-cols-3 gap-1.5">
+                      {[250, 500, 1000].map((w) => (
+                        <button
+                          key={w}
+                          type="button"
+                          onClick={() => setHeroWeight(w)}
+                          className={`py-1.5 text-xs font-heading font-extrabold rounded-xl transition-all cursor-pointer ${
+                            heroWeight === w
+                              ? 'bg-[#50000D] text-[#FFF0DC] shadow-md border border-[#D6B77A]'
+                              : 'text-[#21191A]/80 hover:bg-white/80'
+                          }`}
+                        >
+                          {w >= 1000 ? '1 kg' : `${w}g`}
+                        </button>
+                      ))}
+                    </div>
                   </div>
 
-                  <Link
-                    to="/snacks/tikha-gathiya"
-                    className="w-full bg-[#50000D] hover:bg-[#790B13] text-[#FFF0DC] border border-[#D6B77A]/40 py-3 rounded-xl text-center text-xs font-heading font-bold uppercase tracking-widest block transition-all shadow-sm"
+                  {/* Order / Add to Bag Action Button */}
+                  <button
+                    type="button"
+                    onClick={handleHeroAddToCart}
+                    className={`w-full py-3.5 rounded-2xl text-center text-xs font-heading font-extrabold uppercase tracking-widest transition-all shadow-md hover:shadow-xl flex items-center justify-center gap-2 cursor-pointer active:scale-98 ${
+                      heroJustAdded
+                        ? 'bg-[#174D35] text-white'
+                        : 'bg-gradient-to-r from-[#50000D] via-[#790B13] to-[#50000D] text-[#FFF0DC] border border-[#D6B77A]/40'
+                    }`}
                   >
-                    ORDER TIKHA GATHIYA
-                  </Link>
+                    {heroJustAdded ? (
+                      <>
+                        <Check className="w-4 h-4 text-white" />
+                        <span>ADDED TO YOUR BAG!</span>
+                      </>
+                    ) : (
+                      <>
+                        <ShoppingBag className="w-4 h-4 text-[#D6B77A]" />
+                        <span>ORDER {currentHeroSnack.name.toUpperCase()} (₹{heroDynamicPrice})</span>
+                      </>
+                    )}
+                  </button>
+
+                  {/* Quick Thumbnail Switcher Strip */}
+                  <div className="pt-4 mt-4 border-t border-[#D6B77A]/25">
+                    <div className="flex items-center justify-between text-[10px] font-heading font-bold uppercase tracking-wider text-[#21191A]/60 mb-2">
+                      <span>Quick Switch Snack:</span>
+                      <span className="text-[#790B13]">{heroIndex + 1} of 4</span>
+                    </div>
+                    <div className="grid grid-cols-4 gap-2">
+                      {HERO_FEATURED_SNACKS.map((snack, idx) => (
+                        <button
+                          key={snack.id}
+                          type="button"
+                          onClick={() => {
+                            setHeroIndex(idx);
+                          }}
+                          className={`aspect-square rounded-xl overflow-hidden border-2 transition-all p-0.5 cursor-pointer ${
+                            heroIndex === idx
+                              ? 'border-[#790B13] shadow-md scale-105'
+                              : 'border-transparent opacity-60 hover:opacity-100'
+                          }`}
+                          title={snack.name}
+                        >
+                          <img
+                            src={snack.imageUrl}
+                            alt={snack.name}
+                            className="w-full h-full object-cover rounded-lg"
+                          />
+                        </button>
+                      ))}
+                    </div>
+                  </div>
 
                 </div>
 
@@ -198,76 +424,63 @@ const Home = () => {
 
 
       {/* ========================================================
-          2. DISTINCTIVE CATEGORY SHOWCASE
-          Large Photographic Tiles with Asymmetric Editorial Layout
+          2. INTERACTIVE CRAVING COMPASS (MOOD SELECTOR)
+          Modern Floating Pill Filter with Icons
           ======================================================== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4 pb-4 border-b border-[#D6B77A]/25">
-          <div>
-            <span className="font-heading text-xs font-bold uppercase tracking-widest text-[#790B13]">
-              Authentic Farsan Collections
-            </span>
-            <h2 className="font-editorial text-3xl sm:text-4xl text-[#50000D] font-bold mt-1">
-              Explore By Category
-            </h2>
-          </div>
-          <Link
-            to="/categories"
-            className="text-xs font-heading font-bold uppercase tracking-wider text-[#790B13] hover:text-[#50000D] flex items-center gap-1.5 transition-colors"
-          >
-            <span>View All Categories</span>
-            <ArrowRight className="w-3.5 h-3.5" />
-          </Link>
+        <div className="text-center max-w-xl mx-auto mb-8 space-y-2">
+          <span className="font-heading text-xs font-bold uppercase tracking-widest text-[#790B13]">
+            What Are You Craving Today?
+          </span>
+          <h2 className="font-editorial text-3xl sm:text-4xl text-[#50000D] font-bold">
+            The Craving Navigator
+          </h2>
+          <p className="text-xs sm:text-sm text-[#21191A]/70">
+            Pick a mood to instantly curate your snacks.
+          </p>
         </div>
 
-        {/* Asymmetrical Grid of Photographic Tiles */}
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3.5 sm:gap-6">
-          {categories.map((cat, idx) => (
-            <Link
-              key={cat._id}
-              to={`/snacks?category=${cat.slug}`}
-              className="group relative bg-[#FFF9F2] rounded-3xl overflow-hidden border border-[#D6B77A]/30 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between hover:-translate-y-1.5"
-            >
-              {/* Category Image */}
-              <div className="aspect-square overflow-hidden bg-[#FFF0DC]/40 relative">
-                <img
-                  src={cat.imageUrl || '/images/snacks/tikha-gathiya.jpg'}
-                  alt={cat.name}
-                  className="w-full h-full object-cover group-hover:scale-108 transition-transform duration-500"
-                />
-                <div className="absolute inset-0 bg-gradient-to-t from-[#3A000A]/80 via-transparent to-transparent opacity-60 group-hover:opacity-40 transition-opacity" />
-                <span className="absolute bottom-3 left-3 bg-[#50000D]/85 backdrop-blur-xs text-[#FFF0DC] text-[10px] font-heading font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border border-[#D6B77A]/30">
-                  {cat.productCount || 0} Varieties
-                </span>
-              </div>
-
-              {/* Title & Description */}
-              <div className="p-4 text-center">
-                <h3 className="font-heading font-bold text-sm text-[#50000D] group-hover:text-[#790B13] transition-colors">
-                  {language === 'gu' && cat.nameGujarati ? cat.nameGujarati : cat.name}
-                </h3>
-                <p className="text-[11px] text-[#21191A]/60 line-clamp-1 mt-1 font-sans">
-                  {cat.description}
-                </p>
-              </div>
-            </Link>
-          ))}
+        {/* Futuristic Filter Pills */}
+        <div className="flex flex-wrap items-center justify-center gap-2.5 sm:gap-3">
+          {[
+            { id: 'all', label: 'All Varieties', icon: '✨' },
+            { id: 'tea-time', label: 'Chai-Time Crunch', icon: '🍵' },
+            { id: 'spicy', label: 'Spicy Kathiyawadi', icon: '🔥' },
+            { id: 'crispy', label: 'Light & Crisp', icon: '🌾' },
+            { id: 'combos', label: 'Special Hampers', icon: '🎁' },
+          ].map((mood) => {
+            const isActive = activeMood === mood.id;
+            return (
+              <button
+                key={mood.id}
+                type="button"
+                onClick={() => setActiveMood(mood.id)}
+                className={`flex items-center gap-2 px-5 py-2.5 rounded-full text-xs font-heading font-extrabold uppercase tracking-wider transition-all cursor-pointer shadow-xs ${
+                  isActive
+                    ? 'bg-[#50000D] text-[#FFF0DC] border border-[#D6B77A] shadow-md scale-105'
+                    : 'bg-[#FFF0DC]/70 hover:bg-[#FFF0DC] text-[#21191A]/80 border border-[#D6B77A]/30'
+                }`}
+              >
+                <span>{mood.icon}</span>
+                <span>{mood.label}</span>
+              </button>
+            );
+          })}
         </div>
       </section>
 
 
       {/* ========================================================
-          3. BESTSELLING SNACKS SHOWCASE
-          Dynamic Products Loaded from MongoDB with Live Weight Selector
+          3. SIGNATURE SNACKS SHOWCASE (DYNAMIC GRID)
           ======================================================== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="flex flex-col md:flex-row md:items-end justify-between mb-12 gap-4 pb-4 border-b border-[#D6B77A]/25">
+        <div className="flex flex-col md:flex-row md:items-end justify-between mb-10 gap-4 pb-4 border-b border-[#D6B77A]/25">
           <div>
             <div className="inline-flex items-center gap-1.5 text-xs font-heading font-bold uppercase tracking-widest text-[#790B13] mb-1">
-              <Flame className="w-3.5 h-3.5 text-[#790B13]" /> Time-Honoured Favourites
+              <Flame className="w-3.5 h-3.5 text-[#790B13]" /> Pure Sing-Tel Farsan
             </div>
             <h2 className="font-editorial text-3xl sm:text-4xl text-[#50000D] font-bold">
-              Bestselling Snacks
+              Signature Snack Collection
             </h2>
           </div>
           <Link
@@ -279,111 +492,9 @@ const Home = () => {
           </Link>
         </div>
 
+        {/* Responsive Product Cards Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-          {bestsellers.slice(0, 4).map((product) => (
-            <ProductCard
-              key={product._id}
-              product={product}
-              onQuickView={(p) => setQuickViewProduct(p)}
-            />
-          ))}
-        </div>
-      </section>
-
-
-      {/* ========================================================
-          4. INTERACTIVE CUSTOM SNACK COMBO TEASER
-          Asymmetrical Luxury Feature Section
-          ======================================================== */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-gradient-to-r from-[#50000D] to-[#790B13] rounded-3xl p-8 sm:p-14 text-[#FFF0DC] relative overflow-hidden shadow-2xl border border-[#D6B77A]/40">
-          
-          {/* Subtle Decorative Pattern */}
-          <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-10 bg-[radial-gradient(#D6B77A_1px,transparent_1px)] [background-size:16px_16px] pointer-events-none" />
-
-          <div className="max-w-xl space-y-5 relative z-10">
-            <span className="inline-flex items-center gap-1.5 bg-[#FFF0DC]/10 text-[#D6B77A] border border-[#D6B77A]/30 px-3.5 py-1 rounded-full text-xs font-heading font-bold uppercase tracking-widest">
-              <Sparkles className="w-3.5 h-3.5 text-[#D6B77A]" /> Customise Your Hamper
-            </span>
-            
-            <h2 className="font-heading font-bold text-3xl sm:text-4xl text-[#FFF0DC] leading-tight">
-              Create Your Custom <br />
-              <span className="font-editorial italic font-normal text-[#D6B77A]">Snack Dabba Box</span>
-            </h2>
-            
-            <p className="text-sm text-[#FFF0DC]/85 leading-relaxed font-sans">
-              Why settle for one snack? Combine 250g Tikha Gathiya, 500g Plain Poha Chevdo, and 250g Sev Mamra into your bespoke gift hamper with real-time transparent weight and price calculations.
-            </p>
-            
-            <div className="pt-2">
-              <Link
-                to="/combo-builder"
-                className="bg-[#D6B77A] hover:bg-[#E9D8C3] text-[#50000D] font-heading font-bold text-xs uppercase tracking-widest px-8 py-3.5 rounded-full shadow-lg transition-all inline-flex items-center gap-2 cursor-pointer"
-              >
-                <span>LAUNCH COMBO BUILDER</span>
-                <ArrowRight className="w-4 h-4 text-[#50000D]" />
-              </Link>
-            </div>
-          </div>
-
-          <div className="hidden lg:block absolute -right-6 -bottom-6 w-72 h-72 rounded-full overflow-hidden border-4 border-[#D6B77A]/30 shadow-2xl opacity-90">
-            <img
-              src="/images/snacks/tea-time-combo.jpg"
-              alt="Kathiyawadi Tea Time Combo Platter"
-              className="w-full h-full object-cover"
-            />
-          </div>
-        </div>
-      </section>
-
-
-      {/* ========================================================
-          5. COMPLETE HOMEMADE SNACKS CATALOGUE PREVIEW
-          Category Pill Filter Tabs + Responsive Grid
-          ======================================================== */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
-          <span className="font-heading text-xs font-bold uppercase tracking-widest text-[#790B13]">
-            Traditional Taste & Heritage
-          </span>
-          <h2 className="font-editorial text-3xl sm:text-4xl text-[#50000D] font-bold">
-            Homemade Gujarati Farsan
-          </h2>
-          <p className="text-xs sm:text-sm text-[#21191A]/70">
-            Every batch is hand-prepared with stone-ground besan, roasted Kathiyawadi spices, and 100% pure filtered groundnut oil. Select any weight from 250g to 2kg.
-          </p>
-        </div>
-
-        {/* Category Filter Pills */}
-        <div className="flex flex-wrap items-center justify-center gap-2 mb-10">
-          <button
-            onClick={() => setActiveCategorySlug('all')}
-            className={`px-4 py-2 rounded-full text-xs font-heading font-bold uppercase tracking-wider transition-all cursor-pointer ${
-              activeCategorySlug === 'all'
-                ? 'bg-[#50000D] text-[#FFF0DC] shadow-sm'
-                : 'bg-[#FFF0DC]/70 text-[#21191A]/80 hover:bg-[#FFF0DC] border border-[#D6B77A]/30'
-            }`}
-          >
-            All Snacks ({products.length})
-          </button>
-          {categories.map((cat) => (
-            <button
-              key={cat._id}
-              onClick={() => setActiveCategorySlug(cat.slug)}
-              className={`px-4 py-2 rounded-full text-xs font-heading font-bold uppercase tracking-wider transition-all cursor-pointer ${
-                activeCategorySlug === cat.slug
-                  ? 'bg-[#50000D] text-[#FFF0DC] shadow-sm'
-                  : 'bg-[#FFF0DC]/70 text-[#21191A]/80 hover:bg-[#FFF0DC] border border-[#D6B77A]/30'
-              }`}
-            >
-              {language === 'gu' && cat.nameGujarati ? cat.nameGujarati : cat.name}
-            </button>
-          ))}
-        </div>
-
-        {/* Products Grid */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 sm:gap-6 lg:gap-8">
-          {filteredProducts.map((product) => (
+          {filteredProducts.slice(0, 8).map((product) => (
             <ProductCard
               key={product._id}
               product={product}
@@ -395,9 +506,9 @@ const Home = () => {
         <div className="text-center mt-12">
           <Link
             to="/snacks"
-            className="inline-flex items-center gap-2 bg-[#50000D] hover:bg-[#790B13] text-[#FFF0DC] border border-[#D6B77A]/40 font-heading font-bold text-xs uppercase tracking-widest px-8 py-4 rounded-full shadow-md transition-all"
+            className="inline-flex items-center gap-2 bg-[#50000D] hover:bg-[#790B13] text-[#FFF0DC] border border-[#D6B77A]/40 font-heading font-extrabold text-xs uppercase tracking-widest px-8 py-4 rounded-full shadow-lg transition-all transform hover:-translate-y-0.5"
           >
-            <span>VIEW COMPLETE SNACK CATALOGUE</span>
+            <span>EXPLORE FULL 11-SNACK CATALOGUE</span>
             <ArrowRight className="w-4 h-4 text-[#D6B77A]" />
           </Link>
         </div>
@@ -405,76 +516,130 @@ const Home = () => {
 
 
       {/* ========================================================
-          6. THE BRAND STORY: ANCESTRAL HERITAGE
-          "MORE THAN JUST SNACKS. A TASTE OF HOME."
-          Deep Burgundy & Warm Ivory Editorial Contrast
+          4. INTERACTIVE CUSTOM SNACK BOX STUDIO (ON-PAGE LAB)
+          Direct visual hamper packing preview
           ======================================================== */}
-      <section className="bg-[#FFF0DC] py-20 lg:py-28 border-y border-[#D6B77A]/30">
-        <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-          <div className="grid grid-cols-1 lg:grid-cols-12 gap-12 items-center">
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="bg-gradient-to-br from-[#50000D] via-[#790B13] to-[#3A000A] rounded-3xl p-6 sm:p-12 text-[#FFF0DC] relative overflow-hidden shadow-2xl border border-[#D6B77A]/40">
+          
+          {/* Subtle Ambient Pattern */}
+          <div className="absolute right-0 top-0 bottom-0 w-1/2 opacity-10 bg-[radial-gradient(#D6B77A_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
+
+          <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-center relative z-10">
             
-            {/* Story Content */}
-            <div className="lg:col-span-6 space-y-6">
-              <span className="font-heading text-xs font-bold uppercase tracking-widest text-[#790B13] bg-white px-3.5 py-1.5 rounded-full border border-[#D6B77A]/40">
-                Heritage of Saurashtra
+            {/* Left Info */}
+            <div className="lg:col-span-6 space-y-5">
+              <span className="inline-flex items-center gap-1.5 bg-[#FFF0DC]/10 text-[#D6B77A] border border-[#D6B77A]/30 px-3.5 py-1 rounded-full text-xs font-heading font-bold uppercase tracking-widest">
+                <Sparkles className="w-3.5 h-3.5 text-[#D6B77A]" /> Custom Dabba Box Studio
               </span>
               
-              <h2 className="font-editorial text-3xl sm:text-5xl text-[#50000D] font-bold leading-tight">
-                More Than Just Snacks. <br />
-                <span className="italic text-[#790B13]">A Taste of Home.</span>
+              <h2 className="font-heading font-black text-3xl sm:text-5xl text-[#FFF0DC] leading-tight">
+                Curate Your 1kg <br />
+                <span className="text-shimmer-gold font-editorial italic font-normal">
+                  Artisanal Hamper.
+                </span>
               </h2>
               
-              <p className="text-sm text-[#21191A]/80 leading-relaxed font-sans">
-                In Gujarat, evening teatime is sacred. For generations, our family kitchen in Rajkot has honored traditional preparation, using pure, golden Saurashtra groundnut oil (Sing-Tel) in heavy brass and iron kadhais.
-              </p>
-              
-              <p className="text-sm text-[#21191A]/80 leading-relaxed font-sans">
-                We never use palm oil, artificial colors, or chemical preservatives. Our besan is freshly milled, our black pepper is cracked in-house, and our ajwain is hand-cleaned. When you open a pack, the fragrant, nutty aroma of pure Kathiyawadi farsan fills the room.
+              <p className="text-xs sm:text-sm text-[#FFF0DC]/85 leading-relaxed font-sans">
+                Never settle for just one snack. Mix and match 250g, 500g, or 1kg pouches of your family favourites into a personalized gift box. Transparent weights and instant dynamic calculations.
               </p>
 
-              <div className="grid grid-cols-2 gap-4 pt-3">
-                <div className="bg-white p-5 rounded-2xl border border-[#D6B77A]/30 shadow-xs">
-                  <span className="block font-heading font-black text-3xl text-[#50000D]">100%</span>
-                  <span className="font-heading text-xs font-bold uppercase tracking-wider text-[#21191A]">Pure Groundnut Oil</span>
-                  <p className="text-[11px] text-[#21191A]/60 mt-1 font-sans">Zero palm oil, zero adulteration</p>
+              {/* Weight Progress Capacity Meter */}
+              <div className="bg-[#3A000A]/80 backdrop-blur-md p-4 rounded-2xl border border-[#D6B77A]/30 space-y-2 max-w-md">
+                <div className="flex items-center justify-between text-xs font-heading font-bold">
+                  <span className="text-[#FFF0DC]">Hamper Capacity:</span>
+                  <span className="text-[#D6B77A] font-black">{hamperTotalGrams}g / 1000g</span>
                 </div>
-                <div className="bg-white p-5 rounded-2xl border border-[#D6B77A]/30 shadow-xs">
-                  <span className="block font-heading font-black text-3xl text-[#790B13]">Pure</span>
-                  <span className="font-heading text-xs font-bold uppercase tracking-wider text-[#21191A]">Ancestral Taste</span>
-                  <p className="text-[11px] text-[#21191A]/60 mt-1 font-sans">Traditional Kathiyawadi recipes</p>
+                <div className="w-full bg-white/10 rounded-full h-2 overflow-hidden">
+                  <div
+                    className="bg-gradient-to-r from-[#D6B77A] to-amber-300 h-full rounded-full transition-all duration-300"
+                    style={{ width: `${Math.min(100, (hamperTotalGrams / 1000) * 100)}%` }}
+                  />
                 </div>
+                <p className="text-[10px] text-[#FFF0DC]/70 font-sans">
+                  {hamperTotalGrams >= 1000
+                    ? '🎉 Perfect 1kg family hamper reached!'
+                    : `Add ${1000 - hamperTotalGrams}g more for an optimal 1kg combo box.`}
+                </p>
+              </div>
+
+              {/* CTA Launch Full Builder */}
+              <div className="pt-2 flex flex-wrap gap-3">
+                <button
+                  type="button"
+                  onClick={handleAddHamperToCart}
+                  className={`px-8 py-3.5 rounded-full text-xs font-heading font-extrabold uppercase tracking-widest transition-all shadow-lg flex items-center gap-2 cursor-pointer ${
+                    hamperAdded
+                      ? 'bg-[#174D35] text-white'
+                      : 'bg-[#D6B77A] hover:bg-[#E9D8C3] text-[#50000D]'
+                  }`}
+                >
+                  {hamperAdded ? (
+                    <>
+                      <Check className="w-4 h-4 text-white" />
+                      <span>HAMPER ADDED TO BAG!</span>
+                    </>
+                  ) : (
+                    <>
+                      <ShoppingBag className="w-4 h-4 text-[#50000D]" />
+                      <span>PACK & ADD HAMPER (₹{hamperTotalPrice})</span>
+                    </>
+                  )}
+                </button>
+
+                <Link
+                  to="/combo-builder"
+                  className="px-6 py-3.5 rounded-full text-xs font-heading font-bold uppercase tracking-widest text-[#FFF0DC] border border-[#D6B77A]/40 hover:bg-[#50000D] transition-all flex items-center gap-1.5"
+                >
+                  <span>ADVANCED BUILDER</span>
+                  <ArrowRight className="w-3.5 h-3.5 text-[#D6B77A]" />
+                </Link>
               </div>
             </div>
 
-            {/* Visual Photography Composition */}
-            <div className="lg:col-span-6">
-              <div className="grid grid-cols-2 gap-5">
-                <div className="space-y-5">
-                  <div className="rounded-3xl overflow-hidden border border-[#D6B77A]/40 shadow-lg aspect-4/5">
-                    <img
-                      src="/images/snacks/tikha-gathiya.jpg"
-                      alt="Fresh Tikha Gathiya"
-                      className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
-                    />
+            {/* Right Visual Hamper Box Preview */}
+            <div className="lg:col-span-6 space-y-3">
+              <div className="bg-[#FFF9F2] text-[#21191A] p-5 sm:p-6 rounded-3xl border border-[#D6B77A]/40 shadow-xl space-y-4">
+                <div className="flex items-center justify-between border-b border-[#D6B77A]/25 pb-3">
+                  <div>
+                    <h3 className="font-heading font-extrabold text-base text-[#50000D]">
+                      Bespoke Box Contents
+                    </h3>
+                    <p className="text-[10px] text-[#21191A]/60 font-sans">
+                      Sealed individually for maximum crunch retention
+                    </p>
                   </div>
-                  <div className="bg-[#50000D] text-[#FFF0DC] p-5 rounded-2xl text-center border border-[#D6B77A]/30">
-                    <p className="font-editorial text-lg font-bold text-[#D6B77A]">Rajkot, Gujarat</p>
-                    <p className="text-[11px] text-[#FFF0DC]/80 font-heading uppercase tracking-wider mt-0.5">Heritage Kathiyawadi Taste</p>
-                  </div>
+                  <span className="font-heading font-black text-xl text-[#790B13]">
+                    ₹{hamperTotalPrice}
+                  </span>
                 </div>
 
-                <div className="space-y-5 pt-8">
-                  <div className="bg-[#790B13] text-[#FFF0DC] p-5 rounded-2xl text-center border border-[#D6B77A]/30">
-                    <p className="font-heading font-bold text-sm text-[#FFF0DC] uppercase tracking-wider">4 Configurable Weights</p>
-                    <p className="text-xs text-[#D6B77A] font-sans mt-0.5">250g • 500g • 1kg • 2kg</p>
-                  </div>
-                  <div className="rounded-3xl overflow-hidden border border-[#D6B77A]/40 shadow-lg aspect-4/5">
-                    <img
-                      src="/images/snacks/plain-poha-chevdo.jpg"
-                      alt="Roasted Poha Chevdo"
-                      className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-500"
-                    />
-                  </div>
+                <div className="space-y-2.5">
+                  {hamperItems.map((item, idx) => (
+                    <div
+                      key={idx}
+                      className="flex items-center justify-between p-3 rounded-xl bg-[#FFF0DC]/50 border border-[#D6B77A]/30 text-xs font-heading"
+                    >
+                      <div className="flex items-center gap-2.5">
+                        <span className="w-6 h-6 rounded-lg bg-[#50000D] text-[#D6B77A] font-bold text-[10px] flex items-center justify-center">
+                          0{idx + 1}
+                        </span>
+                        <div>
+                          <p className="font-extrabold text-[#21191A]">{item.name}</p>
+                          <span className="text-[10px] text-[#790B13] font-bold">100% Sing-Tel</span>
+                        </div>
+                      </div>
+                      <div className="text-right">
+                        <span className="font-bold text-[#50000D]">{item.grams}g</span>
+                        <span className="text-[10px] text-[#21191A]/60 block">₹{item.price}</span>
+                      </div>
+                    </div>
+                  ))}
+                </div>
+
+                <div className="pt-2 text-[11px] text-[#21191A]/70 flex items-center gap-2 bg-[#FFF0DC] p-3 rounded-xl border border-[#D6B77A]/30">
+                  <ShieldCheck className="w-4 h-4 text-[#790B13] shrink-0" />
+                  <span>Doorstep dispatched in shock-absorbing gift carton across India.</span>
                 </div>
               </div>
             </div>
@@ -485,166 +650,297 @@ const Home = () => {
 
 
       {/* ========================================================
-          7. QUALITY & VERIFIED TRUST SECTION
-          Verified Pillars: Pure Sing-Tel, Authentic Spices, Freshness
+          5. NEXT-GEN BENTO GRID: THE ARCHITECTURE OF PURITY
+          Apple/Linear Luxury Design Language
           ======================================================== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-xl mx-auto mb-14 space-y-2">
+        <div className="text-center max-w-xl mx-auto mb-12 space-y-2">
           <span className="font-heading text-xs font-bold uppercase tracking-widest text-[#790B13]">
             Uncompromising Standards
           </span>
           <h2 className="font-editorial text-3xl sm:text-4xl text-[#50000D] font-bold">
-            Our Homemade Quality Promise
+            The Architecture of Authentic Nasta
           </h2>
           <p className="text-xs sm:text-sm text-[#21191A]/70">
-            Every bite carries the integrity of traditional Gujarati craftsmanship.
+            Why our homemade Gujarati namkeen hits completely different.
           </p>
         </div>
 
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-6">
-          <div className="bg-[#FFF9F2] p-6 rounded-3xl border border-[#D6B77A]/30 text-center space-y-3">
-            <div className="w-12 h-12 bg-[#FFF0DC] text-[#790B13] rounded-2xl flex items-center justify-center mx-auto border border-[#D6B77A]/30">
-              <ShieldCheck className="w-6 h-6 text-[#790B13]" />
+        {/* Bento Grid */}
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          
+          {/* Bento Card 1 (Large 2-column Spanning Dark Obsidian Card) */}
+          <div className="md:col-span-2 bg-gradient-to-br from-[#2D0007] to-[#50000D] text-[#FFF0DC] p-8 sm:p-10 rounded-3xl border border-[#D6B77A]/35 shadow-xl relative overflow-hidden flex flex-col justify-between">
+            <div className="absolute top-0 right-0 w-80 h-80 bg-[#D6B77A]/10 rounded-full blur-3xl pointer-events-none" />
+            
+            <div className="space-y-4 max-w-lg relative z-10">
+              <span className="inline-flex items-center gap-1.5 bg-[#FFF0DC]/10 text-[#D6B77A] border border-[#D6B77A]/30 px-3 py-1 rounded-full text-[10px] font-heading font-extrabold uppercase tracking-widest">
+                <ShieldCheck className="w-3.5 h-3.5 text-[#D6B77A]" /> The Golden Rule
+              </span>
+              <h3 className="font-heading font-black text-2xl sm:text-3xl text-[#FFF0DC] tracking-tight">
+                100% Saurashtra Sing-Tel. <br />
+                <span className="font-editorial italic font-normal text-[#D6B77A]">Zero Palm Oil. Zero Blends.</span>
+              </h3>
+              <p className="text-xs sm:text-sm text-[#FFF0DC]/85 font-sans leading-relaxed">
+                Commercial snacks use cheap refined palm oil that coats your palate and causes heaviness. We exclusively use pure filtered groundnut oil from Saurashtra. Sing-Tel has a clean smoking point, giving our farsan its signature nutty fragrance, light crunch, and easy digestibility.
+              </p>
             </div>
-            <h3 className="font-heading font-bold text-sm text-[#50000D] uppercase tracking-wider">100% Pure Sing-Tel</h3>
-            <p className="text-xs text-[#21191A]/70 leading-relaxed font-sans">
-              Fried exclusively in Saurashtra filtered groundnut oil. We strictly prohibit palm oil or blended oils.
-            </p>
+
+            <div className="grid grid-cols-3 gap-3 pt-6 mt-6 border-t border-[#D6B77A]/20 relative z-10 text-center">
+              <div className="bg-[#FFF0DC]/5 p-3 rounded-2xl border border-[#D6B77A]/20">
+                <span className="font-heading font-black text-lg sm:text-xl text-[#D6B77A] block">0%</span>
+                <span className="text-[10px] text-[#FFF0DC]/70 uppercase font-heading font-bold">Palm Oil</span>
+              </div>
+              <div className="bg-[#FFF0DC]/5 p-3 rounded-2xl border border-[#D6B77A]/20">
+                <span className="font-heading font-black text-lg sm:text-xl text-[#D6B77A] block">100%</span>
+                <span className="text-[10px] text-[#FFF0DC]/70 uppercase font-heading font-bold">Sing-Tel</span>
+              </div>
+              <div className="bg-[#FFF0DC]/5 p-3 rounded-2xl border border-[#D6B77A]/20">
+                <span className="font-heading font-black text-lg sm:text-xl text-[#D6B77A] block">Zero</span>
+                <span className="text-[10px] text-[#FFF0DC]/70 uppercase font-heading font-bold">Preservatives</span>
+              </div>
+            </div>
           </div>
 
-          <div className="bg-[#FFF9F2] p-6 rounded-3xl border border-[#D6B77A]/30 text-center space-y-3">
-            <div className="w-12 h-12 bg-[#FFF0DC] text-[#790B13] rounded-2xl flex items-center justify-center mx-auto border border-[#D6B77A]/30">
-              <Flame className="w-6 h-6 text-[#790B13]" />
+          {/* Bento Card 2: Rajkot Born & Bred */}
+          <div className="bg-[#FFF9F2] p-8 rounded-3xl border border-[#D6B77A]/35 shadow-md flex flex-col justify-between space-y-6">
+            <div className="space-y-3">
+              <div className="w-12 h-12 rounded-2xl bg-[#50000D] text-[#D6B77A] flex items-center justify-center font-heading font-bold text-lg shadow-sm">
+                <Flame className="w-6 h-6 text-[#D6B77A]" />
+              </div>
+              <span className="text-[10px] font-heading font-bold text-[#790B13] uppercase tracking-wider block">
+                Rajkot Kitchen Direct
+              </span>
+              <h3 className="font-heading font-black text-xl text-[#50000D]">
+                Ancestral Kathiyawadi Spice Craft
+              </h3>
+              <p className="text-xs text-[#21191A]/70 leading-relaxed font-sans">
+                Stone-ground hing (asafoetida), freshly cracked black pepper (mari), and hand-picked ajwain. Flavours balanced across three generations of Rajkot farsan heritage.
+              </p>
             </div>
-            <h3 className="font-heading font-bold text-sm text-[#50000D] uppercase tracking-wider">Traditional Preparation</h3>
-            <p className="text-xs text-[#21191A]/70 leading-relaxed font-sans">
-              Prepared with care using authentic Kathiyawadi methods. Crisp, flavorful namkeen sealed for optimal freshness.
-            </p>
+            <div className="bg-[#FFF0DC] p-3 rounded-xl border border-[#D6B77A]/30 text-center">
+              <span className="font-heading text-xs font-bold text-[#50000D] uppercase tracking-wider">
+                Rajkot, Gujarat
+              </span>
+            </div>
           </div>
 
-          <div className="bg-[#FFF9F2] p-6 rounded-3xl border border-[#D6B77A]/30 text-center space-y-3">
-            <div className="w-12 h-12 bg-[#FFF0DC] text-[#790B13] rounded-2xl flex items-center justify-center mx-auto border border-[#D6B77A]/30">
-              <Package className="w-6 h-6 text-[#790B13]" />
+          {/* Bento Card 3: Configurable 250g to 2kg */}
+          <div className="bg-[#FFF9F2] p-8 rounded-3xl border border-[#D6B77A]/35 shadow-md flex flex-col justify-between space-y-6">
+            <div className="space-y-3">
+              <div className="w-12 h-12 rounded-2xl bg-[#790B13] text-[#FFF0DC] flex items-center justify-center shadow-sm">
+                <Package className="w-6 h-6 text-[#D6B77A]" />
+              </div>
+              <span className="text-[10px] font-heading font-bold text-[#790B13] uppercase tracking-wider block">
+                Transparent Weights
+              </span>
+              <h3 className="font-heading font-black text-xl text-[#50000D]">
+                Configurable 250g to 2kg Packs
+              </h3>
+              <p className="text-xs text-[#21191A]/70 leading-relaxed font-sans">
+                Order exactly what your pantry needs. Choose single 250g trial pouches, 500g tea-time packs, or 1kg and 2kg family festive bulk sizes with dynamic, honest per-kg pricing.
+              </p>
             </div>
-            <h3 className="font-heading font-bold text-sm text-[#50000D] uppercase tracking-wider">Moisture-Proof Seal</h3>
-            <p className="text-xs text-[#21191A]/70 leading-relaxed font-sans">
-              Packed in food-grade zip-lock pouches to lock in aroma, crunch, and authentic Kathiyawadi flavour.
-            </p>
+            <div className="bg-[#FFF0DC] p-3 rounded-xl border border-[#D6B77A]/30 text-center">
+              <span className="font-heading text-xs font-bold text-[#790B13] uppercase tracking-wider">
+                250g • 500g • 1kg • 2kg
+              </span>
+            </div>
           </div>
 
-          <div className="bg-[#FFF9F2] p-6 rounded-3xl border border-[#D6B77A]/30 text-center space-y-3">
-            <div className="w-12 h-12 bg-[#FFF0DC] text-[#790B13] rounded-2xl flex items-center justify-center mx-auto border border-[#D6B77A]/30">
-              <Award className="w-6 h-6 text-[#790B13]" />
+          {/* Bento Card 4 (Spanning 2 Columns on bottom): Airtight Freshness & Safe Shipping */}
+          <div className="md:col-span-2 bg-gradient-to-r from-[#FFF0DC] to-[#FFF9F2] p-8 sm:p-10 rounded-3xl border border-[#D6B77A]/35 shadow-md flex flex-col sm:flex-row items-center justify-between gap-6">
+            <div className="space-y-3 max-w-md">
+              <span className="inline-flex items-center gap-1.5 bg-[#50000D] text-[#D6B77A] px-3 py-0.5 rounded-full text-[10px] font-heading font-bold uppercase tracking-widest">
+                <Truck className="w-3.5 h-3.5 text-[#D6B77A]" /> Pan-India Doorstep Dispatch
+              </span>
+              <h3 className="font-heading font-black text-2xl text-[#50000D]">
+                Airtight Moisture-Proof Pouches
+              </h3>
+              <p className="text-xs sm:text-sm text-[#21191A]/75 font-sans leading-relaxed">
+                Every snack is packed in food-grade resealable pouches that seal out humidity and lock in the crisp Kathiyawadi snap for up to 90 days. Shipped in protective cartons straight to your door.
+              </p>
             </div>
-            <h3 className="font-heading font-bold text-sm text-[#50000D] uppercase tracking-wider">Ancestral Recipes</h3>
-            <p className="text-xs text-[#21191A]/70 leading-relaxed font-sans">
-              Balanced spices, stone-ground hing, and hand-cleaned ajwain perfected across three generations.
-            </p>
+            <div className="shrink-0 text-center bg-white p-5 rounded-2xl border border-[#D6B77A]/30 shadow-xs">
+              <span className="font-heading font-black text-3xl text-[#790B13] block">90 Days</span>
+              <span className="text-[11px] font-heading font-bold uppercase tracking-wider text-[#21191A]/70">Pristine Crispness</span>
+            </div>
+          </div>
+
+        </div>
+      </section>
+
+
+      {/* ========================================================
+          6. VERIFIED PATRON LOVE (TESTIMONIALS WALL)
+          ======================================================== */}
+      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center max-w-xl mx-auto mb-12 space-y-2">
+          <span className="font-heading text-xs font-bold uppercase tracking-widest text-[#790B13]">
+            Verified Customer Stories
+          </span>
+          <h2 className="font-editorial text-3xl sm:text-4xl text-[#50000D] font-bold">
+            Loved by 8,500+ Farsan Lovers
+          </h2>
+          <p className="text-xs sm:text-sm text-[#21191A]/70">
+            Real feedback from households enjoying authentic Rajkot taste.
+          </p>
+        </div>
+
+        <div className="grid grid-cols-1 md:grid-cols-3 gap-6">
+          <div className="bg-[#FFF9F2] p-8 rounded-3xl border border-[#D6B77A]/35 space-y-4 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+            <div className="space-y-3">
+              <div className="flex text-[#D6B77A] gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-[#D6B77A]" />
+                ))}
+              </div>
+              <p className="text-xs sm:text-sm text-[#21191A]/80 italic leading-relaxed font-editorial">
+                "Finding authentic Kathiyawadi Tikha Gathiya made in pure Sing-Tel outside Rajkot was impossible until I ordered from here. The pepper punch and soft melt-in-mouth texture are unbelievable."
+              </p>
+            </div>
+            <div className="border-t border-[#D6B77A]/20 pt-4 flex items-center justify-between">
+              <div>
+                <h4 className="font-heading font-extrabold text-xs uppercase tracking-wider text-[#50000D]">Bhavik Mehta</h4>
+                <span className="text-[11px] text-[#21191A]/60 font-sans">Ahmedabad</span>
+              </div>
+              <span className="text-[10px] font-heading font-bold bg-[#174D35]/10 text-[#174D35] px-2 py-0.5 rounded-full">
+                Verified Buyer
+              </span>
+            </div>
+          </div>
+
+          <div className="bg-[#FFF9F2] p-8 rounded-3xl border border-[#D6B77A]/35 space-y-4 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+            <div className="space-y-3">
+              <div className="flex text-[#D6B77A] gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-[#D6B77A]" />
+                ))}
+              </div>
+              <p className="text-xs sm:text-sm text-[#21191A]/80 italic leading-relaxed font-editorial">
+                "The Plain Poha Chevdo is feather-light and not oily at all. You can genuinely taste the fresh groundnut oil and the crispy roasted peanuts. It has become our daily teatime companion."
+              </p>
+            </div>
+            <div className="border-t border-[#D6B77A]/20 pt-4 flex items-center justify-between">
+              <div>
+                <h4 className="font-heading font-extrabold text-xs uppercase tracking-wider text-[#50000D]">Anjali Trivedi</h4>
+                <span className="text-[11px] text-[#21191A]/60 font-sans">Mumbai</span>
+              </div>
+              <span className="text-[10px] font-heading font-bold bg-[#174D35]/10 text-[#174D35] px-2 py-0.5 rounded-full">
+                Verified Buyer
+              </span>
+            </div>
+          </div>
+
+          <div className="bg-[#FFF9F2] p-8 rounded-3xl border border-[#D6B77A]/35 space-y-4 shadow-sm hover:shadow-xl transition-all duration-300 flex flex-col justify-between">
+            <div className="space-y-3">
+              <div className="flex text-[#D6B77A] gap-0.5">
+                {[...Array(5)].map((_, i) => (
+                  <Star key={i} className="w-4 h-4 fill-[#D6B77A]" />
+                ))}
+              </div>
+              <p className="text-xs sm:text-sm text-[#21191A]/80 italic leading-relaxed font-editorial">
+                "Ordered the 2kg family combo of Chakdi and Methi Chatpati for Diwali. Reached in pristine airtight packing without a single broken piece. Outstanding taste and super quick delivery!"
+              </p>
+            </div>
+            <div className="border-t border-[#D6B77A]/20 pt-4 flex items-center justify-between">
+              <div>
+                <h4 className="font-heading font-extrabold text-xs uppercase tracking-wider text-[#50000D]">Dhaval Patel</h4>
+                <span className="text-[11px] text-[#21191A]/60 font-sans">Vadodara</span>
+              </div>
+              <span className="text-[10px] font-heading font-bold bg-[#174D35]/10 text-[#174D35] px-2 py-0.5 rounded-full">
+                Verified Buyer
+              </span>
+            </div>
           </div>
         </div>
       </section>
 
 
       {/* ========================================================
-          8. CUSTOMER TESTIMONIALS
-          Genuine Patron Reflections
+          7. FREQUENTLY ASKED QUESTIONS (ACCORDION)
           ======================================================== */}
-      <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="text-center max-w-xl mx-auto mb-14 space-y-2">
+      <section className="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="text-center mb-10 space-y-2">
           <span className="font-heading text-xs font-bold uppercase tracking-widest text-[#790B13]">
-            Patron Reviews
+            Common Queries
           </span>
           <h2 className="font-editorial text-3xl sm:text-4xl text-[#50000D] font-bold">
-            Loved Across Saurashtra & Beyond
+            Frequently Asked Questions
           </h2>
         </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-3 gap-8">
-          <div className="bg-[#FFF9F2] p-8 rounded-3xl border border-[#D6B77A]/30 space-y-4 shadow-sm flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="flex text-[#D6B77A]">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-[#D6B77A]" />
-                ))}
+        <div className="space-y-3">
+          {[
+            {
+              q: 'What oil do you use for frying your snacks?',
+              a: 'We use 100% pure filtered groundnut oil (Sing-Tel) sourced locally from Saurashtra. We never use palm oil, cottonseed oil, or blended oils in any of our farsan.',
+            },
+            {
+              q: 'What is the shelf life of the snacks and how are they packed?',
+              a: 'Our snacks have a shelf life of 90 days. Every order is packed in food-grade, moisture-proof zip-lock pouches to lock in crunch, freshness, and authentic aroma.',
+            },
+            {
+              q: 'Can I order different weights like 250g, 500g, or 1kg?',
+              a: 'Yes! All our products have flexible pack sizes ranging from 250g to 2kg. You can choose the exact weight you want on the product card or build a custom hamper in our Custom Box Studio.',
+            },
+            {
+              q: 'How fast is delivery across India?',
+              a: 'Orders are dispatched within 24 hours from Rajkot, Gujarat. Delivery takes 1-2 days within Gujarat and 3-5 days for other major Indian metros.',
+            },
+          ].map((faq, idx) => {
+            const isOpen = openFaq === idx;
+            return (
+              <div
+                key={idx}
+                className="bg-[#FFF9F2] rounded-2xl border border-[#D6B77A]/35 overflow-hidden transition-all shadow-xs"
+              >
+                <button
+                  type="button"
+                  onClick={() => setOpenFaq(isOpen ? -1 : idx)}
+                  className="w-full p-4 sm:p-5 text-left flex items-center justify-between gap-4 font-heading font-extrabold text-sm sm:text-base text-[#50000D] cursor-pointer"
+                >
+                  <span>{faq.q}</span>
+                  <ChevronDown
+                    className={`w-4 h-4 text-[#790B13] shrink-0 transition-transform duration-300 ${
+                      isOpen ? 'transform rotate-180' : ''
+                    }`}
+                  />
+                </button>
+                {isOpen && (
+                  <div className="px-4 pb-5 sm:px-5 sm:pb-5 text-xs sm:text-sm text-[#21191A]/75 font-sans leading-relaxed border-t border-[#D6B77A]/20 pt-3">
+                    {faq.a}
+                  </div>
+                )}
               </div>
-              <p className="text-xs sm:text-sm text-[#21191A]/80 italic leading-relaxed font-editorial">
-                "Finding authentic Kathiyawadi Tikha Gathiya made in pure Sing-Tel outside Rajkot was impossible until I ordered from Gujarati Nasta. The crunch and pepper heat are extraordinary."
-              </p>
-            </div>
-            <div className="border-t border-[#D6B77A]/20 pt-4">
-              <h4 className="font-heading font-bold text-xs uppercase tracking-wider text-[#50000D]">Bhavik Mehta</h4>
-              <span className="text-[11px] text-[#21191A]/60 font-sans">Ahmedabad • Verified Buyer</span>
-            </div>
-          </div>
-
-          <div className="bg-[#FFF9F2] p-8 rounded-3xl border border-[#D6B77A]/30 space-y-4 shadow-sm flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="flex text-[#D6B77A]">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-[#D6B77A]" />
-                ))}
-              </div>
-              <p className="text-xs sm:text-sm text-[#21191A]/80 italic leading-relaxed font-editorial">
-                "The Plain Poha Chevdo is feather-light and non-greasy. You can genuinely taste the fresh groundnut oil and the roasted peanuts. Our family teatime staple now."
-              </p>
-            </div>
-            <div className="border-t border-[#D6B77A]/20 pt-4">
-              <h4 className="font-heading font-bold text-xs uppercase tracking-wider text-[#50000D]">Anjali Trivedi</h4>
-              <span className="text-[11px] text-[#21191A]/60 font-sans">Mumbai • Verified Buyer</span>
-            </div>
-          </div>
-
-          <div className="bg-[#FFF9F2] p-8 rounded-3xl border border-[#D6B77A]/30 space-y-4 shadow-sm flex flex-col justify-between">
-            <div className="space-y-3">
-              <div className="flex text-[#D6B77A]">
-                {[...Array(5)].map((_, i) => (
-                  <Star key={i} className="w-4 h-4 fill-[#D6B77A]" />
-                ))}
-              </div>
-              <p className="text-xs sm:text-sm text-[#21191A]/80 italic leading-relaxed font-editorial">
-                "Ordered the 2kg family pack of Chakdi and Methi Chatpati. Arrived in pristine condition with freshness-locked airtight seals. Extraordinary taste and prompt delivery!"
-              </p>
-            </div>
-            <div className="border-t border-[#D6B77A]/20 pt-4">
-              <h4 className="font-heading font-bold text-xs uppercase tracking-wider text-[#50000D]">Dhaval Patel</h4>
-              <span className="text-[11px] text-[#21191A]/60 font-sans">Vadodara • Verified Buyer</span>
-            </div>
-          </div>
+            );
+          })}
         </div>
       </section>
 
 
       {/* ========================================================
-          9. FINAL SHOPPING CTA
-          Striking Full-Width Burgundy Section
-          "YOUR FAVOURITE GUJARATI FLAVOURS AWAIT."
+          8. VIP WELCOME OFFER BANNER (NASTA50)
           ======================================================== */}
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
-        <div className="bg-[#50000D] rounded-3xl p-10 sm:p-16 text-[#FFF0DC] text-center space-y-6 relative overflow-hidden border border-[#D6B77A]/40 shadow-2xl">
-          
-          {/* Subtle Ambient Glow */}
-          <div className="absolute inset-0 opacity-10 bg-[radial-gradient(#D6B77A_1px,transparent_1px)] [background-size:20px_20px] pointer-events-none" />
-
-          <div className="max-w-2xl mx-auto space-y-4 relative z-10">
+        <div className="bg-gradient-to-r from-[#50000D] via-[#790B13] to-[#3A000A] rounded-3xl p-8 sm:p-14 text-[#FFF0DC] text-center space-y-5 relative overflow-hidden border border-[#D6B77A]/40 shadow-2xl">
+          <div className="max-w-xl mx-auto space-y-3 relative z-10">
             <span className="inline-flex items-center gap-1.5 bg-[#FFF0DC]/10 text-[#D6B77A] border border-[#D6B77A]/30 px-3.5 py-1 rounded-full text-xs font-heading font-bold uppercase tracking-widest">
-              <Sparkles className="w-3.5 h-3.5 text-[#D6B77A]" /> Doorstep Dispatch
+              <Sparkles className="w-3.5 h-3.5 text-[#D6B77A]" /> Welcome Patron Discount
             </span>
-            
-            <h2 className="font-editorial text-3xl sm:text-5xl text-[#FFF0DC] font-bold leading-tight">
-              Your Favourite Gujarati <br />
-              <span className="italic text-[#D6B77A]">Flavours Await.</span>
+            <h2 className="font-heading font-black text-3xl sm:text-5xl text-[#FFF0DC] leading-tight">
+              Enjoy ₹50 Off <br />
+              <span className="text-shimmer-gold font-editorial italic font-normal">Your First Order.</span>
             </h2>
-            
-            <p className="text-xs sm:text-sm text-[#FFF0DC]/80 font-sans max-w-lg mx-auto leading-relaxed">
-              Experience the unmatched crunch and heritage taste of homemade Saurashtra snacks. Configurable weights from 250g to 2kg delivered straight to your door.
+            <p className="text-xs sm:text-sm text-[#FFF0DC]/80 font-sans leading-relaxed">
+              Use promo code <strong className="text-[#D6B77A] font-extrabold tracking-wider bg-black/30 px-2 py-0.5 rounded-md">NASTA50</strong> at checkout on orders above ₹499.
             </p>
-
-            <div className="pt-4">
+            <div className="pt-3">
               <Link
                 to="/snacks"
-                className="bg-[#D6B77A] hover:bg-[#E9D8C3] text-[#50000D] font-heading font-bold text-xs uppercase tracking-widest px-10 py-4 rounded-full shadow-xl transition-all inline-flex items-center gap-2 cursor-pointer transform hover:scale-105"
+                className="bg-[#D6B77A] hover:bg-[#E9D8C3] text-[#50000D] font-heading font-extrabold text-xs uppercase tracking-widest px-10 py-4 rounded-full shadow-xl transition-all inline-flex items-center gap-2 cursor-pointer transform hover:scale-105"
               >
-                <span>SHOP NOW</span>
+                <span>CLAIM DISCOUNT & SHOP NOW</span>
                 <ArrowRight className="w-4 h-4 text-[#50000D]" />
               </Link>
             </div>

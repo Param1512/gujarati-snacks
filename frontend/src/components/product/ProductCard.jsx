@@ -3,7 +3,7 @@ import { Link } from 'react-router-dom';
 import { useCart } from '../../context/CartContext';
 import { useWishlist } from '../../context/WishlistContext';
 import { useLanguage } from '../../context/LanguageContext';
-import { Heart, Plus, Eye, Check, Sparkles } from 'lucide-react';
+import { Heart, Plus, Eye, Check, Sparkles, Flame, ShieldCheck } from 'lucide-react';
 
 const ProductCard = ({ product, onQuickView }) => {
   const { addToCart, setIsCartOpen } = useCart();
@@ -22,7 +22,7 @@ const ProductCard = ({ product, onQuickView }) => {
     e.stopPropagation();
     addToCart(product, selectedWeight, 1);
     setJustAdded(true);
-    setTimeout(() => setJustAdded(false), 1500);
+    setTimeout(() => setJustAdded(false), 1600);
     setIsCartOpen(true);
   };
 
@@ -38,54 +38,79 @@ const ProductCard = ({ product, onQuickView }) => {
     { weightGrams: 2000, label: '2kg' },
   ];
 
+  // Spice level mapping for taste indicator
+  const getSpiceBadge = () => {
+    const nameLower = (product.name || '').toLowerCase();
+    if (nameLower.includes('tikha') || nameLower.includes('jhaal') || nameLower.includes('masala')) {
+      return { text: 'Spicy', icon: '🌶️🌶️' };
+    }
+    if (nameLower.includes('methi') || nameLower.includes('chatpati')) {
+      return { text: 'Medium', icon: '🌶️' };
+    }
+    return { text: 'Mild Crunch', icon: '✨' };
+  };
+
+  const spiceBadge = getSpiceBadge();
+
   return (
-    <article className="group bg-[#FFF9F2] border border-[#D6B77A]/30 hover:border-[#790B13]/60 rounded-3xl flex flex-col justify-between overflow-hidden shadow-sm hover:shadow-xl hover:-translate-y-1.5 transition-all duration-300 relative">
+    <article className="group relative bg-[#FFF9F2] border border-[#D6B77A]/30 hover:border-[#790B13]/70 rounded-3xl flex flex-col justify-between overflow-hidden shadow-xs hover:shadow-2xl hover:-translate-y-2 transition-all duration-300">
       
-      {/* Top Badges & Wishlist */}
-      <div className="absolute top-3.5 left-3.5 z-10 flex flex-col gap-1.5 items-start">
+      {/* Top Floating Glass Badges */}
+      <div className="absolute top-3.5 left-3.5 z-20 flex flex-col gap-1.5 items-start pointer-events-none">
         {product.isBestseller && (
-          <span className="bg-[#50000D] text-[#D6B77A] text-[10px] font-heading font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border border-[#D6B77A]/40 shadow-xs flex items-center gap-1">
+          <span className="bg-[#50000D] text-[#D6B77A] text-[10px] font-heading font-extrabold uppercase tracking-wider px-3 py-1 rounded-full border border-[#D6B77A]/40 shadow-md flex items-center gap-1.5">
             <Sparkles className="w-2.5 h-2.5 text-[#D6B77A]" />
             Bestseller
           </span>
         )}
-        {product.isCombo && (
-          <span className="bg-[#790B13] text-[#FFF0DC] text-[10px] font-heading font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full shadow-xs">
+        {product.isCombo ? (
+          <span className="bg-[#790B13] text-[#FFF0DC] text-[10px] font-heading font-extrabold uppercase tracking-wider px-3 py-1 rounded-full border border-[#D6B77A]/30 shadow-md">
             Special Hamper
+          </span>
+        ) : (
+          <span className="bg-[#FFF0DC]/90 backdrop-blur-md text-[#50000D] text-[9px] font-heading font-bold uppercase tracking-wider px-2.5 py-0.5 rounded-full border border-[#D6B77A]/40">
+            {spiceBadge.icon} {spiceBadge.text}
           </span>
         )}
       </div>
 
+      {/* Wishlist Heart Button */}
       <button
+        type="button"
         onClick={(e) => {
           e.preventDefault();
           e.stopPropagation();
           toggleWishlist(product._id);
         }}
-        className="absolute top-3.5 right-3.5 z-10 p-2.5 bg-white/90 backdrop-blur-xs rounded-full border border-[#D6B77A]/30 text-[#21191A]/50 hover:text-[#790B13] hover:border-[#790B13]/40 transition-all cursor-pointer shadow-xs"
+        className="absolute top-3.5 right-3.5 z-20 w-9 h-9 rounded-full bg-white/90 backdrop-blur-md border border-[#D6B77A]/40 text-[#21191A]/60 hover:text-[#790B13] hover:border-[#790B13] flex items-center justify-center transition-all cursor-pointer shadow-sm hover:scale-110 active:scale-95"
         title="Add to Wishlist"
       >
-        <Heart className={`w-4 h-4 ${isFavorited ? 'fill-[#790B13] text-[#790B13]' : ''}`} />
+        <Heart className={`w-4 h-4 transition-colors ${isFavorited ? 'fill-[#790B13] text-[#790B13]' : ''}`} />
       </button>
 
-      {/* Image Container with Warm Ivory Backdrop */}
-      <div className="relative aspect-square overflow-hidden bg-gradient-to-b from-[#FFF0DC]/40 to-[#FFF9F2] border-b border-[#D6B77A]/20">
-        <Link to={`/snacks/${product.slug || product._id}`} className="block w-full h-full p-3 sm:p-6">
+      {/* Visual Product Showcase / Pedestal */}
+      <div className="relative aspect-[4/3] sm:aspect-square overflow-hidden bg-gradient-to-b from-[#FFF0DC]/60 via-[#FFF9F2] to-[#FFF9F2] border-b border-[#D6B77A]/20">
+        {/* Subtle radial ambient spotlight behind image */}
+        <div className="absolute inset-0 bg-[radial-gradient(circle_at_center,rgba(214,183,122,0.18)_0%,transparent_70%)] pointer-events-none" />
+
+        <Link to={`/snacks/${product.slug || product._id}`} className="block w-full h-full p-4 sm:p-6">
           <img
             src={primaryImage}
             alt={product.name}
             loading="lazy"
-            className="w-full h-full object-cover rounded-2xl group-hover:scale-106 transition-transform duration-500 shadow-sm"
+            className="w-full h-full object-cover rounded-2xl group-hover:scale-108 transition-transform duration-500 shadow-sm"
             onError={(e) => {
               e.target.src = '/images/snacks/tikha-gathiya.jpg';
             }}
           />
         </Link>
 
+        {/* Quick View Floating Pill */}
         {onQuickView && (
           <button
+            type="button"
             onClick={() => onQuickView(product)}
-            className="absolute bottom-2.5 left-3 right-3 sm:bottom-3 sm:left-4 sm:right-4 bg-[#50000D]/90 hover:bg-[#790B13] backdrop-blur-xs text-[#FFF0DC] text-[10px] sm:text-xs font-heading font-bold uppercase tracking-wider py-2 sm:py-2.5 rounded-xl opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-200 flex items-center justify-center gap-1.5 cursor-pointer shadow-md min-h-[36px]"
+            className="absolute bottom-3 left-3 right-3 sm:bottom-4 sm:left-6 sm:right-6 bg-[#50000D]/95 hover:bg-[#790B13] backdrop-blur-md text-[#FFF0DC] text-[11px] font-heading font-bold uppercase tracking-wider py-2 sm:py-2.5 rounded-xl opacity-90 sm:opacity-0 sm:group-hover:opacity-100 transition-all duration-200 flex items-center justify-center gap-2 cursor-pointer shadow-lg hover:shadow-xl"
           >
             <Eye className="w-3.5 h-3.5 text-[#D6B77A]" />
             <span>{t('quickView') || 'Quick View'}</span>
@@ -94,36 +119,40 @@ const ProductCard = ({ product, onQuickView }) => {
       </div>
 
       {/* Product Content Details */}
-      <div className="p-3.5 sm:p-5 flex-1 flex flex-col justify-between space-y-3 sm:space-y-4">
+      <div className="p-4 sm:p-5 flex-1 flex flex-col justify-between space-y-4">
         <div>
-          {/* Category & Per-kg rate */}
-          <div className="flex items-center justify-between text-[10px] sm:text-[11px] font-heading font-bold text-[#790B13] mb-1">
-            <span className="truncate uppercase tracking-wider max-w-[65%]">{product.category?.name || 'Kathiyawadi Nasta'}</span>
-            <span className="text-[#50000D] font-black bg-[#FFF0DC] px-1.5 sm:px-2 py-0.5 rounded-md border border-[#D6B77A]/30 shrink-0">₹{product.pricePerKg}/kg</span>
+          {/* Category Tag & 100% Sing-Tel Seal */}
+          <div className="flex items-center justify-between text-[10px] sm:text-[11px] font-heading font-bold text-[#790B13] mb-1.5">
+            <span className="truncate uppercase tracking-wider max-w-[65%]">
+              {product.category?.name || 'Kathiyawadi Nasta'}
+            </span>
+            <span className="text-[#50000D] font-black bg-[#FFF0DC] px-2 py-0.5 rounded-md border border-[#D6B77A]/40 shrink-0 text-[10px]">
+              ₹{product.pricePerKg}/kg
+            </span>
           </div>
 
           {/* Product Title */}
           <Link to={`/snacks/${product.slug || product._id}`}>
-            <h3 className="font-heading font-bold text-sm sm:text-lg text-[#21191A] hover:text-[#790B13] transition-colors line-clamp-1">
+            <h3 className="font-heading font-extrabold text-base sm:text-lg text-[#21191A] group-hover:text-[#790B13] transition-colors line-clamp-1 tracking-tight">
               {language === 'gu' && product.nameGujarati ? product.nameGujarati : product.name}
             </h3>
           </Link>
 
-          {/* Short Description */}
-          <p className="text-[11px] sm:text-xs text-[#21191A]/70 line-clamp-2 mt-1 leading-relaxed">
+          {/* Description */}
+          <p className="text-[11px] sm:text-xs text-[#21191A]/70 line-clamp-2 mt-1 leading-relaxed font-sans">
             {product.description}
           </p>
         </div>
 
-        {/* Weight Selector & Price Section */}
-        <div className="pt-2.5 sm:pt-3 border-t border-[#D6B77A]/20 space-y-2.5 sm:space-y-3">
-          <div className="flex items-center justify-between text-[9px] sm:text-[10px] font-heading font-bold uppercase tracking-wider text-[#21191A]/60">
-            <span>Pack Size:</span>
-            <span className="text-[#790B13] font-bold bg-[#FFF0DC] px-1.5 sm:px-2 py-0.5 rounded-full text-[8px] sm:text-[9px]">100% Sing-Tel</span>
+        {/* Interactive Weight Selector & Dynamic Price Bar */}
+        <div className="pt-3 border-t border-[#D6B77A]/25 space-y-3">
+          <div className="flex items-center justify-between text-[10px] font-heading font-bold uppercase tracking-wider text-[#21191A]/60">
+            <span>Choose Pack Size:</span>
+            <span className="text-[#50000D] font-extrabold">100% Sing-Tel</span>
           </div>
 
-          {/* Weight Selection Buttons */}
-          <div className="grid grid-cols-4 gap-1 sm:gap-1.5">
+          {/* Weight Selection Chips */}
+          <div className="grid grid-cols-4 gap-1.5">
             {weightOptions.map((opt) => {
               const isSel = selectedWeight === opt.weightGrams;
               return (
@@ -134,46 +163,49 @@ const ProductCard = ({ product, onQuickView }) => {
                     e.preventDefault();
                     setSelectedWeight(opt.weightGrams);
                   }}
-                  className={`py-1 sm:py-1.5 px-0.5 sm:px-1 text-[10px] sm:text-xs font-heading font-bold rounded-lg transition-all cursor-pointer truncate ${
+                  className={`py-1.5 px-1 text-[10px] sm:text-xs font-heading font-extrabold rounded-xl transition-all cursor-pointer truncate ${
                     isSel
-                      ? 'bg-[#50000D] text-[#FFF0DC] shadow-xs border border-[#D6B77A]/40'
-                      : 'bg-[#FFF0DC]/60 text-[#21191A] border border-[#D6B77A]/30 hover:border-[#790B13]'
+                      ? 'bg-[#50000D] text-[#FFF0DC] shadow-md border border-[#D6B77A] scale-[1.02]'
+                      : 'bg-[#FFF0DC]/60 text-[#21191A] border border-[#D6B77A]/30 hover:border-[#790B13] hover:bg-[#FFF0DC]'
                   }`}
                 >
-                  {opt.label || `${opt.weightGrams}g`}
+                  {opt.weightGrams >= 1000 ? `${opt.weightGrams / 1000}kg` : `${opt.weightGrams}g`}
                 </button>
               );
             })}
           </div>
 
-          {/* Dynamic Price & Add to Cart */}
-          <div className="flex items-center justify-between gap-2 sm:gap-3 pt-1">
+          {/* Dynamic Price Calculation & Add to Cart Pill */}
+          <div className="flex items-center justify-between gap-3 pt-1">
             <div className="shrink-0">
-              <span className="font-heading font-black text-xl sm:text-2xl text-[#790B13] leading-none block">
-                ₹{currentPrice}
-              </span>
-              <span className="text-[9px] sm:text-[10px] text-[#21191A]/60 font-medium block mt-0.5">
+              <div className="flex items-baseline gap-1">
+                <span className="font-heading font-black text-2xl sm:text-3xl text-[#790B13] leading-none">
+                  ₹{currentPrice}
+                </span>
+              </div>
+              <span className="text-[10px] text-[#21191A]/60 font-medium block mt-0.5">
                 {selectedWeight >= 1000 ? `${selectedWeight / 1000}kg` : `${selectedWeight}g`} pack
               </span>
             </div>
 
             <button
+              type="button"
               onClick={handleAddToCart}
-              className={`flex-1 py-2 sm:py-2.5 px-2.5 sm:px-4 rounded-xl text-[11px] sm:text-xs font-heading font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1 sm:gap-1.5 cursor-pointer shadow-sm active:scale-95 min-h-[40px] ${
+              className={`flex-1 py-2.5 px-3 sm:px-4 rounded-xl text-xs font-heading font-bold uppercase tracking-wider transition-all flex items-center justify-center gap-1.5 cursor-pointer shadow-md hover:shadow-lg active:scale-95 min-h-[42px] ${
                 justAdded
-                  ? 'bg-[#174D35] text-white'
-                  : 'bg-[#50000D] hover:bg-[#790B13] text-[#FFF0DC] border border-[#D6B77A]/40'
+                  ? 'bg-[#174D35] text-white shadow-[#174D35]/30'
+                  : 'bg-gradient-to-r from-[#50000D] to-[#790B13] hover:from-[#790B13] hover:to-[#50000D] text-[#FFF0DC] border border-[#D6B77A]/40'
               }`}
             >
               {justAdded ? (
                 <>
-                  <Check className="w-3.5 h-3.5 text-white" />
-                  <span className="truncate">Added!</span>
+                  <Check className="w-4 h-4 text-white" />
+                  <span className="truncate">Added to Bag</span>
                 </>
               ) : (
                 <>
-                  <Plus className="w-3.5 h-3.5 text-[#D6B77A]" />
-                  <span className="truncate">{t('addToCart')}</span>
+                  <Plus className="w-4 h-4 text-[#D6B77A]" />
+                  <span className="truncate">{t('addToCart') || 'Add to Bag'}</span>
                 </>
               )}
             </button>
