@@ -211,9 +211,9 @@ const ProductDetails = () => {
             </div>
             <div className="bg-[#FFF0DC] p-4 rounded-2xl border border-[#D6B77A]/30 space-y-0.5">
               <span className="text-[10px] text-[#21191A]/70 font-semibold block flex items-center gap-1">
-                <Clock className="w-3.5 h-3.5 text-[#790B13]" /> Batch Schedule
+                <Award className="w-3.5 h-3.5 text-[#790B13]" /> Recipe
               </span>
-              <span className="font-bold text-[#50000D] block text-xs">Fresh Morning Kadai</span>
+              <span className="font-bold text-[#50000D] block text-xs">Authentic Homemade</span>
             </div>
           </div>
         </div>
@@ -367,8 +367,8 @@ const ProductDetails = () => {
             </h2>
             <div className="grid grid-cols-1 sm:grid-cols-2 gap-3.5 text-[#21191A]/75">
               <div>
-                <span className="font-heading font-bold text-[#50000D] uppercase tracking-wider text-[10px] block">Fresh Routine:</span>
-                Fried fresh daily in Rajkot kitchen
+                <span className="font-heading font-bold text-[#50000D] uppercase tracking-wider text-[10px] block">Kitchen Location:</span>
+                Handcrafted in Rajkot, Gujarat
               </div>
               <div>
                 <span className="font-heading font-bold text-[#50000D] uppercase tracking-wider text-[10px] block">Shelf Life:</span>

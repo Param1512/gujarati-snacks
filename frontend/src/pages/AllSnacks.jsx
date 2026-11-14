@@ -110,7 +110,7 @@ const AllSnacks = () => {
             </h1>
             
             <p className="text-xs sm:text-sm text-[#21191A]/75 font-sans max-w-xl leading-relaxed">
-              Fried fresh every dawn in pure filtered groundnut oil with ancestral Kathiyawadi spices. Choose configurable 250g, 500g, 1kg or 2kg packs with transparent pricing.
+              Prepared in 100% pure filtered groundnut oil with ancestral Kathiyawadi spices. Choose configurable 250g, 500g, 1kg or 2kg packs with transparent pricing.
             </p>
           </div>
 

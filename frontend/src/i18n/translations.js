@@ -20,7 +20,7 @@ export const translations = {
     logout: 'Logout',
 
     // Announcement bar
-    announcement: '🌿 100% Pure Filtered Groundnut Oil (Sing-Tel) | Fresh Daily Batches | Free Rajkot Delivery on Orders Above ₹999!',
+    announcement: '🌿 100% Pure Filtered Groundnut Oil (Sing-Tel) | Authentic Homemade Taste | Free Rajkot Delivery on Orders Above ₹999!',
 
     // Common Buttons
     addToCart: 'Add to Cart',

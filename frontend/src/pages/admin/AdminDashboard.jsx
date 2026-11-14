@@ -66,7 +66,7 @@ const AdminDashboard = () => {
             Analytics & <span className="font-serif italic font-normal lowercase text-[#790B13]">performance</span>
           </h1>
           <p className="text-xs sm:text-sm text-[#21191A]/70 font-sans mt-1">
-            Real-time gross transactional metrics, daily batch dispatch volume, and gram-level storage states.
+            Real-time gross transactional metrics, dispatch volume, and gram-level storage states.
           </p>
         </div>
       </div>

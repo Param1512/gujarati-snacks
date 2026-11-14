@@ -15,7 +15,7 @@ const FAQ = () => {
     {
       question: 'How fresh are the snacks when shipped?',
       answer:
-        'We prepare batches daily in small artisanal lots. Orders received are packed directly from that morning’s freshly prepared batch and sealed in air-tight moisture-proof food-grade pouches before dispatch.',
+        'Our snacks are prepared in small artisanal lots using pure groundnut oil. Orders received are packed directly and sealed in airtight moisture-proof food-grade pouches before dispatch.',
     },
     {
       question: 'Can I select different weights for each snack?',

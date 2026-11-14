@@ -26,7 +26,7 @@ const AnnouncementBar = () => {
           </div>
         </div>
 
-        {/* Right Side: Morning Frying Batch & Language Switcher */}
+        {/* Right Side: Heritage Location & Language Switcher */}
         <div className="flex items-center gap-4">
           <div className="hidden md:flex items-center gap-2 text-[11px] text-[#D6B77A] font-medium">
             <span className="w-1.5 h-1.5 rounded-full bg-[#D6B77A]" />

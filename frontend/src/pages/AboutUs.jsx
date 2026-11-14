@@ -42,14 +42,14 @@ const AboutUs = () => {
               Unlike commercial factories that dilute batches with low-grade palm oil and synthetic aromatics, we hold that authentic Gujarati farsan acquires its delicate crispness and signature aroma exclusively from 100% pure filtered Saurashtra groundnut oil.
             </p>
             <p>
-              When you purchase snacks from us, you receive food prepared fresh that very morning by experienced home cooks, sealed immediately in barrier pouches to guarantee optimal crispness.
+              When you purchase snacks from us, you receive food prepared with genuine care by experienced home cooks, sealed immediately in airtight pouches to guarantee optimal crispness.
             </p>
             <div className="pt-2">
               <Link
                 to="/snacks"
                 className="inline-flex items-center gap-2 bg-[#790B13] hover:bg-[#50000D] text-[#FFF0DC] text-xs font-mono uppercase tracking-widest font-bold px-8 py-4 rounded-full transition-all shadow-lg shadow-[#790B13]/25 cursor-pointer group"
               >
-                <span>Explore Our Fresh Batches</span>
+                <span>Explore Our Snack Collection</span>
                 <ArrowRight className="w-4 h-4 text-[#D6B77A] group-hover:translate-x-1 transition-transform" />
               </Link>
             </div>
@@ -60,13 +60,13 @@ const AboutUs = () => {
               <div className="aspect-4/3 rounded-2xl overflow-hidden bg-[#FFF9F2] border border-[#D6B77A]/20">
                 <img
                   src="/images/snacks/tikha-gathiya.jpg"
-                  alt="Traditional Morning Kadhais in Rajkot"
+                  alt="Traditional Homemade Farsan in Rajkot"
                   className="w-full h-full object-cover hover:scale-105 transition-transform duration-700"
                 />
               </div>
               <div className="flex items-center justify-between px-3 pt-2 text-xs text-[#21191A]/70 font-mono uppercase">
                 <span className="flex items-center gap-2 text-[#790B13] font-bold">
-                  <Flame className="w-4 h-4 text-[#D6B77A]" /> Daily Morning Kadhais
+                  <Flame className="w-4 h-4 text-[#D6B77A]" /> Authentic Homemade Taste
                 </span>
                 <span>Rajkot, Gujarat</span>
               </div>
@@ -93,10 +93,10 @@ const AboutUs = () => {
               <Flame className="w-7 h-7 text-[#790B13]" />
             </div>
             <h3 className="font-heading font-black text-xl text-[#21191A] uppercase tracking-tight">
-              Daily Morning Batches
+              Traditional Preparation
             </h3>
             <p className="text-xs sm:text-sm text-[#21191A]/70 font-sans leading-relaxed">
-              Fried before dawn in small controlled rounds to eliminate warehouse resting time. Never stale warehouse inventory.
+              Handcrafted in small artisanal batches following time-tested ancestral recipes. Pure taste with zero compromises.
             </p>
           </div>
 

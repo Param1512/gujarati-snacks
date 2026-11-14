@@ -93,7 +93,7 @@ const Home = () => {
                 </h1>
                 
                 <p className="text-base sm:text-lg text-[#FFF0DC]/85 max-w-xl mx-auto lg:mx-0 leading-relaxed font-sans">
-                  Traditional homemade snacks, crafted with care and inspired by the flavours of home. Fried fresh each dawn in pure filtered groundnut oil with ancestral Kathiyawadi spices.
+                  Traditional homemade snacks, crafted with care and inspired by the flavours of home. Prepared in pure filtered groundnut oil with ancestral Kathiyawadi spices.
                 </p>
               </div>
 
@@ -124,7 +124,7 @@ const Home = () => {
                 </div>
                 <div className="flex items-center gap-2 justify-center lg:justify-start">
                   <Flame className="w-4 h-4 text-[#D6B77A] shrink-0" />
-                  <span>Fresh Daily Batch</span>
+                  <span>Authentic Homemade</span>
                 </div>
                 <div className="flex items-center gap-2 justify-center lg:justify-start">
                   <Package className="w-4 h-4 text-[#D6B77A] shrink-0" />
@@ -155,7 +155,7 @@ const Home = () => {
                       className="w-full h-full object-cover transform hover:scale-105 transition-transform duration-700"
                     />
                     <div className="absolute bottom-2.5 left-2.5 bg-[#50000D]/80 backdrop-blur-xs text-[#FFF0DC] text-[10px] font-heading font-bold px-2.5 py-1 rounded-md">
-                      Fried Fresh Every Morning
+                      100% Pure Sing-Tel
                     </div>
                   </div>
 
@@ -344,7 +344,7 @@ const Home = () => {
       <section className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center max-w-2xl mx-auto mb-10 space-y-2">
           <span className="font-heading text-xs font-bold uppercase tracking-widest text-[#790B13]">
-            Fresh Daily Batches
+            Traditional Taste & Heritage
           </span>
           <h2 className="font-editorial text-3xl sm:text-4xl text-[#50000D] font-bold">
             Homemade Gujarati Farsan
@@ -425,7 +425,7 @@ const Home = () => {
               </h2>
               
               <p className="text-sm text-[#21191A]/80 leading-relaxed font-sans">
-                In Gujarat, evening teatime is sacred. For generations, our family kitchen in Rajkot has awakened before sunrise to heat pure, golden Saurashtra groundnut oil (Sing-Tel) in heavy brass and iron kadhais.
+                In Gujarat, evening teatime is sacred. For generations, our family kitchen in Rajkot has honored traditional preparation, using pure, golden Saurashtra groundnut oil (Sing-Tel) in heavy brass and iron kadhais.
               </p>
               
               <p className="text-sm text-[#21191A]/80 leading-relaxed font-sans">
@@ -439,9 +439,9 @@ const Home = () => {
                   <p className="text-[11px] text-[#21191A]/60 mt-1 font-sans">Zero palm oil, zero adulteration</p>
                 </div>
                 <div className="bg-white p-5 rounded-2xl border border-[#D6B77A]/30 shadow-xs">
-                  <span className="block font-heading font-black text-3xl text-[#790B13]">Daily</span>
-                  <span className="font-heading text-xs font-bold uppercase tracking-wider text-[#21191A]">Fresh Small Batches</span>
-                  <p className="text-[11px] text-[#21191A]/60 mt-1 font-sans">Handcrafted fresh every morning</p>
+                  <span className="block font-heading font-black text-3xl text-[#790B13]">Pure</span>
+                  <span className="font-heading text-xs font-bold uppercase tracking-wider text-[#21191A]">Ancestral Taste</span>
+                  <p className="text-[11px] text-[#21191A]/60 mt-1 font-sans">Traditional Kathiyawadi recipes</p>
                 </div>
               </div>
             </div>
@@ -516,9 +516,9 @@ const Home = () => {
             <div className="w-12 h-12 bg-[#FFF0DC] text-[#790B13] rounded-2xl flex items-center justify-center mx-auto border border-[#D6B77A]/30">
               <Flame className="w-6 h-6 text-[#790B13]" />
             </div>
-            <h3 className="font-heading font-bold text-sm text-[#50000D] uppercase tracking-wider">Fresh Daily Frying</h3>
+            <h3 className="font-heading font-bold text-sm text-[#50000D] uppercase tracking-wider">Traditional Preparation</h3>
             <p className="text-xs text-[#21191A]/70 leading-relaxed font-sans">
-              No stale warehouse stockpiles. Snacks are fried and dispatched in small morning batches for optimal crispness.
+              Prepared with care using authentic Kathiyawadi methods. Crisp, flavorful namkeen sealed for optimal freshness.
             </p>
           </div>
 
@@ -627,7 +627,7 @@ const Home = () => {
 
           <div className="max-w-2xl mx-auto space-y-4 relative z-10">
             <span className="inline-flex items-center gap-1.5 bg-[#FFF0DC]/10 text-[#D6B77A] border border-[#D6B77A]/30 px-3.5 py-1 rounded-full text-xs font-heading font-bold uppercase tracking-widest">
-              <Sparkles className="w-3.5 h-3.5 text-[#D6B77A]" /> Fresh Morning Dispatch
+              <Sparkles className="w-3.5 h-3.5 text-[#D6B77A]" /> Doorstep Dispatch
             </span>
             
             <h2 className="font-editorial text-3xl sm:text-5xl text-[#FFF0DC] font-bold leading-tight">

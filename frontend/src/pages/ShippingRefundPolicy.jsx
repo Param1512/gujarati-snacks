@@ -25,7 +25,7 @@ const ShippingRefundPolicy = () => {
         <div className="bg-white p-8 sm:p-12 rounded-3xl border border-[#D6B77A]/30 shadow-xl text-xs sm:text-sm text-[#21191A] font-sans leading-relaxed space-y-8">
           <div className="bg-[#FFF0DC] p-6 rounded-2xl border border-[#D6B77A]/40 text-[#790B13] font-medium leading-relaxed font-sans">
             {settings.policies?.shippingAndRefund ||
-              'Local deliveries in Rajkot are dispatched within 4-8 hours or next morning. Gujarat and Interstate shipments arrive within 2-4 business days. Because snacks are perishable homemade food products, returns are accepted only in case of package tampering or transit damage reported within 24 hours of delivery.'}
+              'Local deliveries in Rajkot are dispatched within 4-8 hours or next business day. Gujarat and Interstate shipments arrive within 2-4 business days. Because snacks are perishable homemade food products, returns are accepted only in case of package tampering or transit damage reported within 24 hours of delivery.'}
           </div>
 
           <div className="space-y-3">
@@ -33,7 +33,7 @@ const ShippingRefundPolicy = () => {
               1. Rajkot Local Express Dispatch
             </h2>
             <p className="text-[#21191A]/70">
-              Orders placed within Rajkot city limits are dispatched directly from our local kitchen on 150 Feet Ring Road. Deliveries are typically completed within 4 to 8 hours or early next morning. Standard delivery charge is ₹{settings.deliveryCharges?.localRajkot || 30}, and complimentary on orders above ₹{settings.freeDeliveryThreshold || 999}.
+              Orders placed within Rajkot city limits are dispatched directly from our local kitchen on 150 Feet Ring Road. Deliveries are typically completed within 4 to 8 hours or next business day. Standard delivery charge is ₹{settings.deliveryCharges?.localRajkot || 30}, and complimentary on orders above ₹{settings.freeDeliveryThreshold || 999}.
             </p>
           </div>
 

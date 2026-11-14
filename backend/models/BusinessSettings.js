@@ -114,7 +114,7 @@ const businessSettingsSchema = new mongoose.Schema(
       shippingAndRefund: {
         type: String,
         default:
-          'Local deliveries in Rajkot are delivered within 4-8 hours or next morning. Gujarat and Interstate shipments arrive within 2-4 business days. Because snacks are perishable homemade food products, returns are accepted only in case of package tampering or transit damage reported within 24 hours of delivery.',
+          'Local deliveries in Rajkot are delivered within 4-8 hours or next business day. Gujarat and Interstate shipments arrive within 2-4 business days. Because snacks are perishable homemade food products, returns are accepted only in case of package tampering or transit damage reported within 24 hours of delivery.',
       },
       aboutUs: {
         type: String,
@@ -132,7 +132,7 @@ const businessSettingsSchema = new mongoose.Schema(
           {
             question: 'How fresh are the snacks when shipped?',
             answer:
-              'We prepare batches daily. Orders received are packed from the day’s freshly made batch and sealed in air-tight food-grade pouches.',
+              'Our snacks are prepared in small artisanal lots using pure groundnut oil. Orders received are packed and sealed in air-tight food-grade pouches.',
           },
           {
             question: 'Can I select different weights for each snack?',
