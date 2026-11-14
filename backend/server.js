@@ -23,6 +23,7 @@ const bulkOrderRoutes = require('./routes/bulkOrderRoutes');
 const wishlistRoutes = require('./routes/wishlistRoutes');
 const paymentRoutes = require('./routes/paymentRoutes');
 const adminRoutes = require('./routes/adminRoutes');
+const uploadRoutes = require('./routes/uploadRoutes');
 
 const app = express();
 
@@ -99,6 +100,7 @@ app.use('/api/bulk-orders', bulkOrderRoutes);
 app.use('/api/wishlist', wishlistRoutes);
 app.use('/api/payments', paymentRoutes);
 app.use('/api/admin', adminRoutes);
+app.use('/api/upload', uploadRoutes);
 
 // Error Handling Middlewares
 app.use(notFound);

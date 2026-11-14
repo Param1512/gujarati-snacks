@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useParams, Link } from 'react-router-dom';
 import api from '../../services/api';
-import { ArrowLeft, Save, Sparkles } from 'lucide-react';
+import { ArrowLeft, Save, Sparkles, Upload, Loader2, Check } from 'lucide-react';
 
 const AdminProductForm = () => {
   const { id } = useParams();
@@ -11,6 +11,8 @@ const AdminProductForm = () => {
   const [categories, setCategories] = useState([]);
   const [loading, setLoading] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
+  const [uploadingImage, setUploadingImage] = useState(false);
+  const [uploadSuccess, setUploadSuccess] = useState(false);
 
   // Form state
   const [name, setName] = useState('');
@@ -245,18 +247,104 @@ const AdminProductForm = () => {
             />
           </div>
 
-          <div>
-            <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70 mb-2">
-              Image URL *
-            </label>
-            <input
-              type="text"
-              required
-              value={imageUrl}
-              onChange={(e) => setImageUrl(e.target.value)}
-              placeholder="/images/snacks/tikha-gathiya.jpg or https://..."
-              className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs font-mono text-[#21191A] focus:outline-none focus:border-[#790B13]"
-            />
+          <div className="space-y-3">
+            <div className="flex items-center justify-between">
+              <label className="block text-xs font-mono uppercase tracking-wider text-[#21191A]/70">
+                Product Image *
+              </label>
+              <span className="text-[10px] text-[#790B13] font-mono">
+                Cloudinary Powered • High Resolution
+              </span>
+            </div>
+
+            <div className="grid grid-cols-1 sm:grid-cols-12 gap-3 items-center">
+              <div className="sm:col-span-8">
+                <input
+                  type="text"
+                  required
+                  value={imageUrl}
+                  onChange={(e) => setImageUrl(e.target.value)}
+                  placeholder="/images/snacks/tikha-gathiya.jpg or https://..."
+                  className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs font-mono text-[#21191A] focus:outline-none focus:border-[#790B13]"
+                />
+              </div>
+
+              <div className="sm:col-span-4">
+                <label className={`w-full py-3 px-3 rounded-xl text-xs font-mono font-bold uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer transition-all border ${
+                  uploadingImage
+                    ? 'bg-[#FFF0DC] text-[#790B13] border-[#D6B77A] cursor-wait'
+                    : uploadSuccess
+                    ? 'bg-emerald-50 text-emerald-700 border-emerald-300'
+                    : 'bg-[#50000D] hover:bg-[#790B13] text-[#FFF0DC] border-[#D6B77A]/40'
+                }`}>
+                  {uploadingImage ? (
+                    <>
+                      <Loader2 className="w-4 h-4 animate-spin text-[#790B13]" />
+                      <span>Uploading...</span>
+                    </>
+                  ) : uploadSuccess ? (
+                    <>
+                      <Check className="w-4 h-4 text-emerald-600" />
+                      <span>Uploaded!</span>
+                    </>
+                  ) : (
+                    <>
+                      <Upload className="w-4 h-4 text-[#D6B77A]" />
+                      <span>Upload Photo</span>
+                    </>
+                  )}
+                  <input
+                    type="file"
+                    accept="image/*"
+                    disabled={uploadingImage}
+                    onChange={async (e) => {
+                      const file = e.target.files?.[0];
+                      if (!file) return;
+                      setUploadingImage(true);
+                      setUploadSuccess(false);
+
+                      const reader = new FileReader();
+                      reader.onloadend = async () => {
+                        try {
+                          const base64Data = reader.result;
+                          const res = await api.post('/upload', { image: base64Data });
+                          if (res.success && res.url) {
+                            setImageUrl(res.url);
+                            setUploadSuccess(true);
+                          } else {
+                            alert('Upload failed: ' + (res.message || 'Unknown error'));
+                          }
+                        } catch (err) {
+                          alert('Upload error: ' + err.message);
+                        } finally {
+                          setUploadingImage(false);
+                        }
+                      };
+                      reader.readAsDataURL(file);
+                    }}
+                    className="hidden"
+                  />
+                </label>
+              </div>
+            </div>
+
+            {/* Image Preview Thumbnail */}
+            {imageUrl && (
+              <div className="flex items-center gap-3 p-3 bg-white rounded-xl border border-[#D6B77A]/30">
+                <img
+                  src={imageUrl}
+                  alt="Product preview"
+                  className="w-12 h-12 rounded-lg object-cover border border-[#D6B77A]/30 shrink-0"
+                  onError={(e) => {
+                    e.target.src = '/images/snacks/tikha-gathiya.jpg';
+                  }}
+                />
+                <div className="min-w-0 flex-1 text-xs">
+                  <p className="font-mono text-[#50000D] font-bold truncate">Active Image</p>
+                  <p className="text-[10px] text-[#21191A]/60 font-mono truncate">{imageUrl}</p>
+                </div>
+              </div>
+            )}
           </div>
 
           {!isEditMode && (
