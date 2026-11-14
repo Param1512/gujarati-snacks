@@ -6,6 +6,7 @@ import { useWishlist } from '../context/WishlistContext';
 import { useLanguage } from '../context/LanguageContext';
 import { useSettings } from '../context/SettingsContext';
 import { useAuth } from '../context/AuthContext';
+import { PRIMARY_WHATSAPP_NUMBER, buildWhatsAppLink } from '../config/whatsapp';
 import ProductCard from '../components/product/ProductCard';
 import {
   Heart,
@@ -141,9 +142,10 @@ const ProductDetails = () => {
     }
   };
 
-  const productWhatsappUrl = `https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(
-    `Namaste! I would like to order *${product.name}* (${selectedWeight >= 1000 ? `${selectedWeight / 1000}kg` : `${selectedWeight}g`}) - ₹${unitPrice} per pack. Is this available for dispatch from Rajkot?`
-  )}`;
+  const productWhatsappUrl = buildWhatsAppLink(
+    settings.whatsappNumber || PRIMARY_WHATSAPP_NUMBER,
+    `Namaste Deepaji! I would like to order *${product.name}* (${selectedWeight >= 1000 ? `${selectedWeight / 1000}kg` : `${selectedWeight}g`}) - ₹${unitPrice} per pack. Is this available for dispatch from Rajkot?`
+  );
 
   const weightOptions = product.weightOptions || [
     { weightGrams: 250, label: '250g' },

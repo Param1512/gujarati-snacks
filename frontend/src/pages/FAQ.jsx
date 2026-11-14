@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import { useSettings } from '../context/SettingsContext';
 import { Plus, Minus, HelpCircle, MessageCircle, ArrowRight, Sparkles } from 'lucide-react';
+import { PRIMARY_WHATSAPP_NUMBER, buildWhatsAppLink } from '../config/whatsapp';
 
 const FAQ = () => {
   const { settings } = useSettings();
@@ -115,7 +116,10 @@ const FAQ = () => {
             </div>
           </div>
           <a
-            href={`https://wa.me/${settings.whatsappNumber}`}
+            href={buildWhatsAppLink(
+              settings.whatsappNumber || PRIMARY_WHATSAPP_NUMBER,
+              'Namaste Deepaji! I have a question regarding Gujarati Homemade Nasta.'
+            )}
             target="_blank"
             rel="noopener noreferrer"
             className="bg-[#790B13] hover:bg-[#50000D] text-[#FFF0DC] px-8 py-4 rounded-full text-xs font-mono uppercase tracking-widest font-bold transition-all shadow-lg shadow-[#790B13]/20 active:scale-98 flex items-center gap-2 shrink-0 cursor-pointer group"

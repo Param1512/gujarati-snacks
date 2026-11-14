@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { useSettings } from '../context/SettingsContext';
+import { PRIMARY_WHATSAPP_NUMBER, buildWhatsAppLink } from '../config/whatsapp';
 import {
   MapPin,
   Phone,
@@ -114,9 +115,10 @@ const ContactUs = () => {
 
             <div className="pt-4 border-t border-[#D6B77A]/20">
               <a
-                href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(
-                  'Namaste! I would like to inquire about your homemade Gujarati snacks.'
-                )}`}
+                href={buildWhatsAppLink(
+                  settings.whatsappNumber || PRIMARY_WHATSAPP_NUMBER,
+                  'Namaste Deepaji! I would like to inquire about your homemade Gujarati snacks.'
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full bg-[#790B13] hover:bg-[#50000D] text-[#FFF0DC] py-4 px-6 rounded-full font-mono uppercase tracking-widest font-bold text-xs flex items-center justify-between transition-all shadow-lg shadow-[#790B13]/30 active:scale-98 cursor-pointer border border-[#D6B77A]/40 group"

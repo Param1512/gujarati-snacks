@@ -1,4 +1,5 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
+import { PRIMARY_WHATSAPP_NUMBER, buildWhatsAppLink } from '../config/whatsapp';
 
 const CartContext = createContext();
 
@@ -114,9 +115,9 @@ export const CartProvider = ({ children }) => {
   const totalItemsCount = items.reduce((sum, item) => sum + item.quantity, 0);
 
   // Generate WhatsApp cart message for Deepa Bhansali
-  const getWhatsAppCartMessage = (phoneNumber = '919426845625') => {
+  const getWhatsAppCartMessage = (phoneNumber = PRIMARY_WHATSAPP_NUMBER) => {
     if (items.length === 0) return '';
-    let msg = `*Namaste Gujarati Nasta & Snacks!* 🥟\n\nI want to order the following fresh homemade snacks:\n\n`;
+    let msg = `*Namaste Deepaji (Gujarati Homemade Nasta & Snacks)!* 🥟\n\nI want to order the following fresh homemade snacks:\n\n`;
     items.forEach((item, idx) => {
       msg += `${idx + 1}. *${item.name}* (${item.weightLabel}) x ${item.quantity} = ₹${item.itemSubtotal}\n`;
     });
@@ -124,7 +125,7 @@ export const CartProvider = ({ children }) => {
     msg += `\n*Total Weight:* ${totalKg} kg`;
     msg += `\n\nPlease confirm availability and delivery to my location!`;
 
-    return `https://wa.me/${phoneNumber}?text=${encodeURIComponent(msg)}`;
+    return buildWhatsAppLink(phoneNumber, msg);
   };
 
   return (

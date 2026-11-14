@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import api from '../services/api';
 import { useSettings } from '../context/SettingsContext';
 import { Check, MessageCircle, Package, Sparkles, ShieldCheck, ArrowRight } from 'lucide-react';
+import { PRIMARY_WHATSAPP_NUMBER, buildWhatsAppLink } from '../config/whatsapp';
 
 const BulkOrders = () => {
   const { settings } = useSettings();
@@ -111,9 +112,10 @@ const BulkOrders = () => {
                 Submit Another Inquiry
               </button>
               <a
-                href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(
-                  `Namaste! I just submitted a bulk enquiry for ${name} (${approximateQuantityKg} kg).`
-                )}`}
+                href={buildWhatsAppLink(
+                  settings.whatsappNumber || PRIMARY_WHATSAPP_NUMBER,
+                  `Namaste Deepaji! I just submitted a bulk enquiry for ${name} (${approximateQuantityKg} kg).`
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto bg-white border border-[#D6B77A]/40 hover:border-[#790B13] text-[#21191A] text-xs font-mono uppercase tracking-widest px-8 py-4 rounded-full transition-all flex items-center justify-center gap-2 shadow-sm cursor-pointer"
@@ -346,9 +348,10 @@ const BulkOrders = () => {
               </button>
 
               <a
-                href={`https://wa.me/${settings.whatsappNumber}?text=${encodeURIComponent(
-                  'Namaste! I would like to enquire about a bulk snack order for our upcoming event.'
-                )}`}
+                href={buildWhatsAppLink(
+                  settings.whatsappNumber || PRIMARY_WHATSAPP_NUMBER,
+                  'Namaste Deepaji! I would like to enquire about a bulk snack order for our upcoming event.'
+                )}
                 target="_blank"
                 rel="noopener noreferrer"
                 className="w-full sm:w-auto border border-[#D6B77A]/40 hover:border-[#790B13] bg-white text-[#21191A] text-xs font-mono uppercase tracking-widest px-8 py-4 rounded-full transition-colors flex items-center justify-center gap-2 shadow-sm hover:bg-[#FFF0DC]/40 cursor-pointer"

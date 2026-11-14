@@ -18,12 +18,20 @@ import {
   AlertCircle,
 } from 'lucide-react';
 
+import {
+  PRIMARY_WHATSAPP_NUMBER,
+  RECIPIENT_DISPLAY_NAME,
+} from '../config/whatsapp';
+
 const OrderConfirmationPage = () => {
   const { orderNumber } = useParams();
   const [orderData, setOrderData] = useState(null);
   const [whatsappUrl, setWhatsappUrl] = useState('');
   const [whatsappMessage, setWhatsappMessage] = useState('');
-  const [recipient, setRecipient] = useState({ name: 'Deepa Bhansali', phone: '919426845625' });
+  const [recipient, setRecipient] = useState({
+    name: RECIPIENT_DISPLAY_NAME,
+    phone: PRIMARY_WHATSAPP_NUMBER,
+  });
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
   const [copied, setCopied] = useState(false);
@@ -282,7 +290,7 @@ const OrderConfirmationPage = () => {
                 {recipient.name || 'Deepa Bhansali'}
               </p>
               <p className="text-[#21191A]/75 leading-relaxed">
-                Direct WhatsApp: +91 {recipient.phone?.slice(-10) || '9426845625'}<br />
+                Direct WhatsApp: +91 {recipient.phone?.slice(-10) || PRIMARY_WHATSAPP_NUMBER.slice(-10)}<br />
                 Kitchen Address: 150 Feet Ring Road, Near Indira Circle, Rajkot, Gujarat - 360005
               </p>
               <div className="pt-2 text-[11px] text-[#21191A]/70 flex items-center gap-2">

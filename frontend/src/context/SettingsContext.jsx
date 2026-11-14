@@ -1,5 +1,10 @@
 import React, { createContext, useContext, useState, useEffect } from 'react';
 import api from '../services/api';
+import {
+  PRIMARY_WHATSAPP_NUMBER,
+  PRIMARY_PHONE_DISPLAY,
+  RECIPIENT_DISPLAY_NAME,
+} from '../config/whatsapp';
 
 const SettingsContext = createContext();
 
@@ -8,9 +13,9 @@ export const SettingsProvider = ({ children }) => {
     storeName: 'Gujarati Homemade Nasta & Snacks',
     storeNameGujarati: 'ગુજરાતી હોમમેડ નાસ્તા અને સ્નેક્સ',
     tagline: 'Authentic Kathiyawadi Namkeen, Made Fresh Daily With Pure Groundnut Oil',
-    phone: '+91 94268 45625',
-    whatsappRecipientName: 'Deepa Bhansali',
-    whatsappNumber: '919426845625',
+    phone: PRIMARY_PHONE_DISPLAY,
+    whatsappRecipientName: RECIPIENT_DISPLAY_NAME,
+    whatsappNumber: PRIMARY_WHATSAPP_NUMBER,
     email: 'orders@gujaratinasta.com',
     address: {
       shopNo: 'Shop 4, Shreeji Complex',

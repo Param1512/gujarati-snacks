@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSettings } from '../../context/SettingsContext';
 import { useLanguage } from '../../context/LanguageContext';
+import { PRIMARY_WHATSAPP_NUMBER, buildWhatsAppLink } from '../../config/whatsapp';
 import {
   ArrowUpRight,
   Sparkles,
@@ -171,7 +172,7 @@ const Footer = () => {
               </li>
               <li>
                 <a
-                  href={`https://wa.me/${settings.whatsappNumber || '919825012345'}`}
+                  href={buildWhatsAppLink(settings.whatsappNumber || PRIMARY_WHATSAPP_NUMBER, 'Namaste Deepaji! I would like to inquire about ordering snacks.')}
                   target="_blank"
                   rel="noopener noreferrer"
                   className="hover:text-[#D6B77A] transition-colors flex items-center gap-1 text-[#D6B77A] font-bold"

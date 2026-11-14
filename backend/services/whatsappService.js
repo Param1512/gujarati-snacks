@@ -1,13 +1,15 @@
+const WHATSAPP_CONFIG = require('../config/whatsappConfig');
+
 /**
  * WhatsApp Order Message Formatting Service
  * Generates verified, itemized order summaries for WhatsApp confirmation.
- * Primary Recipient: Deepa Bhansali (+91 9426845625)
+ * Primary Recipient: Deepa Bhansali (Testing: +91 9316152114, Permanent: +91 9426845625)
  */
 
 function formatWhatsAppOrder(order, settings = {}) {
   const storeName = settings.storeName || 'Gujarati Homemade Nasta & Snacks';
-  const recipientName = settings.whatsappRecipientName || 'Deepa Bhansali';
-  let recipientPhone = (settings.whatsappNumber || '919426845625').toString().replace(/\D/g, '');
+  const recipientName = settings.whatsappRecipientName || WHATSAPP_CONFIG.recipientName || 'Deepa Bhansali';
+  let recipientPhone = (settings.whatsappNumber || WHATSAPP_CONFIG.activePhone || '919316152114').toString().replace(/\D/g, '');
   if (recipientPhone.length === 10) {
     recipientPhone = `91${recipientPhone}`;
   }

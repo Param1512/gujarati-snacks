@@ -1,13 +1,15 @@
 import React from 'react';
 import { useSettings } from '../../context/SettingsContext';
 import { MessageCircle } from 'lucide-react';
+import { PRIMARY_WHATSAPP_NUMBER, buildWhatsAppLink } from '../../config/whatsapp';
 
 const WhatsAppButton = () => {
   const { settings } = useSettings();
 
-  const whatsappUrl = `https://wa.me/${settings.whatsappNumber || '919426845625'}?text=${encodeURIComponent(
+  const whatsappUrl = buildWhatsAppLink(
+    settings.whatsappNumber || PRIMARY_WHATSAPP_NUMBER,
     'Namaste Deepaji! I would like to inquire about ordering fresh Gujarati homemade snacks.'
-  )}`;
+  );
 
   return (
     <a

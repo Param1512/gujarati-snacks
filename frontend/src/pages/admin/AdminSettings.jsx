@@ -2,6 +2,7 @@ import React, { useState, useEffect } from 'react';
 import api from '../../services/api';
 import { useSettings } from '../../context/SettingsContext';
 import { Save, CheckCircle2, Sparkles } from 'lucide-react';
+import { PRIMARY_WHATSAPP_NUMBER, RECIPIENT_DISPLAY_NAME } from '../../config/whatsapp';
 
 const AdminSettings = () => {
   const { refetchSettings } = useSettings();
@@ -14,8 +15,8 @@ const AdminSettings = () => {
   const [storeNameGujarati, setStoreNameGujarati] = useState('');
   const [tagline, setTagline] = useState('');
   const [phone, setPhone] = useState('');
-  const [whatsappRecipientName, setWhatsappRecipientName] = useState('Deepa Bhansali');
-  const [whatsappNumber, setWhatsappNumber] = useState('919426845625');
+  const [whatsappRecipientName, setWhatsappRecipientName] = useState(RECIPIENT_DISPLAY_NAME);
+  const [whatsappNumber, setWhatsappNumber] = useState(PRIMARY_WHATSAPP_NUMBER);
   const [email, setEmail] = useState('');
   const [operatingStatus, setOperatingStatus] = useState('open');
   const [allowCashOnDelivery, setAllowCashOnDelivery] = useState(true);
@@ -41,8 +42,8 @@ const AdminSettings = () => {
           setStoreNameGujarati(s.storeNameGujarati || '');
           setTagline(s.tagline);
           setPhone(s.phone);
-          setWhatsappRecipientName(s.whatsappRecipientName || 'Deepa Bhansali');
-          setWhatsappNumber(s.whatsappNumber || '919426845625');
+          setWhatsappRecipientName(s.whatsappRecipientName || RECIPIENT_DISPLAY_NAME);
+          setWhatsappNumber(s.whatsappNumber || PRIMARY_WHATSAPP_NUMBER);
           setEmail(s.email);
           setOperatingStatus(s.operatingStatus || 'open');
           setAllowCashOnDelivery(s.allowCashOnDelivery !== undefined ? s.allowCashOnDelivery : true);
@@ -230,7 +231,7 @@ const AdminSettings = () => {
                 required
                 value={whatsappNumber}
                 onChange={(e) => setWhatsappNumber(e.target.value)}
-                placeholder="919426845625"
+                placeholder={PRIMARY_WHATSAPP_NUMBER}
                 className="w-full bg-[#FFF9F2] border border-[#D6B77A]/30 rounded-xl px-4 py-3 text-xs font-mono text-[#21191A] focus:outline-none focus:border-[#790B13]"
               />
             </div>

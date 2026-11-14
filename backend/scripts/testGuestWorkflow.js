@@ -73,7 +73,7 @@ async function runTests() {
   console.log(`✓ Order Status: ${codOrder.orderStatus}`);
   console.log(`✓ Recipient Name: ${codData.whatsappRecipient.name}`);
   console.log(`✓ Recipient Phone: ${codData.whatsappRecipient.phone}`);
-  console.log(`✓ wa.me link contains 919426845625: ${codData.whatsappUrl.includes('919426845625')}`);
+  console.log(`✓ wa.me link contains 919316152114: ${codData.whatsappUrl.includes('919316152114')}`);
   console.log(`✓ Message includes Order ID: ${codData.whatsappMessage.includes(codOrder.orderNumber)}`);
   console.log(`✓ Message includes Customer Name: ${codData.whatsappMessage.includes('Kiran Dave')}`);
 

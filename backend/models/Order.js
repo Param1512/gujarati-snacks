@@ -191,7 +191,7 @@ const orderSchema = new mongoose.Schema(
     },
     whatsappNotification: {
       recipientName: { type: String, default: 'Deepa Bhansali' },
-      recipientPhone: { type: String, default: '919426845625' },
+      recipientPhone: { type: String, default: '919316152114' },
       formattedMessage: { type: String, default: '' },
       waUrl: { type: String, default: '' },
       customerOpenedWa: { type: Boolean, default: false },
