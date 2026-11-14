@@ -36,6 +36,7 @@ const Navbar = () => {
   useEffect(() => {
     setMobileMenuOpen(false);
     setUserDropdown(false);
+    setSearchOpen(false);
   }, [location.pathname]);
 
   const handleSearch = (e) => {
@@ -48,60 +49,61 @@ const Navbar = () => {
     }
   };
 
+  // Primary navigation links with strict whitespace-nowrap
   const navLinks = [
-    { label: t('allSnacks') || 'Shop Snacks', path: '/snacks' },
+    { label: t('allSnacks') || 'All Snacks', path: '/snacks' },
     { label: t('categories') || 'Categories', path: '/categories' },
     { label: t('comboBuilder') || 'Custom Box', path: '/combo-builder', badge: 'Hamper' },
     { label: t('bulkOrders') || 'Bulk Orders', path: '/bulk-orders' },
-    { label: t('aboutUs') || 'Our Story', path: '/about-us' },
-    { label: t('contactUs') || 'Contact', path: '/contact-us' },
+    { label: t('aboutUs') || 'Our Story', path: '/about-us', hideOnMedium: true },
+    { label: t('contactUs') || 'Contact', path: '/contact-us', hideOnMedium: true },
   ];
 
   return (
-    <header className="sticky top-0 z-40 bg-[#FFF9F2]/95 backdrop-blur-md text-[#21191A] border-b border-[#D6B77A]/25 shadow-xs transition-all">
-      <div className="max-w-7xl mx-auto px-3 sm:px-6 lg:px-8">
-        <div className="flex items-center justify-between h-16 sm:h-20 gap-2 sm:gap-4">
+    <header className="sticky top-0 z-40 bg-[#FFF9F2]/95 backdrop-blur-xl text-[#21191A] border-b border-[#D6B77A]/30 shadow-xs transition-all">
+      <div className="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+        <div className="flex items-center justify-between h-20 gap-4">
           
-          {/* Brand Identity / Premium Emblem */}
-          <Link to="/" className="flex items-center gap-2 sm:gap-3 shrink-0 group">
-            <div className="w-9 h-9 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-[#790B13] to-[#50000D] text-[#FFF0DC] border border-[#D6B77A]/40 flex items-center justify-center font-heading font-bold text-base sm:text-xl shadow-md group-hover:scale-105 transition-all">
-              <span className="font-gujarati text-base sm:text-lg leading-none font-bold text-[#D6B77A]">ગુ</span>
+          {/* Brand Identity / Monogram Emblem */}
+          <Link to="/" className="flex items-center gap-3 shrink-0 group">
+            <div className="w-10 h-10 sm:w-11 sm:h-11 rounded-xl bg-gradient-to-br from-[#790B13] via-[#50000D] to-[#3A000A] text-[#FFF0DC] border border-[#D6B77A]/50 flex items-center justify-center font-heading font-black text-lg sm:text-xl shadow-md group-hover:scale-105 transition-all shrink-0">
+              <span className="font-gujarati text-lg sm:text-xl leading-none font-bold text-[#D6B77A]">ગુ</span>
             </div>
-            <div>
-              <div className="font-heading font-black text-lg sm:text-2xl tracking-tight text-[#50000D] flex items-center gap-1.5 leading-none">
+            <div className="min-w-0">
+              <div className="font-heading font-black text-lg sm:text-2xl tracking-tight text-[#50000D] flex items-center gap-1.5 leading-none whitespace-nowrap">
                 <span>
-                  {language === 'gu' && settings.storeNameGujarati
-                    ? settings.storeNameGujarati
-                    : (settings.storeName || 'Gujarati Nasta & Snacks')}
+                  {language === 'gu'
+                    ? (settings.storeNameGujarati || 'ગુજરાતી નાસ્તા અને સ્નેક્સ')
+                    : 'Gujarati Nasta & Snacks'}
                 </span>
-                <span className="w-1.5 h-1.5 rounded-full bg-[#D6B77A]" />
+                <span className="w-1.5 h-1.5 rounded-full bg-[#D6B77A] shrink-0" />
               </div>
-              <span className="hidden xs:block text-[9px] sm:text-[10px] uppercase tracking-widest text-[#790B13] font-bold mt-0.5 sm:mt-1 font-heading">
-                Authentic Homemade • Rajkot
+              <span className="hidden sm:block text-[10px] uppercase tracking-widest text-[#790B13] font-bold mt-1 font-heading whitespace-nowrap">
+                Authentic Homemade • Rajkot Kitchen
               </span>
             </div>
           </Link>
 
-          {/* Desktop Navigation Links */}
-          <nav className="hidden lg:flex items-center space-x-6 xl:space-x-7 text-xs font-heading font-bold uppercase tracking-wider">
+          {/* Desktop Navigation Links (with absolute protection against line breaks) */}
+          <nav className="hidden xl:flex items-center gap-6 2xl:gap-8 text-xs font-heading font-bold uppercase tracking-wider shrink-0">
             {navLinks.map((link) => {
               const isActive = location.pathname === link.path;
               return (
                 <Link
                   key={link.path}
                   to={link.path}
-                  className={`relative py-1.5 transition-colors flex items-center gap-1.5 ${
-                    isActive ? 'text-[#790B13]' : 'text-[#21191A]/80 hover:text-[#790B13]'
+                  className={`relative py-2 transition-all flex items-center gap-1.5 whitespace-nowrap shrink-0 group ${
+                    isActive ? 'text-[#790B13] font-extrabold' : 'text-[#21191A]/80 hover:text-[#790B13]'
                   }`}
                 >
-                  <span>{link.label}</span>
+                  <span className="whitespace-nowrap">{link.label}</span>
                   {link.badge && (
-                    <span className="text-[9px] px-2 py-0.5 bg-[#FFF0DC] text-[#790B13] border border-[#D6B77A]/40 rounded-full font-bold tracking-wider">
+                    <span className="text-[9px] px-2 py-0.5 bg-[#FFF0DC] text-[#790B13] border border-[#D6B77A]/50 rounded-full font-extrabold tracking-wider shrink-0">
                       {link.badge}
                     </span>
                   )}
                   {isActive && (
-                    <span className="absolute -bottom-1 left-0 right-0 h-0.5 bg-[#790B13] rounded-full" />
+                    <span className="absolute -bottom-0.5 left-0 right-0 h-0.5 bg-[#790B13] rounded-full" />
                   )}
                 </Link>
               );
@@ -109,13 +111,14 @@ const Navbar = () => {
           </nav>
 
           {/* Right Action Icons: Language, Search, Wishlist, Account, Cart */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0">
             
             {/* Desktop Language Toggle */}
             <button
+              type="button"
               onClick={toggleLanguage}
-              className="hidden md:flex items-center gap-1 px-2.5 py-1.5 text-[11px] font-heading font-bold text-[#50000D] bg-[#FFF0DC] border border-[#D6B77A]/40 rounded-full hover:bg-[#790B13] hover:text-[#FFF0DC] transition-all cursor-pointer"
-              title="Toggle Language (English / ગુજરાતી)"
+              className="hidden md:flex items-center gap-1 px-3 py-1.5 text-xs font-heading font-bold text-[#50000D] bg-[#FFF0DC] border border-[#D6B77A]/40 rounded-full hover:bg-[#790B13] hover:text-[#FFF0DC] transition-all cursor-pointer shadow-xs whitespace-nowrap shrink-0"
+              title="Toggle Language"
             >
               <span className={language === 'gu' ? 'font-gujarati' : ''}>
                 {language === 'en' ? 'ગુજરાતી' : 'English'}
@@ -127,7 +130,7 @@ const Navbar = () => {
               {searchOpen ? (
                 <form
                   onSubmit={handleSearch}
-                  className="flex items-center bg-white border border-[#D6B77A]/40 rounded-full px-3 py-1.5 shadow-sm"
+                  className="flex items-center bg-white border border-[#D6B77A]/50 rounded-full px-3 py-1.5 shadow-md"
                 >
                   <input
                     type="text"
@@ -135,7 +138,7 @@ const Navbar = () => {
                     onChange={(e) => setSearchTerm(e.target.value)}
                     placeholder="Search snacks..."
                     autoFocus
-                    className="bg-transparent text-xs text-[#21191A] placeholder-[#21191A]/40 focus:outline-none w-28 sm:w-44 font-sans"
+                    className="bg-transparent text-xs text-[#21191A] placeholder-[#21191A]/40 focus:outline-none w-32 sm:w-44 font-sans"
                   />
                   <button type="submit" className="text-[#50000D] hover:text-[#790B13] p-1 cursor-pointer">
                     <Search className="w-3.5 h-3.5" />
@@ -152,7 +155,7 @@ const Navbar = () => {
                 <button
                   type="button"
                   onClick={() => setSearchOpen(true)}
-                  className="p-2 sm:p-2.5 rounded-full text-[#21191A]/70 hover:text-[#790B13] hover:bg-[#FFF0DC] transition-colors cursor-pointer"
+                  className="p-2 sm:p-2.5 rounded-full text-[#21191A]/70 hover:text-[#790B13] hover:bg-[#FFF0DC] transition-colors cursor-pointer shrink-0"
                   title="Search snacks"
                 >
                   <Search className="w-4 h-4" />
@@ -163,7 +166,7 @@ const Navbar = () => {
             {/* Wishlist Link */}
             <Link
               to="/wishlist"
-              className="relative p-2 sm:p-2.5 rounded-full text-[#21191A]/70 hover:text-[#790B13] hover:bg-[#FFF0DC] transition-colors"
+              className="relative p-2 sm:p-2.5 rounded-full text-[#21191A]/70 hover:text-[#790B13] hover:bg-[#FFF0DC] transition-colors shrink-0"
               title="Saved Items"
             >
               <Heart className="w-4 h-4" />
@@ -175,12 +178,13 @@ const Navbar = () => {
             </Link>
 
             {/* User Account / Profile */}
-            <div className="relative">
+            <div className="relative shrink-0">
               {isAuthenticated ? (
                 <div>
                   <button
+                    type="button"
                     onClick={() => setUserDropdown(!userDropdown)}
-                    className="flex items-center gap-1.5 text-xs font-heading font-bold text-[#50000D] bg-[#FFF0DC] border border-[#D6B77A]/40 rounded-full px-2.5 sm:px-3.5 py-1.5 sm:py-2 hover:bg-[#790B13] hover:text-[#FFF0DC] transition-all cursor-pointer shadow-xs"
+                    className="flex items-center gap-1.5 text-xs font-heading font-bold text-[#50000D] bg-[#FFF0DC] border border-[#D6B77A]/40 rounded-full px-3 py-2 hover:bg-[#790B13] hover:text-[#FFF0DC] transition-all cursor-pointer shadow-xs whitespace-nowrap"
                   >
                     <User className="w-3.5 h-3.5" />
                     <span className="hidden sm:inline">
@@ -189,11 +193,11 @@ const Navbar = () => {
                   </button>
 
                   {userDropdown && (
-                    <div className="absolute right-0 mt-2 w-56 bg-white text-[#21191A] rounded-2xl shadow-xl py-2 z-50 text-xs font-heading border border-[#D6B77A]/30">
+                    <div className="absolute right-0 mt-2 w-56 bg-white text-[#21191A] rounded-2xl shadow-2xl py-2 z-50 text-xs font-heading border border-[#D6B77A]/30">
                       <div className="px-4 py-3 border-b border-[#D6B77A]/20 bg-[#FFF9F2]">
                         <p className="text-[10px] text-[#790B13] uppercase tracking-wider font-bold">Patron Account</p>
                         <p className="font-bold text-[#21191A] truncate text-sm">{user?.name}</p>
-                        <p className="text-[11px] text-[#21191A]/60 truncate">{user?.email}</p>
+                        <p className="text-[11px] text-[#21191A]/60 truncate font-sans">{user?.email}</p>
                       </div>
 
                       {isAdmin && (
@@ -229,6 +233,7 @@ const Navbar = () => {
                       </Link>
 
                       <button
+                        type="button"
                         onClick={() => {
                           setUserDropdown(false);
                           logout();
@@ -244,7 +249,7 @@ const Navbar = () => {
               ) : (
                 <Link
                   to="/login"
-                  className="flex items-center gap-1.5 text-xs font-heading font-bold uppercase tracking-wider text-[#50000D] bg-[#FFF0DC] hover:bg-[#790B13] hover:text-[#FFF0DC] border border-[#D6B77A]/40 rounded-full px-3 sm:px-4 py-1.5 sm:py-2 transition-all shadow-xs"
+                  className="flex items-center gap-1.5 text-xs font-heading font-extrabold uppercase tracking-wider text-[#50000D] bg-[#FFF0DC] hover:bg-[#790B13] hover:text-[#FFF0DC] border border-[#D6B77A]/50 rounded-full px-3.5 sm:px-4 py-2 transition-all shadow-xs whitespace-nowrap shrink-0"
                 >
                   <User className="w-3.5 h-3.5" />
                   <span className="hidden sm:inline">{t('login')}</span>
@@ -254,23 +259,25 @@ const Navbar = () => {
 
             {/* Shopping Bag Trigger in Deep Burgundy Luxury Style */}
             <button
+              type="button"
               onClick={() => setIsCartOpen(true)}
-              className="relative flex items-center gap-1.5 sm:gap-2 bg-[#50000D] hover:bg-[#790B13] text-[#FFF0DC] px-3 sm:px-4 py-1.5 sm:py-2 rounded-full border border-[#D6B77A]/40 transition-all cursor-pointer shadow-sm active:scale-95"
-              title="Shopping Cart"
+              className="relative flex items-center gap-2 bg-[#50000D] hover:bg-[#790B13] text-[#FFF0DC] px-3.5 sm:px-4 py-2 rounded-full border border-[#D6B77A]/50 transition-all cursor-pointer shadow-md active:scale-95 shrink-0"
+              title="Shopping Bag"
             >
-              <ShoppingBag className="w-3.5 sm:w-4 h-3.5 sm:h-4 text-[#D6B77A]" />
-              <span className="font-heading text-xs font-bold text-[#FFF0DC]">
+              <ShoppingBag className="w-4 h-4 text-[#D6B77A]" />
+              <span className="font-heading text-xs font-black text-[#FFF0DC]">
                 {totalItemsCount}
               </span>
             </button>
 
-            {/* Mobile Navigation Toggle (≥ 44px touch area) */}
+            {/* Mobile Navigation Toggle (Visible on screens < 1280px) */}
             <button
+              type="button"
               onClick={() => setMobileMenuOpen(true)}
-              className="lg:hidden p-2.5 text-[#50000D] hover:bg-[#FFF0DC] rounded-full cursor-pointer transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center"
+              className="xl:hidden p-2 text-[#50000D] hover:bg-[#FFF0DC] rounded-full cursor-pointer transition-colors min-w-[44px] min-h-[44px] flex items-center justify-center shrink-0"
               aria-label="Open Navigation Menu"
             >
-              <Menu className="w-5 h-5" />
+              <Menu className="w-6 h-6" />
             </button>
           </div>
         </div>
@@ -278,7 +285,7 @@ const Navbar = () => {
 
       {/* Off-Canvas Mobile Drawer with Backdrop */}
       {mobileMenuOpen && (
-        <div className="fixed inset-0 z-50 lg:hidden">
+        <div className="fixed inset-0 z-50 xl:hidden">
           {/* Backdrop overlay */}
           <div
             className="fixed inset-0 bg-black/60 backdrop-blur-xs transition-opacity duration-300"
@@ -295,12 +302,13 @@ const Navbar = () => {
                     ગુ
                   </div>
                   <span className="font-heading font-black text-lg text-[#50000D] tracking-tight">
-                    {language === 'gu' && settings.storeNameGujarati
-                      ? settings.storeNameGujarati
-                      : (settings.storeName || 'Gujarati Nasta & Snacks')}
+                    {language === 'gu'
+                      ? (settings.storeNameGujarati || 'ગુજરાતી નાસ્તા અને સ્નેક્સ')
+                      : 'Gujarati Nasta & Snacks'}
                   </span>
                 </div>
                 <button
+                  type="button"
                   onClick={() => setMobileMenuOpen(false)}
                   className="p-2 text-[#50000D] hover:bg-[#FFF0DC] rounded-full min-w-[44px] min-h-[44px] flex items-center justify-center cursor-pointer"
                   aria-label="Close Navigation"
@@ -375,6 +383,7 @@ const Navbar = () => {
               <div className="flex items-center justify-between text-xs font-heading">
                 <span className="text-[#21191A]/70 font-bold uppercase tracking-wider text-[11px]">Language:</span>
                 <button
+                  type="button"
                   onClick={toggleLanguage}
                   className="px-3.5 py-1.5 rounded-full bg-[#50000D] text-[#FFF0DC] border border-[#D6B77A]/40 text-xs font-bold cursor-pointer transition-all active:scale-95"
                 >
@@ -413,6 +422,7 @@ const Navbar = () => {
                       </Link>
                     )}
                     <button
+                      type="button"
                       onClick={() => {
                         setMobileMenuOpen(false);
                         logout();
